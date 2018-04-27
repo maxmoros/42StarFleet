@@ -1,0 +1,8 @@
+test.txt
+*.o
+libft/*.o
+libft/*.gch
+*.swp
+.nfs*
+ruby*
+gen.rb
