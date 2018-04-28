@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 12:59:02 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/27 19:24:16 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/04/27 20:07:09 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,14 @@ int		main()//int ac, char **av)
 
 	ft_printf("the %d number is %d\n", 343, x);
 	ft_printf("the %ld number is %d\n", 3333333333, x);
-	printf("the %ld number is %d\n", 3333333333, x);
 	ft_printf("|%-+0#06.96c|\n", '#');
 	printf("|%6lc|\n", '#');
+	printf("|%5.3s|\n", "HELLO");
+	printf("|%-5p|\n", (void*)255);
+	printf("|%+013.10d|\n", 3234);
+	printf("|%#6.5o|\n", 255);
+	printf("|%03.2u|\n", 1234567);
+	printf("|%0.4x|\n", 255);
+
 	return (0);
 }
