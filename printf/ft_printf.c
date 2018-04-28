@@ -6,12 +6,13 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 12:59:02 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/26 20:02:15 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/04/27 19:24:16 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <time.h>
+#include <stdio.h>
  
 void delay(int number_of_seconds)
 {
@@ -28,43 +29,27 @@ void delay(int number_of_seconds)
 
 int		ft_printf(char *str, ...)
 {
+	t_conv	*node;
 	va_list	ap;
-	int		d;
-	char	c;
-	char	*s;
+	char	error;
 	
+	error = 0;
+	node = pf_chomp(str, &error);
 	va_start(ap, str);
-	while (*str)
-		switch(*str++) {
-			case 's':                       
-				s = va_arg(ap, char *);
-				ft_putstr(s);
-				 break;
-			case 'd':                       
-				d = va_arg(ap, int);
-				ft_putnbr(d);
-				break;
-			case 'c':                      
-				c = va_arg(ap, int);
-				ft_putchar(c);
-			   break;
-	   }
+//	print_nodes(node);
+	do_conv(ap, node, &error);
 	va_end(ap);
-	return (1);
+	return (error ? 0 : 1);
 }
 
-int		main(int ac, char **av)
+int		main()//int ac, char **av)
 {
-	char	error;
-	t_conv	*node;
+	int		x = 12321;
 
-	error = 0;
-	if (ac == 2)
-	{
-		ft_putstr("\n");
-		node = pf_chomp(av[1], &error);
-		ft_putstr("\n");
-		print_nodes(node);
-	}
+	ft_printf("the %d number is %d\n", 343, x);
+	ft_printf("the %ld number is %d\n", 3333333333, x);
+	printf("the %ld number is %d\n", 3333333333, x);
+	ft_printf("|%-+0#06.96c|\n", '#');
+	printf("|%6lc|\n", '#');
 	return (0);
 }

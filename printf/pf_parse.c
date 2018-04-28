@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 16:37:42 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/26 20:00:39 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/04/27 19:01:50 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,14 @@ int		parse_type(char **str, t_conv *node, int *i)
 		return (0);
 	if ((**str == 's' || **str == 'S') && ++*i && (*str)++)
 		node->type = conv_s;
-	else if ((**str == 'd' || **str == 'D') && ++*i && (*str)++)
-		node->type = conv_d;
+	else if ((**str == 'd' || **str == 'D' || **str == 'i') && ++*i && (*str)++)
+		node->type = conv_di;
 	else if ((**str == 'o' || **str == 'O') && ++*i && (*str)++)
 		node->type = conv_o;
 	else if ((**str == 'u' || **str == 'U') && ++*i && (*str)++)
 		node->type = conv_u;
 	else if (**str == 'p' && ++*i && (*str)++)
 		node->type = conv_p;
-	else if (**str == 'i' && ++*i && (*str)++)
-		node->type = conv_i;
 	else if (**str == 'x' && ++*i && (*str)++)
 		node->type = conv_x;
 	else if (**str == 'X' && ++*i && (*str)++)
@@ -118,26 +116,16 @@ t_conv	*pf_chomp(char *str, char *error)
 	t_conv	*node;
 	int		i;
 
-	ft_putstr("pf_chomp: \t");
-	ft_putstr(str);
-	ft_putstr("\n");
-	i = ft_strlen_c(str, '%');
-	node = new_conv(i, str);
-	str += i;
+//	ft_putstr("pf_chomp: \t");
+//	ft_putstr(str);
+//	ft_putstr("\n");
+	node = new_conv(&str);
 	if (*str && !*error)
 	{
 		if (!(parse_conv(str, node, &i)))
 			*error = 1;
-		str += i;
-		if (*str && !*error)
+		if (*(str += i) && !*error)
 			node->next = pf_chomp(str, error);
 	}
-	if (*error)
-	{
-		ft_putstr("Error!\n");
-		free(node->prefix);
-		free(node);
-		return (NULL);
-	}
-	return (node);
+	return (*error ? free_conv(node) : node);
 }

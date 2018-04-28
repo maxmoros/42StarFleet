@@ -6,7 +6,7 @@
 #    By: mmoros <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 15:34:53 by mmoros            #+#    #+#              #
-#    Updated: 2018/04/24 17:06:54 by mmoros           ###   ########.fr        #
+#    Updated: 2018/04/27 19:07:27 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,8 +47,11 @@ SRC =	ft_atoi.c			\
 		ft_putchar_fd.c		\
 		ft_putendl.c		\
 		ft_putendl_fd.c		\
+		ft_putoct.c			\
 		ft_puthex.c			\
+		ft_puthex_f.c		\
 		ft_putnbr.c			\
+		ft_putunbr.c		\
 		ft_putnbr_fd.c		\
 		ft_putstr.c			\
 		ft_putnstr.c		\

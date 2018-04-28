@@ -1,0 +1,6 @@
+./*.swp
+./.*.swp
+libft/*.o
+./*.o
+libft/*.gch
+./*.gch

@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 10:26:13 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/24 17:07:42 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/04/27 19:08:12 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,13 @@ void				ft_putstr(char const *s);
 void				ft_putnstr(char const *s, size_t n);
 void				ft_putendl(char const *s);
 void				ft_putnbr(int n);
+int					ft_putunbr(unsigned int n);
 void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char const *s, int fd);
 void				ft_putendl_fd(char const *s, int fd);
+int					ft_putoct(unsigned int oct);
 void				ft_puthex(unsigned int hex);
+int					ft_puthex_f(unsigned int hex, char format);
 void				ft_putnbr_fd(int n, int fd);
 int					ft_wordcount_d(char const *s, char d);
 char				*ft_wordchomp_d(char **s, char d);

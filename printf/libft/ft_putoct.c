@@ -1,40 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_putoct.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/25 21:02:32 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/27 17:50:37 by mmoros           ###   ########.fr       */
+/*   Created: 2018/03/07 21:15:06 by mmoros            #+#    #+#             */
+/*   Updated: 2018/04/27 19:09:33 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	ft_putdig(int n)
+static int	ft_putoctdig(unsigned int oct)
 {
-	if (!n)
-		return ;
-	ft_putdig(n / 10);
-	ft_putchar('0' + n % 10);
+	int		count;
+
+	count = 0;
+	if (oct)
+	{
+		count += 1 + ft_putoctdig(oct / 8);
+		ft_putchar('0' + oct % 8);
+	}
+	return (count);
 }
 
-void		ft_putnbr(int n)
+int			ft_putoct(unsigned int oct)
 {
-	if (!n)
-		write(1, "0", 1);
-	else if (n == -2147483648)
-	{
-		write(1, "-", 1);
-		ft_putdig(21474);
-		ft_putdig(83648);
-		return ;
-	}
-	if (n < 0)
-	{
-		n *= -1;
-		write(1, "-", 1);
-	}
-	ft_putdig(n);
+	if (oct == 0)
+		ft_putchar('0');
+	else
+		return (ft_putoctdig(oct));
+	return (1);
 }
