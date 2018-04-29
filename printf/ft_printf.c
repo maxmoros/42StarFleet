@@ -6,27 +6,13 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 12:59:02 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/28 18:45:36 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/04/28 21:40:51 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <time.h>
 #include <stdio.h>
  
-void delay(int number_of_seconds)
-{
-    // Converting time into milli_seconds
-    int milli_seconds = 100 * number_of_seconds;
- 
-    // Stroing start time
-    clock_t start_time = clock();
- 
-    // looping till required time is not acheived
-    while (clock() < start_time + milli_seconds)
-        ;
-}
-
 int		ft_printf(char *str, ...)
 {
 	t_conv	*node;

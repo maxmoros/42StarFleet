@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/28 18:08:40 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/28 18:53:30 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/04/28 21:32:45 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,3 +65,4 @@ int		put_uintmax_t(uintmax_t num, char print)
 	}
 	return (print ? print_intmax_t(num) : count_intmax_t(num));
 }
+
