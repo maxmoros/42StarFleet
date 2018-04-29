@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:08:49 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/28 19:15:53 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/04/28 21:46:32 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ typedef struct		s_conv
 
 typedef int			(*t_func)(t_conv*);
 
-void				delay(int number_of_seconds);
-
 t_conv				*new_conv(char **str);
 t_conv				*pf_chomp(char *str, char *error);
 void				print_nodes(t_conv *node);
@@ -52,6 +50,8 @@ int					conv_c(va_list ap, t_conv *node);
 
 int					put_intmax_t(intmax_t num, char print);
 int					put_uintmax_t(uintmax_t num, char print);
+
+int					count_oct(uintmax_t oct);
 
 
 #endif

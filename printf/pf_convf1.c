@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 20:23:44 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/28 21:02:38 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/04/28 21:46:27 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		conv_o(va_list ap, t_conv *node)
 
 	out = (node->length ? *(unsigned int*)get_length(ap, node->length)
 						: va_arg(ap, unsigned int));
-	ft_putoct((unsigned int)out);
+	put_bigoct((unsigned int)out);
 	return (node->j);
 }
 
