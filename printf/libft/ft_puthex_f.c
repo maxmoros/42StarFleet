@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 21:15:06 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/27 18:56:07 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/04/28 15:03:09 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 static int	ft_puthexdig(unsigned int hex, char format)
 {
+	int		count;
+
+	count = 0;
 	if (hex)
 	{
-		return (1 + ft_puthexdig(hex / 16, format));
+		count += 1 + ft_puthexdig(hex / 16, format);
 		if (hex % 16 > 9)
 		{
 			if (format & 0x1)
@@ -27,7 +30,7 @@ static int	ft_puthexdig(unsigned int hex, char format)
 		else
 			ft_putchar('0' + hex % 16);
 	}
-	return (0);
+	return (count);
 }
 
 int			ft_puthex_f(unsigned int hex, char format)

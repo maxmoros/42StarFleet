@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:08:49 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/27 19:03:08 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/04/28 19:15:53 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft/libft.h"
 # include <stdarg.h>
 # include <stdio.h>
+# include <stddef.h>
 
 typedef struct		s_conv
 {
@@ -40,7 +41,6 @@ void				print_nodes(t_conv *node);
 t_conv				*free_conv(t_conv *node);
 
 int					do_conv(va_list ap, t_conv *node, char *error);
-int					percent(va_list ap, t_conv *node);
 int					conv_s(va_list ap, t_conv *node);
 int					conv_di(va_list ap, t_conv *node);
 int					conv_o(va_list ap, t_conv *node);
@@ -49,5 +49,9 @@ int					conv_p(va_list ap, t_conv *node);
 int					conv_x(va_list ap, t_conv *node);
 int					conv_X(va_list ap, t_conv *node);
 int					conv_c(va_list ap, t_conv *node);
+
+int					put_intmax_t(intmax_t num, char print);
+int					put_uintmax_t(uintmax_t num, char print);
+
 
 #endif
