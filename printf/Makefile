@@ -6,7 +6,7 @@
 #    By: mmoros <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 15:34:53 by mmoros            #+#    #+#              #
-#    Updated: 2018/04/28 21:19:18 by mmoros           ###   ########.fr        #
+#    Updated: 2018/04/29 21:17:06 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,10 @@ SRC =	ft_printf.c		\
 		node_conv.c		\
 		pf_parse.c		\
 		pf_convf1.c		\
-		bigfunc.c
+		pf_convf2.c		\
+		pf_convf3.c		\
+		pf_bigf1.c		\
+		pf_bigf2.c
 
 INC = ft_printf.h
 CC = gcc

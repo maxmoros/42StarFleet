@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 16:37:42 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/28 18:53:10 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/04/29 23:08:10 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,13 @@ int		parse_flags(char **str, t_conv *node, int *i)
 	while (**str == '-' || **str == '+' || **str == '0' || **str == '#')
 	{
 		if (**str == '-' && (*str)++ && ++*i)
-			if (node->flags & 0x8 || !(node->flags += 0x8))
-				return (0);
+			node->flags |= 0x8;
 		if (**str == '+' && (*str)++ && ++*i)
-			if (node->flags & 0x4 || !(node->flags += 0x4))
-				return (0);
+			node->flags |= 0x4;
 		if (**str == '0' && (*str)++ && ++*i)
-			if (node->flags & 0x2 || !(node->flags += 0x2))
-				return (0);
+			node->flags |= 0x2;
 		if (**str == '#' && (*str)++ && ++*i)
-			if (node->flags & 0x1 || !(node->flags += 0x1))
-				return (0);
+			node->flags |= 0x1;
 	}
 	return (1);
 }
@@ -92,7 +88,7 @@ int		parse_type(char **str, t_conv *node, int *i)
 	else if (**str == 'x' && ++*i && (*str)++)
 		node->type = conv_x;
 	else if (**str == 'X' && ++*i && (*str)++)
-		node->type = conv_X;
+		node->type = conv_xx;
 	else if (**str == 'c' && ++*i && (*str)++)
 		node->type = conv_c;
 	else
@@ -113,20 +109,4 @@ int		parse_conv(char *str, t_conv *node, int *i)
 			!parse_len(&str, node, i) || !parse_type(&str, node, i))
 		return (0);
 	return (*i);
-}
-
-t_conv	*pf_chomp(char *str, char *error)
-{
-	t_conv	*node;
-	int		i;
-
-	node = new_conv(&str);
-	if (*str && !*error)
-	{
-		if (!(parse_conv(str, node, &i)))
-			*error = 1;
-		if (*(str += i) && !*error)
-			node->next = pf_chomp(str, error);
-	}
-	return (*error ? free_conv(node) : node);
 }

@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 21:15:06 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/28 21:25:04 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/04/29 21:36:35 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,14 @@ int			ft_puthex_f(unsigned int hex, char format)
 	prefix = 1;
 	if (format & 0xC)
 	{
-		prefix += 2;
+		prefix++;
 		if (format & 0x1)
+		{
 			if (!(format & 0xF0))
 				ft_putstr("0X");
-		else
-			if (!(format & 0xF0))
-				ft_putstr("0x");
+		}
+		else if (!(format & 0xF0))
+			ft_putstr("0x");
 	}
 	if (hex == 0 && !(format & 0xF0))
 		ft_putchar('0');

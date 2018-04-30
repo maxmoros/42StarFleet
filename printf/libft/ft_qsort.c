@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 20:37:10 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/19 09:44:56 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/04/29 21:32:39 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_qsort(int *tab, unsigned int size)
 	int i;
 
 	pl = 0;
-	pr = size -1;
+	pr = size - 1;
 	i = 0;
 	if (size > 2)
 	{

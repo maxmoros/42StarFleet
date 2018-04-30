@@ -6,15 +6,17 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 16:40:06 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/27 19:24:18 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/04/29 23:17:17 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdio.h>
 
-t_conv		*free_conv(t_conv *node)
+t_conv	*free_conv(t_conv *node)
 {
 	t_conv	*tmp;
+
 	while (node)
 	{
 		if (node->prefix)
@@ -47,6 +49,7 @@ t_conv	*new_conv(char **str)
 	node->type = 0;
 	node->length = 0;
 	node->j = 0;
+	node->padding = 0;
 	return (node);
 }
 
@@ -72,4 +75,35 @@ void	print_nodes(t_conv *node)
 		ft_putstr("\n\n");
 		node = node->next;
 	}
+}
+
+t_conv	*pf_chomp(char *str, char *error)
+{
+	t_conv	*node;
+	int		i;
+
+	node = new_conv(&str);
+	if (*str && !*error)
+	{
+		if (!(parse_conv(str, node, &i)))
+			*error = 1;
+		if (*(str += i) && !*error)
+			node->next = pf_chomp(str, error);
+	}
+	return (*error ? free_conv(node) : node);
+}
+
+int		sum_printed(t_conv *node)
+{
+	int		sum;
+	t_conv	*tmp;
+
+	sum = 0;
+	tmp = node;
+	while (tmp)
+	{
+		sum += tmp->j + tmp->i;
+		tmp = tmp->next;
+	}
+	return (sum);
 }
