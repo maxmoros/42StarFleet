@@ -6,7 +6,7 @@
 #    By: mmoros <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 15:34:53 by mmoros            #+#    #+#              #
-#    Updated: 2018/04/29 21:17:06 by mmoros           ###   ########.fr        #
+#    Updated: 2018/04/29 23:50:05 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC =	ft_printf.c		\
 		pf_bigf2.c
 
 INC = ft_printf.h
+LIBFT = libft/libft.a
 CC = gcc
 OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Wextra -Werror
@@ -33,11 +34,14 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -C libft/
-	@gcc $(CFLAGS) -c $(SRC) $(INC)
-	@gcc -Llibft/ -lft $(OBJ) -o $(NAME)
+	@gcc $(CFLAGS) -c $(SRC)
+	@ar -x libft/libft.a
+	@ar rcs libftprintf.a $(OBJ)
+	@ranlib libftprintf.a
 
 clean:
 	@/bin/rm -f $(OBJ) *.gch
+	@rm *.o
 	@make clean -C libft/
 
 fclean: clean

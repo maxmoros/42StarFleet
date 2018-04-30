@@ -6,12 +6,11 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 16:40:06 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/29 23:17:17 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/04/29 23:22:12 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
 t_conv	*free_conv(t_conv *node)
 {
