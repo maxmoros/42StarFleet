@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 09:08:49 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/29 22:18:39 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/04/29 23:57:12 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "libft/libft.h"
 # include <stdarg.h>
-# include <stdio.h>
 # include <stddef.h>
 
 typedef struct		s_conv
@@ -34,6 +33,7 @@ typedef struct		s_conv
 
 typedef int			(*t_func)(t_conv*);
 
+int					ft_printf(char *str, ...);
 t_conv				*new_conv(char **str);
 t_conv				*pf_chomp(char *str, char *error);
 int					parse_conv(char *str, t_conv *node, int *i);
