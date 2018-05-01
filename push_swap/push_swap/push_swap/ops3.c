@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 19:40:23 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/22 22:17:21 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/01 08:18:55 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ int		op_rra(t_stack *stack)
 	if (stack->i < 1)
 		return (0);
 	stack->moves++;
-	ft_putstr("rra\n");
-	add_op(stack, op_rra);
+	add_op(stack, op_rra, "rra\0");
 	tmp = stack->a[0];
 	k = -1;
 	while (++k < stack->i)
@@ -38,8 +37,7 @@ int		op_rrb(t_stack *stack)
 	if (stack->j < 1)
 		return (0);
 	stack->moves++;
-	ft_putstr("rrb\n");
-	add_op(stack, op_rrb);
+	add_op(stack, op_rrb, "rrb\0");
 	tmp = stack->b[0];
 	k = -1;
 	while (++k < stack->j)
@@ -56,8 +54,7 @@ int		op_rrr(t_stack *stack)
 	if (stack->i < 1 || stack->j < 1)
 		return (0);
 	stack->moves++;
-	ft_putstr("rrr\n");
-	add_op(stack, op_rrr);
+	add_op(stack, op_rrr, "rrr\0");
 	tmp = stack->a[0];
 	k = -1;
 	while (++k < stack->i)

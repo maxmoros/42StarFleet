@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 19:07:56 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/23 15:09:14 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/01 11:51:37 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int		main(int ac, char **av)
 			while (clean_ops(stack))
 				;
 			do_ops(copy, stack->ops_list);
+	//		op_print(copy);
 			if (in_order(copy, copy->size, 0))
 				ft_putstr("\nOK!\n");
 			else

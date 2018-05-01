@@ -6,11 +6,24 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 19:25:51 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/22 21:50:04 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/01 08:29:19 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	op_print(t_stack *stack)
+{
+	t_ops	*node;
+
+	node = stack->ops_list;
+	while (node)
+	{
+		ft_putstr(node->op);
+		ft_putchar('\n');
+		node = node->next;
+	}
+}
 
 int		op_ra(t_stack *stack)
 {
@@ -20,8 +33,7 @@ int		op_ra(t_stack *stack)
 	if (stack->i < 1)
 		return (0);
 	stack->moves++;
-	ft_putstr("ra\n");
-	add_op(stack, op_ra);
+	add_op(stack, op_ra, "ra\0\0");
 	tmp = stack->a[stack->i];
 	k = stack->i + 1;
 	while (--k > 0)
@@ -38,8 +50,7 @@ int		op_rb(t_stack *stack)
 	if (stack->j < 1)
 		return (0);
 	stack->moves++;
-	ft_putstr("rb\n");
-	add_op(stack, op_rb);
+	add_op(stack, op_rb, "rb\0\0");
 	tmp = stack->b[stack->j];
 	k = stack->j + 1;
 	while (--k > 0)
@@ -56,8 +67,7 @@ int		op_rr(t_stack *stack)
 	if (stack->j < 1 || stack->i < 1)
 		return (0);
 	stack->moves++;
-	ft_putstr("rr\n");
-	add_op(stack, op_rr);
+	add_op(stack, op_rr, "rr\0\0");
 	tmp = stack->a[stack->i];
 	k = stack->i + 1;
 	while (--k > 0)

@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 07:47:11 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/23 16:16:52 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/01 12:03:37 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,27 @@ int		median_ab(int *tab, int size, int ab)
 	return (tmp);
 }
 
-void	sort_three_a(t_stack *st)
+int		specific_order(int *tab, int size, int push, int ab)
+{
+	int		*set;
+	int		i;
+
+	if (!(set = (int*)ft_memalloc(sizeof(int) * size)))
+		return (0x7FFFFFFF);
+	ft_memcpy(set, tab, size * 4);
+	ft_qsort(set, size);
+	i = -1;
+	while (++i < size - push)
+		if ((ab && tab[i] != set[i]) || (!ab && tab[i] != set[size - i - 1]))
+		{
+			free(set);
+			return (0);
+		}
+	free(set);
+	return (1);
+}
+
+int		sort_three_a(t_stack *st)
 {
 	int		tmp;
 
@@ -39,6 +59,7 @@ void	sort_three_a(t_stack *st)
 		tmp = (st->a[0] < st->a[2] ? op_ra(st) : op_sa(st));
 	else
 		tmp = op_sa(st) + op_rra(st);
+	return (1);
 }
 
 int		sort_four(t_stack *st, int ab)
@@ -60,19 +81,19 @@ int		sort_four(t_stack *st, int ab)
 	return (0);
 }
 
-void	sort_stack_a(t_stack *st, int size, int x, int y)
+int		sort_stack_a(t_stack *st, int size, int x, int y)
 {
 	int		median;
 	int		push;
 
-	if (in_order(st, size, 0))
-		return ;
-	if (size == 4 && sort_four(st, 0))
-		;
+	if (in_order(st, size,  0) || ((size == 4 && sort_four(st, 0))))
+		return (1);
 	else if (size > 3)
 	{
 		median = median_ab(st->a + st->i - size + 1, size, 0);
 		push = (size + 2) / 4 * 2;
+		if (specific_order(st->a + st->i - size + 1, size, push, 0))
+			return (sort_stack_a(st, push, 0, 0));
 		while (x < push)
 			if (st->a[st->i] < median)
 				x += op_pb(st);
@@ -86,22 +107,23 @@ void	sort_stack_a(t_stack *st, int size, int x, int y)
 			op_pa(st);
 	}
 	else
-		(size == 2 ? op_sa(st) : sort_three_a(st));
+		return (size == 2 ? op_sa(st) : sort_three_a(st));
+	return (1);
 }
 
-void	sort_stack_b(t_stack *st, int size, int x, int y)
+int		sort_stack_b(t_stack *st, int size, int x, int y)
 {
 	int		median;
 	int		push;
 
-	if (in_order(st, size, 1))
-		return ;
-	if (size == 4 && sort_four(st, 1))
-		;
+	if (in_order(st, size, 1) || (size == 4 && sort_four(st, 1)))
+		return (1);
 	else if (size > 2)
 	{
 		median = median_ab(st->b + st->j - size + 1, size, 1);
 		push = (size + 2) / 4 * 2;
+		if (specific_order(st->b + st->j - size + 1, size, push, 1))
+			return (sort_stack_b(st, push, 0, 0));
 		while (x < push)
 			if (st->b[st->j] >= median)
 				x += op_pa(st);
@@ -116,6 +138,7 @@ void	sort_stack_b(t_stack *st, int size, int x, int y)
 	}
 	else
 		op_sb(st);
+	return (1);
 }
 
 int		sort_stack(t_stack *st)

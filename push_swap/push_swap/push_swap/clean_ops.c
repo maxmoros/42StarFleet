@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 10:56:18 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/22 22:17:13 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/01 09:35:25 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,31 @@ t_ops	*itop(t_ops *ops, int count)
 		node = node->next;
 	return (node);
 }
+/*
+int		rrx_sy_rx(t_stack *stack, int del)
+{
+	t_ops	*node;
+	t_ops	*tmp;
+
+	node = stack->ops_list;
+	while (node && (tmp = node->next) && tmp->next && tmp->next->next)
+		if ((tmp->f == op_rra && tmp->next->f == op_sb && tmp->next->next->f == op_ra) ||
+			(tmp->f == op_ra && tmp->next->f == op_sb && tmp->next->next->f == op_rra) ||
+			(tmp->f == op_rrb && tmp->next->f == op_sa && tmp->next->next->f == op_rb) ||
+			(tmp->f == op_rb && tmp->next->f == op_sa && tmp->next->next->f == op_rrb))
+		{
+			node->next = node->next->next;
+			free(tmp);
+			tmp = node->next;
+			node->next = node->next->next;
+			free(tmp);
+			del += 2;
+		}
+		else
+			node = node->next;
+	stack->moves -= del;
+	return (del);
+}*/
 
 int		pa_pb(t_stack *stack, int del)
 {
@@ -105,7 +130,7 @@ int		ss_rr_rrr(t_stack *stack, int del)
 	stack->moves -= del;
 	return (del);
 }
-
+/*
 int		four_mid_switch(t_stack *stack, int del, t_ops *node, t_ops *tmp)
 {
 	node = stack->ops_list;
@@ -133,12 +158,12 @@ int		four_mid_switch(t_stack *stack, int del, t_ops *node, t_ops *tmp)
 			node = node->next;
 	stack->moves -= del;
 	return (del);
-}
+}*/
 
 int		clean_ops(t_stack *stack)
 {
 	if (stack->ops_list->f && stack->ops_list->next->f)
-		return (pp_s_pp(stack, 0) + pa_pb(stack, 0) + ss_rr_rrr(stack, 0));
+		return (pp_s_pp(stack, 0) +/* rrx_sy_rx(stack, 0) + four_mid_switch(stack, 0, NULL, NULL) +*/ pa_pb(stack, 0) + ss_rr_rrr(stack, 0));
 	else
 		return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 20:09:09 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/23 16:23:00 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/01 10:29:49 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int			free_stack(t_stack *stack, int out)
 	{
 		tmp = ops;
 		ops = ops->next;
+		if (tmp->op)
+			free(tmp->op);
 		free(tmp);
 	}
 	if (stack)
@@ -55,7 +57,7 @@ t_stack		*build_stack(int size)
 	t_stack		*stack;
 
 	if (!(stack = (t_stack*)ft_memalloc(sizeof(t_stack))) ||
-			!(stack->ops_list = op_node(NULL, NULL)) ||
+			!(stack->ops_list = op_node(NULL, NULL, NULL)) ||
 			!(stack->a = (int*)ft_memalloc(sizeof(int) * size)) ||
 			!(stack->b = (int*)ft_memalloc(sizeof(int) * size)))
 		return (NULL);
