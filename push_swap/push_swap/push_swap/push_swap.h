@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 19:08:55 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/01 12:03:35 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/02 22:10:27 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PUSH_SWAP_H
 
 # include "../libft/libft.h"
+# include <stdio.h>
 
 typedef struct		s_ops
 {
@@ -39,8 +40,8 @@ typedef int			(*t_func)(t_stack*);
 void				delay(int sec);
 
 int					sort_stack(t_stack *stack);
-int					sort_stack_a(t_stack *stack, int size, int x, int y);
-int					sort_stack_b(t_stack *stack, int size, int x, int y);
+void				sort_stack_a(t_stack *stack, int size, int x, int y);
+void				sort_stack_b(t_stack *stack, int size, int x, int y);
 
 int					clean_ops(t_stack *stack);
 
@@ -55,6 +56,7 @@ t_ops				*op_node(t_ops *next, int (*f)(), char *op);
 void				add_op(t_stack *stack, int (*f)(), char *op);
 void				op_print(t_stack *stack);
 int					do_ops(t_stack *stack, t_ops *ops);
+
 int					op_sa(t_stack *stack);
 int					op_sb(t_stack *stack);
 int					op_ss(t_stack *stack);

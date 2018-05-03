@@ -6,25 +6,11 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 19:07:56 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/01 11:51:37 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/02 22:15:18 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <time.h>
-
-void delay(int number_of_seconds)
-{
-    // Converting time into milli_seconds
-    int milli_seconds = 1000 * number_of_seconds;
-
-    // Stroing start time
-    clock_t start_time = clock();
-
-    // looping till required time is not acheived
-    while (clock() < start_time + milli_seconds)
-        ;
-}
 
 void	init_ops(char op_list[11][4], t_func f[11])
 {
@@ -59,35 +45,25 @@ int		main(int ac, char **av)
 
 	if (ac > 1)
 	{
-		if (!(stack = build_stack(ac - 1)) ||
-				!parse_input(stack, av + 1))
+		if (!(stack = build_stack(ac - 1)) || !parse_input(stack, av + 1))
 			return (free_stack(stack, 0));
-		if (!(copy = build_stack(ac - 1)) ||
-				!parse_input(copy, av + 1))
+		if (!(copy = build_stack(ac - 1)) || !parse_input(copy, av + 1))
 			return (free_stack(stack, 0) + free_stack(copy, 0));
-		if (sort_stack(stack))
-			ft_putstr("\nOK!\n");
-		else
-			ft_putstr("\nKO!\n");
-		ft_putstr("\nfinished in ");
-		ft_putnbr(stack->moves);
-		ft_putstr("steps\n");
+		sort_stack(stack);
 		if (stack->moves)
 		{
-			while (clean_ops(stack))
-				;
+			while (clean_ops(stack)) ;
 			do_ops(copy, stack->ops_list);
-	//		op_print(copy);
-			if (in_order(copy, copy->size, 0))
-				ft_putstr("\nOK!\n");
+			op_print(copy);
+			ft_putnbr(stack->moves);
+			if (in_order(copy, stack->size, 0))
+				ft_putstr("OK!\n");
 			else
-				ft_putstr("\nKO!\n");
-			ft_putstr("\nfinished in ");
+				ft_putstr("KO!\n");
 			ft_putnbr(copy->moves);
-			ft_putstr("steps\n");
 		}
-		free_stack(stack, 0);
 		free_stack(copy, 0);
+		free_stack(stack, 0);
 	}
 	return (0);
 }
