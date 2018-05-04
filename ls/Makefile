@@ -3,26 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmoros <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/16 18:50:59 by mmoros            #+#    #+#              #
-#    Updated: 2018/05/04 12:43:00 by mmoros           ###   ########.fr        #
+#    Updated: 2018/05/04 13:48:45 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = push_swap
+NAME = ls
 
-SRC =	push_swap.c		\
-		node_stack.c	\
-		node_ops.c		\
-		ops1.c			\
-		ops2.c			\
-		ops3.c			\
-		sort_median1.c	\
-		sort_median2.c	\
-		clean_ops.c
+SRC =	ls.c
 
-INC = push_swap.h
+INC = ls.h
 
 CC = gcc
 
@@ -36,16 +28,16 @@ all: $(NAME)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 $(NAME): $(OBJ)
-	@make -C ../ -C libft/
+	@make -C libft/
 	@gcc $(CFLAGS) -c $(SRC) $(INC)
-	@gcc -L../libft/ -lft $(OBJ) -o $(NAME)
+	@gcc -Llibft/ -lft $(OBJ) -o $(NAME)
 
 clean:
 	@/bin/rm -f $(OBJ) *.gch
-	@make clean -C ../ -C libft/
+	@make clean -C libft/
 
 fclean: clean
 	@/bin/rm -f $(NAME)
-	@make fclean -C ../ -C libft/
+	@make fclean -C libft/
 
 re: fclean all
