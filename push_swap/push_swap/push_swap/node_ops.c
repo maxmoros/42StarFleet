@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 21:21:04 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/01 10:23:04 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/03 08:17:43 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,6 @@ int		do_ops(t_stack *stack, t_ops *ops)
 		if (!ops->f(stack))
 			return (0);
 		else
-		{
 			ops = ops->next;
-	//		print_stack(stack);
-	//		delay(200);
-		}
 	return (1);
 }

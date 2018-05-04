@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 19:07:56 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/02 22:15:18 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/03 08:32:43 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	init_ops(char op_list[11][4], t_func f[11])
 	f[1] = op_sb;
 	f[2] = op_ss;
 	f[3] = op_pa;
-	f[4] = op_pa;
+	f[4] = op_pb;
 	f[5] = op_ra;
 	f[6] = op_rb;
 	f[7] = op_rr;
@@ -50,18 +50,15 @@ int		main(int ac, char **av)
 		if (!(copy = build_stack(ac - 1)) || !parse_input(copy, av + 1))
 			return (free_stack(stack, 0) + free_stack(copy, 0));
 		sort_stack(stack);
-		if (stack->moves)
+		if (stack->moves > 5)
 		{
-			while (clean_ops(stack)) ;
+			while (clean_ops(stack))
+				;
 			do_ops(copy, stack->ops_list);
 			op_print(copy);
-			ft_putnbr(stack->moves);
-			if (in_order(copy, stack->size, 0))
-				ft_putstr("OK!\n");
-			else
-				ft_putstr("KO!\n");
-			ft_putnbr(copy->moves);
 		}
+		else
+			op_print(stack);
 		free_stack(copy, 0);
 		free_stack(stack, 0);
 	}

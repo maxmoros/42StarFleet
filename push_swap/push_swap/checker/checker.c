@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 19:07:56 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/17 21:19:28 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/02 22:56:17 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ int		main(int ac, char **av)
 		if (!(stack = build_stack(ac - 1)))
 			return (free_stack(stack, NULL, 0));
 		if (!parse_input(stack, av + 1))
-			return (0);
+			return (free_stack(stack, NULL, 0));
 		count = 0;
-		ops = get_ops(&count);
+		if (!(ops = get_ops(&count)))
+			return (free_stack(stack, NULL, 0));
 		if (count < 0)
 			return (free_stack(stack, ops, 0));
 		do_ops(stack, ops);

@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 19:08:55 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/02 22:10:27 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/02 22:46:25 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef int			(*t_func)(t_stack*);
 
 void				delay(int sec);
 
+int					median_ab(int *tab, int size, int ab, int sub_med);
+int					sort_three_a(t_stack *st);
 int					sort_stack(t_stack *stack);
 void				sort_stack_a(t_stack *stack, int size, int x, int y);
 void				sort_stack_b(t_stack *stack, int size, int x, int y);

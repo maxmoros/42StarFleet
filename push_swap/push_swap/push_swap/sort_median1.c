@@ -1,72 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_median.c                                      :+:      :+:    :+:   */
+/*   sort_median1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 07:47:11 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/02 22:16:59 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/02 23:06:15 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int		median_ab(int *tab, int size, int ab, int sub_med)
-{
-	int		*set;
-	int		tmp;
-
-	if (!(set = (int*)ft_memalloc(sizeof(int) * size)))
-		return (0x7FFFFFFF);
-	ft_memcpy(set, tab, size * 4);
-	ft_qsort(set, size);
-	tmp = (ab ? size / 2 - (size % 4) / 2 : (size + 2) / 4 * 2);
-	if (sub_med)
-		tmp = (ab ? median_ab(set, tmp, 1, 0) :
-				median_ab(set + tmp, size - tmp, 0, 0));
-	else
-		tmp = set[tmp];
-	free(set);
-	return (tmp);
-}
-
-int		sort_three_a(t_stack *st)
-{
-	int		tmp;
-
-	if (st->a[2] < st->a[1])
-	{
-		if (st->a[0] < st->a[1])
-			tmp = (st->a[0] < st->a[2] ? op_rra(st) : op_rra(st) + op_sa(st));
-	}
-	else if (st->a[1] < st->a[0])
-		tmp = (st->a[0] < st->a[2] ? op_ra(st) : op_sa(st));
-	else
-		tmp = op_sa(st) + op_rra(st);
-	return (1);
-}
-
-int		sort_four(t_stack *st, int ab)
-{
-	if (ab)
-	{
-		if (st->b[st->j] > st->b[st->j - 2] &&
-				st->b[st->j - 2] > st->b[st->j - 1] &&
-				st->b[st->j - 1] > st->b[st->j - 3])
-			return (op_rb(st) + op_sb(st) + op_rrb(st));
-	}
-	else
-	{
-		if (st->a[st->i] < st->a[st->i - 2] &&
-				st->a[st->i - 2] < st->a[st->i - 1] &&
-				st->a[st->i - 1] < st->a[st->i - 3])
-			return (op_ra(st) + op_sa(st) + op_rra(st));
-	}
-	return (0);
-}
-
-void		sort_test_a(t_stack *st, int size, int x, int y, int z)
+static void	sort_test_a(t_stack *st, int size, int x, int y, int z)
 {
 	int		med[2];
 	int		push[2];
@@ -95,7 +41,7 @@ void		sort_test_a(t_stack *st, int size, int x, int y, int z)
 		op_pa(st);
 }
 
-void		sort_test_b(t_stack *st, int size, int x, int y, int z)
+static void	sort_test_b(t_stack *st, int size, int x, int y, int z)
 {
 	int		med[2];
 	int		push[2];
@@ -129,7 +75,7 @@ void	sort_stack_a(t_stack *st, int size, int x, int y)
 	int		median;
 	int		push;
 
-	if (in_order(st, size,  0))
+	if (in_order(st, size, 0))
 		return ;
 	else if (size > 7)
 		sort_test_a(st, size, 0, 0, 0);

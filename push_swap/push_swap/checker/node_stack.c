@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 20:09:09 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/17 21:19:33 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/02 22:58:54 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,28 +47,25 @@ t_stack		*build_stack(int size)
 	return (stack);
 }
 
-int			valid_int(char *num)
-{
-	//NEED TO MAKE CHECK INT LIMITS
-	while (*num)
-		if ((*num < '0' || *num > '9') && *num != '-' &&
-				*num != '+' && *num != ' ')
-			return (0);
-		else
-			num++;
-	return (1);
-}
-
 int			parse_input(t_stack *stack, char **nums)
 {
 	int		i;
+	int		j;
+	int		tmp;
 
 	i = -1;
 	while (++i < stack->size)
-		if (!valid_int(nums[i]))
-			return (free_stack(stack, NULL, 0));
+		if (!ft_isint(nums[i]))
+			return (0);
 		else
-			stack->a[stack->size - i - 1] = ft_atoi(nums[i]);
+		{
+			tmp = stack->size - i - 1;
+			stack->a[tmp] = ft_atoi(nums[i]);
+			j = tmp;
+			while (++j < stack->size)
+				if (stack->a[tmp] == stack->a[j])
+					return (0);
+		}
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 21:21:04 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/19 13:29:10 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/02 22:58:28 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,38 @@ t_ops	*next_op(int *count, char op_list[11][4], t_func f[11])
 	return (NULL);
 }
 
+void	init_ops(char op_list[11][4], t_func f[11])
+{
+	ft_strcpy(op_list[0], "sa\0");
+	ft_strcpy(op_list[1], "sb\0");
+	ft_strcpy(op_list[2], "ss\0");
+	ft_strcpy(op_list[3], "pa\0");
+	ft_strcpy(op_list[4], "pb\0");
+	ft_strcpy(op_list[5], "ra\0");
+	ft_strcpy(op_list[6], "rb\0");
+	ft_strcpy(op_list[7], "rr\0");
+	ft_strcpy(op_list[8], "rra\0");
+	ft_strcpy(op_list[9], "rrb\0");
+	ft_strcpy(op_list[10], "rrr\0");
+	f[0] = op_sa;
+	f[1] = op_sb;
+	f[2] = op_ss;
+	f[3] = op_pa;
+	f[4] = op_pa;
+	f[5] = op_ra;
+	f[6] = op_rb;
+	f[7] = op_rr;
+	f[8] = op_rra;
+	f[9] = op_rrb;
+	f[10] = op_rrr;
+}
+
 t_ops	*get_ops(int *count)
 {
-	char	op_list[11][4] = {"sa\0", "sb\0", "ss\0", "pa\0", "pb\0", "ra\0",
-								"rb\0", "rr\0", "rra\0", "rrb\0", "rrr\0"};
-	t_func	f[11] = {op_sa, op_sb, op_ss, op_pa, op_pb,
-					op_ra, op_rb, op_rr,
-					op_rra, op_rrb, op_rrr};
+	char	op_list[11][4];
+	t_func	f[11];
 
+	init_ops(op_list, f);
 	return (next_op(count, op_list, f));
 }
 
