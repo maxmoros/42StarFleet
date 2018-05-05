@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 12:43:48 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/04 14:52:30 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/04 19:48:56 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ char	parse_flags(char *flags, char *input)
 	while (++input)
 	{
 		if (*input == 'l')
-			*flags |= 0x1;
+			*flags |= L_FLAG;
 		else if (*input == 'R')
-			*flags |= 0x2;
+			*flags |= RC_FLAG;
 		else if (*input == 'a')
-			*flags |= 0x4;
+			*flags |= A_FLAG;
 		else if (*input == 'r')
-			*flags |= 0x8;
+			*flags |= RV_FLAG;
 		else if (*input == 't')
-			*flags |= 0x10;
+			*flags |= T_FLAG;
 		else
 			return (0);
 	}
@@ -46,13 +46,13 @@ DIR		*parse_input(char *flags, char **input)
 int		ls(char **input)
 {
 	DIR				*dir;
-	struct dirent	*dp;
 	char			flags;
+	t_dir			*root;
 
 	flags = 0;
-	if (!(dir = parse_input(&flags, input)) ||
-		!(dp = readdir(dir)))
+	if (!(dir = parse_input(&flags, input)))
 		return (0);
+	root = get_nodes(dir, flags);
 	ft_putstr("flags set : ");
 	ft_puthex(flags);
 	ft_putchar('\n');
