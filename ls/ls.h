@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 12:45:42 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/04 19:48:15 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/05 13:03:58 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <stdio.h>
 # include <dirent.h>
 # include <sys/types.h>
+# include <sys/stat.h>
 # include <sys/xattr.h>
 
 typedef struct		s_dir
@@ -34,5 +35,7 @@ typedef struct		s_dir
 }					t_dir;
 
 t_dir				*get_nodes(DIR *dir, char flags);
+
+void				print_nodes(t_dir *node, char flags);
 
 #endif

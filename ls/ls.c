@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 12:43:48 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/04 19:48:56 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/05 13:20:21 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int		ls(char **input)
 	flags = 0;
 	if (!(dir = parse_input(&flags, input)))
 		return (0);
-	root = get_nodes(dir, flags);
+	root = get_nodes(dir, NULL, flags);
+	print_nodes(root, flags);
 	ft_putstr("flags set : ");
 	ft_puthex(flags);
 	ft_putchar('\n');

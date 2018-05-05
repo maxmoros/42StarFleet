@@ -6,13 +6,14 @@
 #    By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/16 18:50:59 by mmoros            #+#    #+#              #
-#    Updated: 2018/05/04 19:49:43 by mmoros           ###   ########.fr        #
+#    Updated: 2018/05/05 11:57:03 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ls
 
 SRC =	ls.c		\
+		ls_print.c	\
 		node_dir.c
 
 INC = ls.h
