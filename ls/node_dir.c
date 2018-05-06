@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 18:40:59 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/05 19:22:39 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/05 20:30:03 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@ t_dir	*new_dir(struct dirent *data, t_dir *up, t_dir *in, t_dir *next)
 {
 	t_dir	*node;
 
-	if (!(node = (t_dir*)ft_memalloc(sizeof(t_dir))))
+	if (!(node = (t_dir*)ft_memalloc(sizeof(t_dir))) ||
+		!(node->stat = (struct stat*)ft_memalloc(sizeof(struct stat))))
 		return (NULL);
 	node->data = data;
 	node->up = up;
 	node->in = in;
 	node->next = next;
 	node->path = node_path(node);
+	if (stat(node->path, node->stat) == -1)
+		return (NULL);
 	return (node);
 }
 
@@ -33,6 +36,8 @@ t_dir	*new_dir(struct dirent *data, t_dir *up, t_dir *in, t_dir *next)
 t_dir	*sort_list(t_dir *list, char flags, int (*cmp)(t_dir*, t_dir*, char))
 {
 	struct dirent	*tmp;
+	struct stat		*stats;
+	char			*str;
 	t_dir			*node;
 
 	node = list;
@@ -45,8 +50,14 @@ t_dir	*sort_list(t_dir *list, char flags, int (*cmp)(t_dir*, t_dir*, char))
 //			printf("swap : n1 = \"%s\", n2 = \"%s\"\n",
 //				node->data->d_name, node->next->data->d_name);
 			tmp = node->data;
+			str = node->path;
+			stats = node->stat;
 			node->data = node->next->data;
+			node->path = node->next->path;
+			node->stat = node->next->stat;
 			node->next->data = tmp;
+			node->next->path = str;
+			node->next->stat = stats;
 			node = list;
 		}
 	}
@@ -89,7 +100,7 @@ char	*node_path(t_dir *node)
 		length += 1 + ft_strlen(tmp->data->d_name);
 		tmp = tmp->up;
 	}
-	if (!(path = (char*)ft_memalloc(sizeof(char) * (--length))))
+	if (!(path = (char*)ft_memalloc(sizeof(char) * (length--))))
 		return (NULL);
 	path[length] = '\0';
 	tmp = node;
@@ -106,7 +117,6 @@ char	*node_path(t_dir *node)
 
 void	recurse_node(t_dir *node, char flags)
 {
-	struct stat		stats;
 	DIR				*dir;
 
 	while (node)
@@ -114,11 +124,9 @@ void	recurse_node(t_dir *node, char flags)
 		if (ft_strcmp(node->data->d_name, ".") &&
 			ft_strcmp(node->data->d_name, ".."))
 		{
-			if (stat(node->path, &stats) == -1)
-				return ;
 			if ((dir = opendir(node->path)))
 			{
-				if (stats.st_mode & S_IFDIR)
+				if (node->stat->st_mode & S_IFDIR)
 					node->in = get_nodes(dir, node, flags);
 				closedir(dir);
 			}

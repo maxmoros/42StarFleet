@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 12:45:42 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/05 19:18:07 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/05 21:39:54 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,13 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/xattr.h>
+# include <pwd.h>
+# include <grp.h>
 
 typedef struct		s_dir
 {
 	char			*path;
+	struct stat		*stat;
 	struct dirent	*data;
 	struct s_dir	*up;
 	struct s_dir	*in;
