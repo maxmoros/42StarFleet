@@ -6,11 +6,25 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 12:43:48 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/05 13:20:21 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/05 18:37:45 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
+#include <time.h>
+ 
+void delay(int number_of_seconds)
+{
+    // Converting time into milli_seconds
+    int milli_seconds = 1000 * number_of_seconds;
+ 
+    // Stroing start time
+    clock_t start_time = clock();
+ 
+    // looping till required time is not acheived
+    while (clock() < start_time + milli_seconds)
+        ;
+}
 
 char	parse_flags(char *flags, char *input)
 {
@@ -54,8 +68,6 @@ int		ls(char **input)
 		return (0);
 	root = get_nodes(dir, NULL, flags);
 	print_nodes(root, flags);
-	ft_putstr("flags set : ");
-	ft_puthex(flags);
 	ft_putchar('\n');
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 12:45:42 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/05 15:32:41 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/05 19:18:07 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 
 typedef struct		s_dir
 {
+	char			*path;
 	struct dirent	*data;
 	struct s_dir	*up;
 	struct s_dir	*in;
@@ -35,7 +36,10 @@ typedef struct		s_dir
 }					t_dir;
 
 t_dir				*get_nodes(DIR *dir, t_dir *up, char flags);
+char				*node_path(t_dir *node);
 
 void				print_nodes(t_dir *node, char flags);
+
+void				delay(int num);
 
 #endif
