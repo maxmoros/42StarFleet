@@ -1,0 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wolf3d.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/05/06 16:58:49 by mmoros            #+#    #+#             */
+/*   Updated: 2018/05/06 20:25:11 by mmoros           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef WOLF3D_H
+# define WOLF3D_H
+
+# include "libft/libft.h"
+
+typedef struct		s_map
+{
+	char			**xy;
+	int				dim[2];
+}					t_map;
+
+typedef struct		s_plr
+{
+	double			pos[2];
+	double			dir[2];
+	double			pln[2];
+}					t_plr;
+
+typedef struct		s_ray
+{
+	double			sdst[2];
+	double			ddst[2];
+	int				step[2];
+	int				pos[2];
+	double			pwdst;
+	char			side;
+}					t_ray;
+
+#endif
