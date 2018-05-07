@@ -6,7 +6,7 @@
 #    By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/16 18:50:59 by mmoros            #+#    #+#              #
-#    Updated: 2018/05/06 20:23:38 by mmoros           ###   ########.fr        #
+#    Updated: 2018/05/06 20:35:38 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,16 +29,16 @@ all: $(NAME)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 $(NAME): $(OBJ)
-	@make -C ../ -C libft/
+	@make -C libft/
 	@gcc $(CFLAGS) -c $(SRC) $(INC)
-	@gcc -L../libft/ -lft $(OBJ) -o $(NAME)
+	@gcc -Llibft/ -lft $(OBJ) -o $(NAME)
 
 clean:
 	@/bin/rm -f $(OBJ) *.gch
-	@make clean -C ../ -C libft/
+	@make clean -C libft/
 
 fclean: clean
 	@/bin/rm -f $(NAME)
-	@make fclean -C ../ -C libft/
+	@make fclean -C libft/
 
 re: fclean all

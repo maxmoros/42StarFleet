@@ -1,30 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wolf3d.c                                           :+:      :+:    :+:   */
+/*   node_ray.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/06 16:57:42 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/06 20:41:13 by mmoros           ###   ########.fr       */
+/*   Created: 2018/05/06 21:11:08 by mmoros            #+#    #+#             */
+/*   Updated: 2018/05/07 09:28:30 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-void	wolf3d(int x, int y)
+void		null_ray(t_ray *ray)
 {
-	t_map	*map;
-
-	map = new_map(x, y);
-	print_map(map);
+	ray->sdst[0] = 0;
+	ray->sdst[1] = 0;
+	ray->ddst[0] = 0;
+	ray->ddst[1] = 0;
+	ray->step[0] = 0;
+	ray->step[1] = 0;
+	ray->pos[0] = 0;
+	ray->pos[1] = 0;
+	ray->pwdst = 0;
+	ray->camx = 0;
+	ray->side = 0;
 }
 
-int		main(int ac, char **av)
+t_ray		*new_ray(void)
 {
-	if (ac == 3 && ft_isint(av[1]) && ft_isint(av[2]))
-	{
-		wolf3d(ft_atoi(av[1]), ft_atoi(av[2]));
-	}
-	return (0);
+	t_ray	*ray;
+
+	if (!(ray = (t_ray*)ft_memalloc(sizeof(t_ray))))
+		return (NULL);
+	null_ray(ray);
+	return (ray);
+}
+
+void		free_ray(t_ray *ray)
+{
+	if (ray)
+		free(ray);
 }
