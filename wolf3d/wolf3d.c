@@ -6,16 +6,26 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 16:57:42 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/07 20:34:36 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/07 21:31:38 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
+int		move(int keycode, void *param)
+{
+	mlx_string_put(mlx, window, 40, 40, 0x00FF0000, "MAX");
+	if (keycode)
+		;
+	param = (int*)ft_memalloc(sizeof(int));
+	return (1);
+}
+
 void	mlx(void)
 {
 	void	*mlx;
 	void	*window;
+	int		*param;
 
 	mlx = mlx_init();
 	if (!(window = mlx_new_window(mlx, 600, 600, "WOLF3D")))
@@ -23,6 +33,8 @@ void	mlx(void)
 	else
 		ft_putstr("MLX window created\n");
 	mlx_string_put(mlx, window, 10, 10, 0x00FF0000, "MAX");
+	param = NULL;
+	mlx_key_hook(window, move, param);
 	mlx_loop(mlx);
 }
 
