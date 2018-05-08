@@ -6,21 +6,17 @@
 #    By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/16 18:50:59 by mmoros            #+#    #+#              #
-#    Updated: 2018/05/07 19:45:38 by mmoros           ###   ########.fr        #
+#    Updated: 2018/05/07 10:17:22 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = wolf3d
+NAME = ft_select
 
-SRC =	wolf3d.c		\
-		node_map.c
+SRC =	select.c
 
-INC = 	wolf3d.h				\
-		minilibx_macos/mlx.h
+INC = select.h
 
 CC = gcc
-
-MLX = minilibx_macos/libmlx.a -framework OpenGL -framework  Appkit
 
 OBJ = $(SRC:.c=.o)
 
@@ -34,7 +30,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@make -C libft/
 	@gcc $(CFLAGS) -c $(SRC) $(INC)
-	@gcc -Llibft/ -lft $(OBJ) -o $(NAME) $(MLX)
+	@gcc -Llibft/ -lft $(OBJ) -o $(NAME)
 
 clean:
 	@/bin/rm -f $(OBJ) *.gch

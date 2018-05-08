@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 16:58:49 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/06 20:43:17 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/07 19:41:29 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define WOLF3D_H
 
 # include "libft/libft.h"
+# include "minilibx_macos/mlx.h"
 # include <stdio.h>
 
 typedef struct		s_map
@@ -36,10 +37,18 @@ typedef struct		s_ray
 	int				step[2];
 	int				pos[2];
 	double			pwdst;
+	double			camx;
 	char			side;
 }					t_ray;
 
 t_map				*new_map(int x, int y);
 void				print_map(t_map *map);
+long				free_map(t_map *map, long out);
+
+t_plr				*new_player(void);
+void				free_player(t_plr *player);
+
+t_ray				*new_ray(void);
+void				free_ray(t_ray *ray);
 
 #endif
