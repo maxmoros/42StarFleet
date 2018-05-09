@@ -6,28 +6,28 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 21:07:01 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/08 10:11:14 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/08 12:38:57 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf3d"
+#include "wolf3d.h"
 
-t_wolf_inst	*new_wolf_inst(int x, int y, unsigned int resx, unsigned int resy)
+t_wolf		*new_wolf_inst(int x, int y, unsigned int resx, unsigned int resy)
 {
-	t_wolf_inst		*node;
+	t_wolf		*node;
 
-	if (!(node = (t_wolf_inst*)ft_memalloc(sizeof(t_wolf_inst))))
+	if (!(node = (t_wolf*)ft_memalloc(sizeof(t_wolf))))
 		return (NULL);
 	if (!(node->map = new_map(x, y)) ||
 		!(node->plr = new_player()) ||
 		!(node->ray = new_ray()) ||
 		!(node->mlx = mlx_init()) ||
 		!(node->window = mlx_new_window(node->mlx, resx, resy, "WOLF3D")))
-		//Do I need diferent name for multiple windows?
-		return (free_wolf_inst(node, 0));
+		return (free_wolf_inst(node, NULL));
+	return (node);
 }
 
-long		free_wolf_inst(t_wolf_inst *node, long out)
+void	*free_wolf_inst(t_wolf *node, void *out)
 {
 	if (node)
 	{
@@ -38,8 +38,9 @@ long		free_wolf_inst(t_wolf_inst *node, long out)
 		if (node->ray)
 			free_ray(node->ray);
 		if (node->window)
-			mlx_destroy_window(node->window);
-		//Do I need to free mlx?
+			mlx_destroy_window(node->mlx, node->window);
+		else if (node->mlx)
+			mlx_destroy_window(node->mlx, NULL);
 	}
 	return (out);
 }
