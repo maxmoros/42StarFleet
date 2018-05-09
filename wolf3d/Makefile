@@ -6,13 +6,14 @@
 #    By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/16 18:50:59 by mmoros            #+#    #+#              #
-#    Updated: 2018/05/09 10:46:33 by mmoros           ###   ########.fr        #
+#    Updated: 2018/05/09 11:12:19 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = wolf3d
 
 SRC =	wolf3d.c		\
+		wolf_geng.c		\
 		node_map.c		\
 		node_plr.c		\
 		node_ray.c		\

@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 16:58:49 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/09 10:48:00 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/09 12:28:44 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "libft/libft.h"
 # include "minilibx_macos/mlx.h"
 # include <stdio.h>
-//# include <X.h>
 
 typedef struct		s_map
 {
@@ -33,10 +32,11 @@ typedef struct		s_plr
 
 typedef struct		s_ray
 {
+	double			dir[2];
 	double			sdst[2];
 	double			ddst[2];
 	int				step[2];
-	int				pos[2];
+	int				mpos[2];
 	double			pwdst;
 	double			camx;
 	char			side;
@@ -62,6 +62,8 @@ typedef struct		s_wolf
 	void			*window;
 }					t_wolf;
 
+int					geng(t_wolf *node);
+
 t_map				*new_map(int x, int y);
 void				print_map(t_map *map);
 long				free_map(t_map *map, long out);
@@ -70,6 +72,7 @@ t_plr				*new_player(void);
 void				free_player(t_plr *player);
 
 t_ray				*new_ray(void);
+void				init_ray(t_wolf *node, double camx);
 void				free_ray(t_ray *ray);
 
 t_io				*new_io(void);
