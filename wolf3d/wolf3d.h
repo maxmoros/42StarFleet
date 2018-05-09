@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 16:58:49 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/08 11:33:39 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/09 10:48:00 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,22 @@ typedef struct		s_ray
 	char			side;
 }					t_ray;
 
+typedef struct		s_io
+{
+	char			a;
+	char			s;
+	char			d;
+	char			w;
+	char			space;
+	char			esc;
+}					t_io;
+
 typedef struct		s_wolf
 {
 	t_map			*map;
 	t_plr			*plr;
 	t_ray			*ray;
+	t_io			*io;
 	void			*mlx;
 	void			*window;
 }					t_wolf;
@@ -60,6 +71,9 @@ void				free_player(t_plr *player);
 
 t_ray				*new_ray(void);
 void				free_ray(t_ray *ray);
+
+t_io				*new_io(void);
+void				free_io(t_io *io);
 
 t_wolf				*new_wolf_inst(int x, int y,
 						unsigned int resx, unsigned int resy);
