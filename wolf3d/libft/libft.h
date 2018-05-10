@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 10:26:13 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/28 21:40:23 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/09 19:53:11 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 int					ft_math_isprime(unsigned int num);
 int					ft_math_pow(int i, int p);
 int					ft_math_abs(int i);
+double				ft_math_dabs(double d);
 void				ft_math_swap(int *a, int *b);
 int					ft_math_gcd(int a, int b);
 int					ft_math_sqrt_t(unsigned const int a);

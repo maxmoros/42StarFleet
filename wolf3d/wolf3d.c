@@ -6,18 +6,28 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 16:57:42 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/09 10:58:43 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/09 20:08:32 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 #include <time.h>
 #include <stdlib.h>
+#include <time.h>
+
+void	delay(int number_of_seconds)
+{
+	int			mil_sec;
+	clock_t		start;
+
+	start = clock();
+	mil_sec = 1000 * number_of_seconds;
+	while (clock() < start + mil_sec)
+		;
+}
 
 int		key_pressed(int key, t_wolf *node)
 {
-	ft_putnbr(key);
-	ft_putstr(" pressed\n");
 	if (key == 0)
 		node->io->a = 1;
 	else if (key == 1)
@@ -29,14 +39,12 @@ int		key_pressed(int key, t_wolf *node)
 	else if (key == 49)
 		node->io->space = 1;
 	else if (key == 53)
-		;		//Close program
+		free_wolf_inst(node, 0);
 	return (1);
 }
 
 int		key_released(int key, t_wolf *node)
 {
-	ft_putnbr(key);
-	ft_putstr(" released\n");
 	if (key == 0)
 		node->io->a = 0;
 	else if (key == 1)
@@ -52,7 +60,6 @@ int		key_released(int key, t_wolf *node)
 
 void	mlx(t_wolf *node)
 {
-	mlx_string_put(node->mlx, node->window, 10, 10, 0x00FF0000, "MAX");
 	mlx_hook(node->window, 2, 0x1, key_pressed, node);
 	mlx_hook(node->window, 3, 0x1, key_released, node);
 	mlx_loop_hook(node->mlx, geng, node);

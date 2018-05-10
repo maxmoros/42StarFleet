@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmoros <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 15:34:53 by mmoros            #+#    #+#              #
-#    Updated: 2018/04/27 19:07:27 by mmoros           ###   ########.fr        #
+#    Updated: 2018/05/09 19:52:27 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC =	ft_atoi.c			\
 		ft_lstmap.c			\
 		ft_lstnew.c			\
 		ft_math_abs.c		\
+		ft_math_dabs.c		\
 		ft_math_gcd.c		\
 		ft_math_isprime.c	\
 		ft_math_pow.c		\

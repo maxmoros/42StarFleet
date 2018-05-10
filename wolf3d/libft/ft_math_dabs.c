@@ -1,34 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   node_io.c                                          :+:      :+:    :+:   */
+/*   ft_math_dabs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/09 10:38:15 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/09 20:08:31 by mmoros           ###   ########.fr       */
+/*   Created: 2018/03/01 18:04:30 by mmoros            #+#    #+#             */
+/*   Updated: 2018/05/09 19:52:07 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf3d.h"
+#include "libft.h"
 
-t_io	*new_io(void)
+double	ft_math_dabs(double d)
 {
-	t_io	*node;
-
-	if (!(node = (t_io*)ft_memalloc(sizeof(t_io))))
-		return (NULL);
-	node->a = 0;
-	node->s = 0;
-	node->d = 0;
-	node->w = 0;
-	node->space = 0;
-	node->esc = 0;
-	return (node);
-}
-
-void	free_io(t_io *io)
-{
-	if (io)
-		free(io);
+	if (d < 0)
+		return (-d);
+	return (d);
 }

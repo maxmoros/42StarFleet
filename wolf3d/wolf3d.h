@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 16:58:49 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/09 12:28:44 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/09 20:08:29 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct		s_map
 typedef struct		s_plr
 {
 	double			pos[2];
+	int				theta;
 	double			dir[2];
 	double			pln[2];
 }					t_plr;
@@ -62,6 +63,8 @@ typedef struct		s_wolf
 	void			*window;
 }					t_wolf;
 
+void				delay(int num);
+
 int					geng(t_wolf *node);
 
 t_map				*new_map(int x, int y);
@@ -69,10 +72,13 @@ void				print_map(t_map *map);
 long				free_map(t_map *map, long out);
 
 t_plr				*new_player(void);
+void				move_player(t_wolf *node);
+int					print_player(t_plr *player);
 void				free_player(t_plr *player);
 
 t_ray				*new_ray(void);
 void				init_ray(t_wolf *node, double camx);
+void				print_ray(t_ray *ray);
 void				free_ray(t_ray *ray);
 
 t_io				*new_io(void);

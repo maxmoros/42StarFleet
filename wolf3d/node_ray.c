@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 21:11:08 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/09 12:26:16 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/09 20:08:27 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void		compute_ray(t_wolf *node)
 		node->ray->sdst[i] += node->ray->ddst[i];
 		node->ray->mpos[i] += node->ray->step[i];
 		node->ray->side = i;
-		hit = (node->map->xy[node->ray->mpos[0]][node->ray->mpos[1]] ? 1 : 0);
+	//	printf("mpos = (%d, %d)\n", node->ray->mpos[0], node->ray->mpos[1]);
+		hit = (node->map->xy[node->ray->mpos[0]][node->ray->mpos[1]] != '0' ? 1 : 0);
 	}
 	i = node->ray->side;
 	node->ray->pwdst = (node->ray->mpos[i] - node->plr->pos[i] +
@@ -66,9 +67,9 @@ void		init_ray(t_wolf *node, double camx)
 	i = -1;
 	while (++i < 2)
 	{
-		node->ray->dir[i] = node->plr->dir[i] + node->plr->pln[i] + camx;
-		node->ray->ddst[i] = ft_math_abs(1 / node->ray->dir[i]);
-		node->ray->step[i] = 0;
+		node->ray->mpos[i] = node->plr->pos[i];
+		node->ray->dir[i] = node->plr->dir[i] + node->plr->pln[i] * camx;
+		node->ray->ddst[i] = ft_math_dabs(1 / node->ray->dir[i]);
 		if (node->ray->dir[i] < 0)
 		{
 			node->ray->step[i] = -1;
@@ -83,6 +84,18 @@ void		init_ray(t_wolf *node, double camx)
 		}
 	}
 	compute_ray(node);
+//	print_ray(node->ray);
+}
+
+void		print_ray(t_ray *ray)
+{
+	printf("Ray:\tdir = (%f, %f)\n\t\tsdst = (%f, %f)\n\t\tddst = (%f, %f)\n\t\tstep = (%d, %d)\n\t\tmpos = (%d, %d)\n\t\tcamx = %f\tside = %d\n\t\tpwdst = %f\n",
+			ray->dir[0], ray->dir[1],
+			ray->sdst[0], ray->sdst[1],
+			ray->ddst[0], ray->ddst[1],
+			ray->step[0], ray->step[1],
+			ray->mpos[0], ray->mpos[1],
+			ray->camx, ray->side, ray->pwdst);
 }
 
 void		free_ray(t_ray *ray)
