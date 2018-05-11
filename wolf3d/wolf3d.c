@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 16:57:42 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/10 18:50:51 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/11 10:30:59 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	delay(int number_of_seconds)
 
 int		key_pressed(int key, t_wolf *node)
 {
+	printf("%d pressed\n", key);
 	if (key == 0)
 		node->io->a = 1;
 	else if (key == 1)
@@ -60,13 +61,10 @@ int		key_released(int key, t_wolf *node)
 
 void	mlx(t_wolf *node)
 {
-	printf("Button pressed hook\n");
 	mlx_hook(node->window, 2, 0x1, key_pressed, node);
-	printf("Button released hook\n");
 	mlx_hook(node->window, 3, 0x1, key_released, node);
-	printf("Loop hook\n");
 	mlx_loop_hook(node->mlx, geng, node);
-	printf("Hooks set\n");
+	mlx_hook(node->window, 17, 0, close_wolf, node);
 	mlx_loop(node->mlx);
 }
 
@@ -75,7 +73,7 @@ void	wolf3d(int x, int y)
 	t_wolf		*node;
 
 	node = new_wolf_inst(x, y, RESX, RESY);
-	printf("Wolf initialized");
+	printf("Wolf initialized\n");
 	print_map(node->map);
 	mlx(node);
 }

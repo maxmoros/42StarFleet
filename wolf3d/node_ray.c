@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 21:11:08 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/10 20:03:18 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/11 10:49:59 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void		compute_ray(t_wolf *node)
 		ray->side = i;
 		if (ray->mpos[0] >= 0 && ray->mpos[0] < node->map->dim[0]
 					&& ray->mpos[1] >= 0 && ray->mpos[1] < node->map->dim[1])
-			ray->hit = (node->map->xy[ray->mpos[0]][ray->mpos[1]]
+				ray->hit = (node->map->xy[ray->mpos[0]][ray->mpos[1]]
 							!= '0' ? 1 : 0);
 	}
 	i = ray->side;

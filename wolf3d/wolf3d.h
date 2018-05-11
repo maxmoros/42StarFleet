@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 16:58:49 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/10 19:33:02 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/11 09:44:36 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct		s_plr
 	int				theta;
 	double			dir[2];
 	double			pln[2];
+	double			z;
 }					t_plr;
 
 typedef struct		s_ray
@@ -85,8 +86,9 @@ t_map				*new_map(int x, int y);
 void				print_map(t_map *map);
 long				free_map(t_map *map, long out);
 
-t_plr				*new_player(void);
+t_plr				*new_player(t_wolf *node);
 void				move_player(t_wolf *node);
+void				rotate_player(t_wolf *node);
 int					print_player(t_plr *player);
 void				free_player(t_plr *player);
 
@@ -105,6 +107,7 @@ void				free_img(t_wolf *wolf);
 
 t_wolf				*new_wolf_inst(int x, int y,
 						unsigned int resx, unsigned int resy);
+int					close_wolf(t_wolf *node);
 void				*free_wolf_inst(t_wolf *node, void *out);
 
 #endif

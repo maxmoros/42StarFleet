@@ -6,33 +6,67 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 21:03:15 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/10 20:16:21 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/11 09:45:03 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 #include "math.h"
 
-t_plr	*new_player(void)
+static int		find_pos(t_map *map, t_plr *player)
+{
+	int		x;
+	int		y;
+
+	x = -1;
+	while (++x < map->dim[0])
+	{
+		y = -1;
+		while (++y < map->dim[1])
+			if (map->xy[x][y] == '0')
+			{
+				player->pos[0] = x;
+				player->pos[1] = y;
+				return (1);
+			}
+	}
+	return (0);
+}
+
+t_plr	*new_player(t_wolf *node)
 {
 	t_plr	*player;
 
 	if (!(player = (t_plr*)ft_memalloc(sizeof(t_plr))))
 		return (NULL);
-	player->pos[0] = 2;
-	player->pos[1] = 2;
-	player->theta = 0;
+	player->theta = 45;
 	player->dir[0] = 1;
 	player->dir[1] = 0;
 	player->pln[0] = 0;
 	player->pln[1] = 0.66;
-	return (player);
+	player->z = 0;
+	if (find_pos(node->map, player))
+		return (player);
+	ft_putstr("No valid player placement\n");
+	return (free_wolf_inst(node, NULL));
+}
+
+void	rotate_player(t_wolf *node)
+{
+	double	rad;
+
+	node->plr->theta -= (node->io->a ? 1 : 0);
+	node->plr->theta += (node->io->d ? 1 : 0);
+	rad = (double)(node->plr->theta % 360) / 180.0 * M_PI;
+	node->plr->dir[0] = cos(rad);
+	node->plr->dir[1] = sin(rad);
+	node->plr->pln[0] = 0.66 * cos(rad + M_PI / 2);
+	node->plr->pln[1] = 0.66 * sin(rad + M_PI / 2);
 }
 
 void	move_player(t_wolf *node)
 {
 	double	delta;
-	double	rad;
 	double	tmpx;
 	double	tmpy;
 
@@ -50,21 +84,9 @@ void	move_player(t_wolf *node)
 		node->plr->pos[0] += tmpx;
 		node->plr->pos[1] += tmpy;
 	}
-	node->plr->theta -= (node->io->a ? 1 : 0);
-	node->plr->theta += (node->io->d ? 1 : 0);
-	rad = (double)(node->plr->theta % 360) / 180.0 * M_PI;
-	node->plr->dir[0] = cos(rad);
-	node->plr->dir[1] = sin(rad);
-	node->plr->pln[0] = 0.66 * cos(rad + M_PI / 2);
-	node->plr->pln[1] = 0.66 * sin(rad + M_PI / 2);
-}
-
-int		print_player(t_plr *player)
-{
-	printf("player at (%f, %f), dir (%f, %f), theta = %d, pln (%f, %f)\n",
-	player->pos[0], player->pos[1], player->dir[0], player->dir[1],
-	player->theta, player->pln[0], player->pln[1]);
-	return (0);
+	node->plr->z += (node->io->space && node->plr->z < 0.46 ? 0.05 : 0);
+	node->plr->z -= (!node->io->space && node->plr->z > 0.01 ? 0.05 : 0);
+	rotate_player(node);
 }
 
 void	free_player(t_plr *player)

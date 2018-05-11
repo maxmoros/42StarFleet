@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 21:07:01 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/10 18:53:21 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/11 10:50:02 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_wolf		*new_wolf_inst(int x, int y, unsigned int resx, unsigned int resy)
 		return (NULL);
 	printf("Initializing Wolf\n");
 	if (!(node->map = new_map(x, y)) ||
-		!(node->plr = new_player()) ||
+		!(node->plr = new_player(node)) ||
 		!(node->ray = new_ray()) ||
 		!(node->io = new_io()) ||
 		!(node->mlx = mlx_init()) ||
@@ -28,6 +28,12 @@ t_wolf		*new_wolf_inst(int x, int y, unsigned int resx, unsigned int resy)
 		!(node->img = new_img(node)))
 		return (free_wolf_inst(node, NULL));
 	return (node);
+}
+
+int		close_wolf(t_wolf *node)
+{
+	free_wolf_inst(node, NULL);
+	return (1);
 }
 
 void	*free_wolf_inst(t_wolf *node, void *out)
@@ -44,8 +50,9 @@ void	*free_wolf_inst(t_wolf *node, void *out)
 			free_io(node->io);
 		if (node->window)
 			mlx_destroy_window(node->mlx, node->window);
-		else if (node->mlx)
-			mlx_destroy_window(node->mlx, NULL);
+		if (node->mlx)
+			free(node->mlx);
 	}
+	exit(1);
 	return (out);
 }
