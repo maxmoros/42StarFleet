@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 16:58:49 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/10 17:57:16 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/10 19:33:02 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct		s_ray
 	double			pwdst;
 	double			camx;
 	char			side;
+	char			hit;
 }					t_ray;
 
 typedef struct		s_io
@@ -99,6 +100,8 @@ void				free_io(t_io *io);
 
 t_img				*new_img(t_wolf *node);
 void				init_img(t_wolf *node);
+void				pixel_to_img(t_wolf *node, int x, int y, int colour);
+void				free_img(t_wolf *wolf);
 
 t_wolf				*new_wolf_inst(int x, int y,
 						unsigned int resx, unsigned int resy);

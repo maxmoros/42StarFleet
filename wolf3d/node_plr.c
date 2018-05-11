@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 21:03:15 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/09 20:08:24 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/10 20:16:21 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ t_plr	*new_player(void)
 
 	if (!(player = (t_plr*)ft_memalloc(sizeof(t_plr))))
 		return (NULL);
-	player->pos[0] = 1;
-	player->pos[1] = 1;
+	player->pos[0] = 2;
+	player->pos[1] = 2;
 	player->theta = 0;
 	player->dir[0] = 1;
 	player->dir[1] = 0;
@@ -33,22 +33,25 @@ void	move_player(t_wolf *node)
 {
 	double	delta;
 	double	rad;
+	double	tmpx;
+	double	tmpy;
 
 	delta = 0.04;
-	if (node->io->w)
+	tmpx = (node->io->w ? delta * node->plr->dir[0] : 0);
+	tmpy = (node->io->w ? delta * node->plr->dir[1] : 0);
+	tmpx -= (node->io->s ? delta * node->plr->dir[0] : 0);
+	tmpy -= (node->io->s ? delta * node->plr->dir[1] : 0);
+	if (node->plr->pos[0] + tmpx > 0.0 && node->plr->pos[1] + tmpy > 0.0 &&
+			node->plr->pos[0] + tmpx < node->map->dim[0] &&
+			node->plr->pos[1] + tmpy < node->map->dim[1] &&
+			(node->map->xy[(int)(node->plr->pos[0] + tmpx)]
+			[(int)(node->plr->pos[1] + tmpy)] == '0'))
 	{
-		node->plr->pos[0] += delta * node->plr->dir[0];
-		node->plr->pos[1] += delta * node->plr->dir[1];
+		node->plr->pos[0] += tmpx;
+		node->plr->pos[1] += tmpy;
 	}
-	if (node->io->s)
-	{
-		node->plr->pos[0] -= delta * node->plr->dir[0];
-		node->plr->pos[1] -= delta * node->plr->dir[1];
-	}
-	if (node->io->a)
-		node->plr->theta += 1;
-	if (node->io->d)
-		node->plr->theta -= 1;
+	node->plr->theta -= (node->io->a ? 1 : 0);
+	node->plr->theta += (node->io->d ? 1 : 0);
 	rad = (double)(node->plr->theta % 360) / 180.0 * M_PI;
 	node->plr->dir[0] = cos(rad);
 	node->plr->dir[1] = sin(rad);

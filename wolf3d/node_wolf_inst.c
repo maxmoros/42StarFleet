@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 21:07:01 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/10 17:51:10 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/10 18:53:21 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_wolf		*new_wolf_inst(int x, int y, unsigned int resx, unsigned int resy)
 
 	if (!(node = (t_wolf*)ft_memalloc(sizeof(t_wolf))))
 		return (NULL);
+	printf("Initializing Wolf\n");
 	if (!(node->map = new_map(x, y)) ||
 		!(node->plr = new_player()) ||
 		!(node->ray = new_ray()) ||

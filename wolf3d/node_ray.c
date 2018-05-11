@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 21:11:08 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/10 18:01:47 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/10 20:03:18 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,26 @@ t_ray		*new_ray(void)
 
 void		compute_ray(t_wolf *node)
 {
-	char	hit;
+	t_ray	*ray;
 	int		i;
 
-	hit = 0;
-	while (!hit)
+	ray = node->ray;
+	ray->hit = 0;
+	while (!ray->hit && ray->mpos[0] >= 0 && ray->mpos[0] < node->map->dim[0]
+					&& ray->mpos[1] >= 0 && ray->mpos[1] < node->map->dim[1])
 	{
-		i = (node->ray->sdst[0] < node->ray->sdst[1] ? 0 : 1);
-		node->ray->sdst[i] += node->ray->ddst[i];
-		node->ray->mpos[i] += node->ray->step[i];
-		node->ray->side = i;
-	//	printf("mpos = (%d, %d)\n", node->ray->mpos[0], node->ray->mpos[1]);
-		hit = (node->map->xy[node->ray->mpos[0]][node->ray->mpos[1]] != '0' ? 1 : 0);
+		i = (ray->sdst[0] < ray->sdst[1] ? 0 : 1);
+		ray->sdst[i] += ray->ddst[i];
+		ray->mpos[i] += ray->step[i];
+		ray->side = i;
+		if (ray->mpos[0] >= 0 && ray->mpos[0] < node->map->dim[0]
+					&& ray->mpos[1] >= 0 && ray->mpos[1] < node->map->dim[1])
+			ray->hit = (node->map->xy[ray->mpos[0]][ray->mpos[1]]
+							!= '0' ? 1 : 0);
 	}
-	i = node->ray->side;
-	node->ray->pwdst = (node->ray->mpos[i] - node->plr->pos[i] +
-						(1 - node->ray->step[i]) / 2) / node->ray->dir[i];
+	i = ray->side;
+	ray->pwdst = (ray->mpos[i] - node->plr->pos[i] +
+						(1 - ray->step[i]) / 2) / ray->dir[i];
 }
 
 void		init_ray(t_wolf *node, double camx)
@@ -84,17 +88,18 @@ void		init_ray(t_wolf *node, double camx)
 		}
 	}
 	compute_ray(node);
-//	print_ray(node->ray);
 }
 
 void		print_ray(t_ray *ray)
 {
-	printf("Ray:\tdir = (%f, %f)\n\t\tsdst = (%f, %f)\n\t\tddst = (%f, %f)\n\t\tstep = (%d, %d)\n\t\tmpos = (%d, %d)\n\t\tcamx = %f\tside = %d\n\t\tpwdst = %f\n",
+	printf("Ray:\tdir = (%f, %f)\n\t\tsdst = (%f, %f)\n\t\tddst = (%f, %f)\n",
 			ray->dir[0], ray->dir[1],
 			ray->sdst[0], ray->sdst[1],
-			ray->ddst[0], ray->ddst[1],
+			ray->ddst[0], ray->ddst[1]);
+	printf("\t\tstep = (%d, %d)\n\t\tmpos = (%d, %d)\n",
 			ray->step[0], ray->step[1],
-			ray->mpos[0], ray->mpos[1],
+			ray->mpos[0], ray->mpos[1]);
+	printf("\t\tcamx = %f\tside = %d\n\t\tpwdst = %f\n",
 			ray->camx, ray->side, ray->pwdst);
 }
 
