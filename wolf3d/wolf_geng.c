@@ -6,13 +6,13 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/09 11:00:40 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/09 20:39:06 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/10 18:01:00 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-int		draw(t_wolf *node, int x, int *image)
+int		draw(t_wolf *node, int x)
 {
 	int		y;
 	int		top;
@@ -20,17 +20,17 @@ int		draw(t_wolf *node, int x, int *image)
 	int		tmp;
 
 	y = -1;
-	tmp = (int)(600 / node->ray->pwdst);
-	top = tmp / 2 + 300;
-	bottom = 300 - tmp / 2;
+	tmp = (int)(RESY / node->ray->pwdst);
+	top = tmp / 2 + RESY / 2;
+	bottom = RESY / 2 - tmp / 2;
 	x++;
-	while (++y < 600)
+	while (++y < RESY)
 	{
 		ft_putnbr(y);
 		if (y < bottom || y > top)
-			image[y] = 0x000000;
+			*(node->img>img + y) = 0x000000;
 		else
-			image[y] = 0xAAFFAA;
+			*(image + y) = 0xAAFFAA;
 	}
 	return (1);
 }
@@ -38,17 +38,16 @@ int		draw(t_wolf *node, int x, int *image)
 int		geng(t_wolf *node)
 {
 	int		x;
-	void	*image;
 
 	x = -1;
 	move_player(node);
-	image = mlx_new_image(node->mlx, 600, 600);
-	while (++x < 600)
+	init_img(node);
+	while (++x < RESX)
 	{
-		init_ray(node, 2.0 * x / 600 - 1.0);
-		draw(node, x, image);
+		init_ray(node, 2.0 * x / RESX - 1.0);
+		draw(node, x);
 	}
-	mlx_put_image_to_window(node->mlx, node->window, image, 0, 0);
-	mlx_destroy_image(node->mlx, image);
+	mlx_put_image_to_window(node->mlx, node->window, node->img->ptr, 0, 0);
+	mlx_destroy_image(node->mlx, node->img->img);
 	return (1);
 }

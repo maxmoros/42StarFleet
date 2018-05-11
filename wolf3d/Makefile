@@ -6,7 +6,7 @@
 #    By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/16 18:50:59 by mmoros            #+#    #+#              #
-#    Updated: 2018/05/09 20:08:34 by mmoros           ###   ########.fr        #
+#    Updated: 2018/05/10 17:49:03 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRC =	wolf3d.c		\
 		node_plr.c		\
 		node_ray.c		\
 		node_io.c		\
+		node_img.c		\
 		node_wolf_inst.c
 
 INC = 	wolf3d.h				\

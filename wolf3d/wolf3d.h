@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 16:58:49 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/09 20:08:29 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/10 17:57:16 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include "libft/libft.h"
 # include "minilibx_macos/mlx.h"
 # include <stdio.h>
+
+# define RESX 600
+# define RESY 600
 
 typedef struct		s_map
 {
@@ -53,12 +56,22 @@ typedef struct		s_io
 	char			esc;
 }					t_io;
 
+typedef struct		s_img
+{
+	void			*ptr;
+	int				*img;
+	int				bits;
+	int				line;
+	int				endian;
+}					t_img;
+
 typedef struct		s_wolf
 {
 	t_map			*map;
 	t_plr			*plr;
 	t_ray			*ray;
 	t_io			*io;
+	t_img			*img;
 	void			*mlx;
 	void			*window;
 }					t_wolf;
@@ -83,6 +96,9 @@ void				free_ray(t_ray *ray);
 
 t_io				*new_io(void);
 void				free_io(t_io *io);
+
+t_img				*new_img(t_wolf *node);
+void				init_img(t_wolf *node);
 
 t_wolf				*new_wolf_inst(int x, int y,
 						unsigned int resx, unsigned int resy);

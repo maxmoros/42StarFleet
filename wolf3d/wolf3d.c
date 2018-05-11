@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 16:57:42 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/09 20:08:32 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/10 17:48:47 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	wolf3d(int x, int y)
 {
 	t_wolf		*node;
 
-	node = new_wolf_inst(x, y, 600, 600);
+	node = new_wolf_inst(x, y, RESX, RESY);
 	print_map(node->map);
 	mlx(node);
 }

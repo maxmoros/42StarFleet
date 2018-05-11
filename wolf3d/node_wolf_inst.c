@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 21:07:01 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/09 19:37:14 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/10 17:51:10 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ t_wolf		*new_wolf_inst(int x, int y, unsigned int resx, unsigned int resy)
 		!(node->ray = new_ray()) ||
 		!(node->io = new_io()) ||
 		!(node->mlx = mlx_init()) ||
-		!(node->window = mlx_new_window(node->mlx, resx, resy, "WOLF3D")))
+		!(node->window = mlx_new_window(node->mlx, resx, resy, "WOLF3D")) ||
+		!(node->img = new_img(node)))
 		return (free_wolf_inst(node, NULL));
 	return (node);
 }
