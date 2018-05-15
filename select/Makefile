@@ -6,13 +6,14 @@
 #    By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/16 18:50:59 by mmoros            #+#    #+#              #
-#    Updated: 2018/05/11 11:41:02 by mmoros           ###   ########.fr        #
+#    Updated: 2018/05/14 19:11:35 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_select
 
-SRC =	select.c
+SRC =	select.c		\
+		select_input.c
 
 INC = select.h
 
@@ -30,7 +31,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@make -C libft/
 	@gcc $(CFLAGS) -c $(SRC) $(INC)
-	@gcc -Llibft/ -lft $(OBJ) -o $(NAME)
+	@gcc -Llibft/ -lft $(OBJ) -o $(NAME) -ltermcap
 
 clean:
 	@/bin/rm -f $(OBJ) *.gch

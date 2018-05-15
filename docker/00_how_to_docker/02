@@ -1,0 +1,1 @@
+docker-machine inspect Char | grep IPAddress | cut -d\" -f4
