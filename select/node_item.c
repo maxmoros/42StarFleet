@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 18:48:53 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/15 20:02:38 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/15 20:46:45 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,8 @@ t_item			*build_list(char **input)
 
 	start = new_item(NULL, NULL, *input);
 	tmp = start;
-	printf("here\n");
 	while (*++input)
 		tmp = new_item(tmp, NULL, *input);
-	printf("not\n");
 	tmp->next = start;
 	while (tmp != start)
 	{
