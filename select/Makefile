@@ -6,14 +6,18 @@
 #    By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/16 18:50:59 by mmoros            #+#    #+#              #
-#    Updated: 2018/05/14 19:11:35 by mmoros           ###   ########.fr        #
+#    Updated: 2018/05/15 20:15:47 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_select
 
 SRC =	select.c		\
-		select_input.c
+		select_action.c	\
+		select_nav.c	\
+		node_item.c		\
+		node_table.c	\
+		node_select.c
 
 INC = select.h
 

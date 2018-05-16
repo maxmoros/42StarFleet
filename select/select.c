@@ -6,36 +6,11 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 10:18:38 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/14 21:07:27 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/15 20:00:28 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "select.h"
-
-int		init_termdata(char **buffer, char *termtype)
-{
-	if (!(*buffer = (char*)ft_memalloc(sizeof(char) * 2048)))
-		return (0);
-	if (tgetent(*buffer, termtype) < 1)
-	{
-		free(*buffer);
-		return (0);
-	}
-	return (1);
-}
-
-int		set_term(struct termios *orig, struct termios *new)
-{
-	if (tcgetattr(0, orig) == -1 || tcgetattr(0, new) == -1)
-		return (-1);
-	new->c_lflag &= ~(ICANON);
-	new->c_lflag &= ~(ECHO);
-	new->c_cc[VMIN] &= 1;
-	new->c_cc[VTIME] &= 0;
-	if (tcsetattr(0, TCSADRAIN, new) == -1)
-		return (-1);
-	return (1);
-}
 
 int		input_loop(void)
 {
@@ -54,16 +29,10 @@ int		input_loop(void)
 
 int		ft_select(char **input)
 {
-	char			*termtype;
-	char			*buffer;
-	struct termios	orig;
-	struct termios	new;
+	t_select		*node;
 
-	buffer = NULL;
-	info = NULL;
-	init_termdata(&buffer, (termtype = getenv("TERM")));
-	printf("termtype is %s, buffer is %s\n", termtype, buffer);
-	set_term(&orig, &new);
+	node = init_select(input);
+	printf("termtype is %s, buffer is %s\n", node->termtype, node->buffer);
 	input_loop();
 	return (1);
 }

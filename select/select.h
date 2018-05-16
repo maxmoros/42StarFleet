@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 10:17:43 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/14 21:38:40 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/15 20:00:23 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,13 @@ typedef struct		s_select
 
 void				clear_term(void);
 
+t_item				*build_list(char **input);
 void				free_item_list(t_item *node);
 
-t_select			*init_select(void);
-void				free_select(t_select *node, int out);
+t_table				*new_table(char **input);
+void				free_table(t_table *node);
+
+t_select			*init_select(char **input);
+int					free_select(t_select *node, int out);
 
 #endif

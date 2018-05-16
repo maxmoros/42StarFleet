@@ -6,40 +6,59 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 21:27:06 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/14 21:38:41 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/15 20:05:05 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "select.h"
 
-t_select	*init_select(void)
+int		set_term(struct termios *orig, struct termios *new)
+{
+	if (tcgetattr(0, orig) == -1 || tcgetattr(0, new) == -1)
+		return (0);
+	new->c_lflag &= ~(ICANON);
+	new->c_lflag &= ~(ECHO);
+	new->c_cc[VMIN] &= 1;
+	new->c_cc[VTIME] &= 0;
+	if (tcsetattr(0, TCSADRAIN, new) == -1)
+		return (0);
+	return (1);
+}
+
+int		init_termdata(char *buffer, char *termtype)
+{
+	if (tgetent(buffer, termtype) < 1)
+	{
+		free(buffer);
+		return (0);
+	}
+	return (1);
+}
+
+t_select	*init_select(char **input)
 {
 	t_select	*node;
 
 	if (!(node = (t_select*)ft_memalloc(sizeof(t_select))) ||
 		!(node->buffer = (char*)ft_memalloc(2048)) ||
-		!(node->table = (t_table*)ft_memalloc(sizeof(t_table))))
+		!(node->table = new_table(input)) ||
+		!(set_term(&node->orig, &node->term)) ||
+		!(init_termdata(node->buffer, (node->termtype = getenv("TERM")))))
 	{
 		free_select(node, 0);
 		return (NULL);
 	}
+	return (node);
 }
 
 int			free_select(t_select *node, int out)
 {
-	t_item	*tmp1;
-	t_item	*tmp2;
-
 	if (node)
 	{
 		if (node->buffer)
 			free(node->buffer);
 		if (node->table)
-		{
-			if (node->table->list)
-				free_item_list(node->table->list);
-			free(node->table);
-		}
+			free_table(node->table);
 		free(node);
 	}
 	return (out);
