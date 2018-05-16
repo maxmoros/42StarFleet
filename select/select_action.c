@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 18:43:19 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/16 14:48:13 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/16 15:28:26 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,9 @@ void	actkey_remove(t_select *node)
 	ft_putstr("C\n");
 	remove_item(node, item);
 	ft_putstr("D\n");
+}
+
+void	actkey_enter(t_select *node)
+{
+	
 }
