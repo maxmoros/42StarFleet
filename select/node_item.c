@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 18:48:53 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/15 20:46:45 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/16 14:49:56 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,29 @@ t_item			*build_list(char **input)
 	t_item	*tmp;
 
 	start = new_item(NULL, NULL, *input);
+	start->state = 0x02;
 	tmp = start;
 	while (*++input)
 		tmp = new_item(tmp, NULL, *input);
 	tmp->next = start;
+	start->prev = tmp;
 	while (tmp != start)
 	{
 		tmp->prev->next = tmp;
 		tmp = tmp->prev;
 	}
 	return (start);
+}
+
+void			remove_item(t_select *node, t_item *item)
+{
+	if (item == item->next)
+		free_select(node, 0);
+	if (node->table->list == item)
+		node->table->list = item->next;
+	item->next->prev = item->prev;
+	item->prev->next = item->next;
+	free(item);
 }
 
 void			free_item_list(t_item *node)
@@ -59,4 +72,15 @@ void			free_item_list(t_item *node)
 		}
 		free(node);
 	}
+}
+
+void			print_item(t_item *node)
+{
+	ft_putstr("\033[0;m");
+	if (node->state & 0x01)
+		ft_putstr("\033[07m");
+	if (node->state & 0x02)
+		ft_putstr("\033[04m");
+	ft_putstr(node->name);
+	ft_putstr("\033[0;m");
 }

@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 18:45:32 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/15 20:46:44 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/16 14:30:30 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,19 @@ void		free_table(t_table *node)
 		if (node->list)
 			free_item_list(node->list);
 		free(node);
+	}
+}
+
+void		print_table(t_select *node)
+{
+	t_item		*item;
+
+	item = node->table->list->next;
+	print_item(item->prev);
+	while (item && item != node->table->list)
+	{
+		ft_putstr("\n");
+		print_item(item);
+		item = item->next;
 	}
 }
