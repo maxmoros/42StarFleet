@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 18:48:53 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/16 15:28:20 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/16 18:28:43 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void			remove_item(t_select *node, t_item *item)
 		node->table->list = item->next;
 	item->next->prev = item->prev;
 	item->prev->next = item->next;
+	node->elements--;
 	free(item);
 }
 
@@ -81,6 +82,12 @@ void			print_item(t_item *node)
 		ft_putstr("\033[07m");
 	if (node->state & 0x02)
 		ft_putstr("\033[04m");
-	ft_putstr(node->name);
+	if (ft_strlen(node->name) > 10)
+	{
+		ft_putnstr(node->name, 8);
+		ft_putstr("..");
+	}
+	else
+		ft_putstr(node->name);
 	ft_putstr("\033[0;m");
 }

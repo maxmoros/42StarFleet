@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 10:17:43 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/16 15:28:17 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/16 19:38:34 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,13 @@ typedef struct		s_select
 	struct termios	term;
 	int				width;
 	int				height;
+	int				elements;
 	t_table			*table;
 }					t_select;
 
 void				clear_term(void);
 
-void				navkey_up(t_select *node);
-void				navkey_down(t_select *node);
-void				navkey_left(t_select *node);
-void				navkey_right(t_select *node);
+void				navkey(t_select *node, char key);
 void				navkey_select(t_select *node);
 
 void				actkey_remove(t_select *node);
@@ -62,8 +60,10 @@ void				print_item(t_item *node);
 
 t_table				*new_table(char **input);
 void				free_table(t_table *node);
+void				set_table(t_select *node);
 void				print_table(t_select *node);
 
+int					init_termdata(char *buffer, char *termtype);
 t_select			*init_select(char **input);
 int					free_select(t_select *node, int out);
 

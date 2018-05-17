@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 18:43:19 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/16 15:28:26 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/16 18:19:47 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	clear_term(void)
 {
 	ft_putstr_fd(tgetstr("cl", NULL), 1);
+	ft_putstr_fd(tgetstr("vi", NULL), 1);
 }
 
 void	actkey_remove(t_select *node)
@@ -31,8 +32,9 @@ void	actkey_remove(t_select *node)
 	remove_item(node, item);
 	ft_putstr("D\n");
 }
-
+/*
 void	actkey_enter(t_select *node)
 {
 	
 }
+*/

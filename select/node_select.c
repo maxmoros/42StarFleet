@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 21:27:06 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/16 15:28:25 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/16 19:29:27 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,20 @@ t_select	*init_select(char **input)
 
 int			free_select(t_select *node, int out)
 {
+	t_item	*item;
+
+	clear_term();
+	ft_putstr_fd(tgetstr("ve", NULL), 1);
 	tcsetattr(0, TCSANOW, &node->orig);
+	item = node->table->list->prev;
+	while (out && (item = item->next)->next != node->table->list)
+		if (item->state & 0x01)
+		{
+			ft_putstr(item->name);
+			ft_putchar(' ');
+		}
+	if (out && item->state & 0x01)
+		ft_putstr(item->name);
 	if (node)
 	{
 		if (node->buffer)
@@ -62,7 +75,7 @@ int			free_select(t_select *node, int out)
 			free_table(node->table);
 		free(node);
 	}
-	clear_term();
+	ft_putchar('\n');
 	exit(1);
 	return (out);
 }
