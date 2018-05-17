@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 18:48:53 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/16 18:28:43 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/16 21:12:05 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ void			print_item(t_item *node)
 		ft_putstr("\033[07m");
 	if (node->state & 0x02)
 		ft_putstr("\033[04m");
-	if (ft_strlen(node->name) > 10)
+	if (ft_strlen(node->name) > 12)
 	{
-		ft_putnstr(node->name, 8);
+		ft_putnstr(node->name, 10);
 		ft_putstr("..");
 	}
 	else

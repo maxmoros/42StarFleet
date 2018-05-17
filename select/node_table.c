@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 18:45:32 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/16 20:47:35 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/16 21:11:06 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ void		set_table(t_select *node)
 	init_termdata(node->buffer, node->termtype);
 	node->height = tgetnum("li");
 	node->width = tgetnum("co");
-	if (node->elements > node->width / 12)
+	if (node->elements > node->width / 14)
 	{
-		node->table->rows = 1 + node->elements / (node->width / 12);
-		node->table->cols = node->width / 12;
+		node->table->rows = 1 + node->elements / (node->width / 14);
+		node->table->cols = node->width / 14;
 	}
 	else
 	{
@@ -65,7 +65,7 @@ void		print_table(t_select *node)
 	{
 		while (++row < node->table->rows && item != node->table->list)
 		{
-			ft_putstr(tgoto(tgetstr("cm", NULL), col * 12, row));
+			ft_putstr(tgoto(tgetstr("cm", NULL), col * 14, row));
 			print_item(item);
 			item = item->next;
 		}

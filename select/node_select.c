@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 21:27:06 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/16 19:29:27 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/05/16 21:22:50 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		set_term(struct termios *orig, struct termios *new)
 	new->c_lflag &= ~(ECHO);
 	new->c_cc[VMIN] &= 1;
 	new->c_cc[VTIME] &= 0;
-	if (tcsetattr(0, TCSADRAIN, new) == -1)
+	if (tcsetattr(0, TCSANOW, new) == -1)
 		return (0);
 	return (1);
 }
