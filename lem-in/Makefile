@@ -12,9 +12,11 @@
 
 NAME = lem-in
 
-SRC =	lem-in.c
+SRC =	lem_in.c	\
+		node_lem.c	\
+		node_room.c
 
-INC = lem-in.h
+INC = lem_in.h
 
 CC = gcc
 

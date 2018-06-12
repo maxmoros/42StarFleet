@@ -1,4 +1,4 @@
-#include "lem-in.h"
+#include "lem_in.h"
 
 t_room	*new_room(char *name, int x, int y, t_room *next)
 {
@@ -12,6 +12,7 @@ t_room	*new_room(char *name, int x, int y, t_room *next)
 	node->x = x;
 	node->y = y;
 	node->prev = NULL;
+	return (node);
 }
 
 t_room	*line_room(char *line, t_room *next)
@@ -26,7 +27,7 @@ t_room	*line_room(char *line, t_room *next)
 		i++;
 	node = NULL;
 	if (i == 3 && ft_isint(parts[1]) && ft_isint(parts[2]))
-		node = new_room(parts[0], parts[1], parts[2], next);
+		node = new_room(parts[0], ft_atoi(parts[1]), ft_atoi(parts[2]), next);
 	while (i-- > 0)
 		free(parts[i]);
 	free(parts);
@@ -62,7 +63,7 @@ int		ht_line(char *line)
 
 int		data_line(char *line)
 {
-	
+	return (ft_atoi(line));
 }
 
 int		build_map(void)

@@ -1,5 +1,5 @@
-#ifndef LEM-IN_H
-# define LEM-IN_H
+#ifndef LEM_IN_H
+# define LEM_IN_H
 
 # include "libft/libft.h"
 
@@ -48,7 +48,10 @@ extern t_lem		g_lem;
 */
 
 int					get_ants();
+int					build_map();
 
 /*
 **Connect all rooms via tube list.
 */
+
+#endif

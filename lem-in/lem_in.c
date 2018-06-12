@@ -1,4 +1,6 @@
-#include "lem-in.h"
+#include "lem_in.h"
+
+t_lem	g_lem;
 
 void	lem_in(void)
 {
