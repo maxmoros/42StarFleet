@@ -15,7 +15,7 @@ int     get_ants()
     char    *line;
 
     printf("Getting ants\n");
-    if (get_next_line(1, &line) < 1)
+    if (get_next_line(0, &line) < 1)
         return (0);
     while (line[0] == '#' && line[1] != '#')
         if (get_next_line(1, &line) < 1)

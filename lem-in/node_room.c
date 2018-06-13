@@ -22,7 +22,7 @@ t_room	*line_room(char *line, t_room *next)
 	t_room	*node;
 
 	parts = ft_strsplit(line, ' ');
-							//		ft_putstr("\t\taa\n");
+							//`		ft_putstr("\t\taa\n");
 	i = 0;
 	while (parts[i])
 		i++;
@@ -39,33 +39,6 @@ t_room	*line_room(char *line, t_room *next)
 	return (node);
 }
 
-int		ht_line(char *line)
-{
-	t_room	*node;
-
-	if (!ft_strcmp(line, "##start"))
-	{
-		if ((g_lem.check & 0x01)
-				|| !(g_lem.check |= 0x01)
-				|| get_next_line(1, &line) != 1
-				|| !(g_lem.rooms = line_room(line, g_lem.rooms)))
-			return (0);
-	}
-	else if (!ft_strcmp(line, "##end"))
-	{
-		node = g_lem.rooms;
-		while (node && node->next)
-			node = node->next;
-		if ((g_lem.check & 0x02) || !(g_lem.check |= 0x02)
-				|| get_next_line(1 ,&line) != 1)
-			return (0);
-		if ((node && !(node->next = line_room(line, NULL)))
-				|| (!node && !(g_lem.rooms = line_room(line, NULL))))
-			return (0);
-	}
-	return (1);
-}
-
 int		valid_name(char *name)
 {
 	t_room	*node;
@@ -80,86 +53,39 @@ int		valid_name(char *name)
 	return (0);
 }
 
-int		name_index(char *name)
+int		count_rooms(void)
 {
 	t_room	*node;
-	int		count;
 
 	node = g_lem.rooms;
-	count = 0;
+	g_lem.room_count = 1;
+	while ((node = node->next))
+		g_lem.room_count++;
+	node = g_lem.rooms;
 	while (node)
 	{
-		if (!ft_strcmp(node->name, name))
-			return (count);
-		count++;
+		if (!(node->adjc = (char*)ft_memalloc(g_lem.room_count + 1)))
+			return (0);	
 		node = node->next;
 	}
-	return (-1);
-}
-
-int		line_path(char *line)
-{
-	char	**parts;
-	int		i;
-	int		ret;
-
-	ret = 1;
-	parts = ft_strsplit(line, '-');
-	i = 0;
-	while (parts[i])
-		i++;
-	if (i != 2 || !valid_name(parts[0]) || !valid_name(parts[1]))
-		ret = 0;
-	else if (g_lem.check & PATH)
-	{
-		printf("link from %s to %s\n", parts[0], parts[1]);
-	}
-	while (i-- > 0)
-		free(parts[i]);
-	free(parts);
-	return (ret);
-}
-
-int		data_line(char *line)
-{
-								//	ft_putstr("\ta\n");
-	if (!(g_lem.check & PATH) && !line_path(line))
-	{
-								//	ft_putstr("\tc\n");
-		if (g_lem.check & START)
-		{
-								//	ft_putstr("\te\n");
-			if (!(g_lem.rooms->next = line_room(line, g_lem.rooms->next)))
-				return (0);
-		}
-		else if (!(g_lem.rooms = line_room(line, g_lem.rooms)))
-			return (0);
-	}
-	else if (!(g_lem.check & PATH))
-	{
-								//	ft_putstr("\tb\n");
-		g_lem.check |= PATH;
-		line_path(line);
-	}
-	else if (!line_path(line))
+	if (!(g_lem.occupied = (char*)ft_memalloc(g_lem.room_count + 1)))
 		return (0);
-								//	ft_putstr("\td\n");
 	return (1);
 }
 
-int		build_map(void)
+void	print_rooms(void)
 {
-	char	*line;
+	t_room	*node;
 
-	while (get_next_line(1, &line) == 1 && line[0])
+	node = g_lem.rooms;
+	ft_putstr("\n\tROOM NETWORK\n");
+	while (node)
 	{
-		if (!(line[0] == '#' ? ht_line(line) : data_line(line)))
-		{
-			printf("Invalid line : \"%s\"\n", line);
-			free(line);
-			return (0);
-		}
-		free(line);
+		ft_putstr(node->name);
+		ft_putstr("\t: ");
+		ft_putstr(node->adjc);
+		ft_putstr("\n");
+		node = node->next;
 	}
-	return (g_lem.check == 0x07 ? 1 : 0);
+	ft_putstr("\n");
 }

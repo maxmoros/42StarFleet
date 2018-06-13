@@ -13,6 +13,7 @@
 NAME = lem-in
 
 SRC =	lem_in.c	\
+		lem_input.c	\
 		node_lem.c	\
 		node_room.c
 

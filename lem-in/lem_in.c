@@ -9,6 +9,7 @@ void	lem_in(void)
 	if (!build_map())
 		return ;
 	ft_putstr("C\n");
+	print_rooms();
 }
 
 int		main(void)

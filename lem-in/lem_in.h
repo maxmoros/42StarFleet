@@ -40,6 +40,8 @@ typedef struct		s_lem
 {
 	struct s_room	*rooms;
 	struct s_path	*paths;
+	char			*occupied;
+	int				room_count;
 	int				ants;
 	char			check;
 }					t_lem;
@@ -52,6 +54,13 @@ extern t_lem		g_lem;
 
 int					get_ants();
 int					build_map();
+
+t_room				*line_room(char *line, t_room *next);
+int					valid_name(char *name);
+int					count_rooms();
+void				print_rooms();
+
+
 
 /*
 **Connect all rooms via tube list.
