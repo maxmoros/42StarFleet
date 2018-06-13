@@ -21,5 +21,5 @@ int       ft_isalldig(char *str)
             str++;
         else
             return (0);
-    return (0);
+    return (1);
 }

@@ -1,11 +1,14 @@
 #include "lem_in.h"
 
-t_lem	g_lem;
-
 void	lem_in(void)
 {
-	get_ants();
-	build_map();
+	ft_putstr("A\n");
+	if (!get_ants())
+		return ;
+	ft_putstr("B\n");
+	if (!build_map())
+		return ;
+	ft_putstr("C\n");
 }
 
 int		main(void)

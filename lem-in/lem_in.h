@@ -2,15 +2,17 @@
 # define LEM_IN_H
 
 # include "libft/libft.h"
+# include <stdio.h>			//###
 
 # define			START	0x01
 # define			END		0x02
+# define			PATH	0x04
 
 typedef struct		s_room
 {
 	char			*name;
 	struct s_room	*next;
-	struct s_room	**tube;
+	char			*adjc;
 	int				x;
 	int				y;
 	struct s_room	*prev;
@@ -31,6 +33,7 @@ typedef struct		s_path
 **	check - Bit switch for complete input verification,
 **			0x1 : has START
 **			0x2 : has END
+**			0x4 : has path
 */
 
 typedef struct		s_lem
