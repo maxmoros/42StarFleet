@@ -22,6 +22,7 @@ typedef struct		s_path
 {
 	int				step;
 	struct s_path	*next;
+	char			*crumbs;
 }					t_path;
 
 /*

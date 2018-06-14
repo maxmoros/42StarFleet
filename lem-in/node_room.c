@@ -76,6 +76,7 @@ int		count_rooms(void)
 void	print_rooms(void)
 {
 	t_room	*node;
+	int		i;
 
 	node = g_lem.rooms;
 	ft_putstr("\n\tROOM NETWORK\n");
@@ -83,7 +84,12 @@ void	print_rooms(void)
 	{
 		ft_putstr(node->name);
 		ft_putstr("\t: ");
-		ft_putstr(node->adjc);
+		i = -1;
+		while (++i < g_lem.room_count)
+			if (node->adjc[i])
+				ft_putchar('1');
+			else
+				ft_putchar('0');
 		ft_putstr("\n");
 		node = node->next;
 	}
