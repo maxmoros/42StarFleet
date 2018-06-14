@@ -2,13 +2,11 @@
 
 void	lem_in(void)
 {
-	ft_putstr("A\n");
-	if (!get_ants())
-		return ;
-	ft_putstr("B\n");
-	if (!build_map())
-		return ;
-	ft_putstr("C\n");
+	if (!get_ants() || !build_map())
+	{
+		ft_putstr("ERROR\n");
+		exit(1);
+	}
 	print_rooms();
 }
 

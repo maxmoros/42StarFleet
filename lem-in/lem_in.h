@@ -22,7 +22,8 @@ typedef struct		s_path
 {
 	int				step;
 	struct s_path	*next;
-	char			*crumbs;
+	struct s_path	*list;
+	struct t_room	*room;
 }					t_path;
 
 /*
