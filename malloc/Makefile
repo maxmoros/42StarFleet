@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmoros <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/18 18:42:43 by mmoros            #+#    #+#              #
-#    Updated: 2018/07/18 20:30:18 by mmoros           ###   ########.fr        #
+#    Updated: 2018/07/29 21:44:58 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ MALLOC = libft_malloc_${HOSTTYPE}.so
 
 NAME = malloc
 
-SRC =	malloc.c
+SRC =	malloc.c	\
+		free.c
 
 INC = malloc.h
 
