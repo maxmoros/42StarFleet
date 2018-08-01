@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 21:03:15 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/11 09:45:03 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/07/31 21:06:14 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,24 +66,17 @@ void	rotate_player(t_wolf *node)
 
 void	move_player(t_wolf *node)
 {
-	double	delta;
 	double	tmpx;
 	double	tmpy;
 
-	delta = 0.04;
-	tmpx = (node->io->w ? delta * node->plr->dir[0] : 0);
-	tmpy = (node->io->w ? delta * node->plr->dir[1] : 0);
-	tmpx -= (node->io->s ? delta * node->plr->dir[0] : 0);
-	tmpy -= (node->io->s ? delta * node->plr->dir[1] : 0);
-	if (node->plr->pos[0] + tmpx > 0.0 && node->plr->pos[1] + tmpy > 0.0 &&
-			node->plr->pos[0] + tmpx < node->map->dim[0] &&
-			node->plr->pos[1] + tmpy < node->map->dim[1] &&
-			(node->map->xy[(int)(node->plr->pos[0] + tmpx)]
-			[(int)(node->plr->pos[1] + tmpy)] == '0'))
-	{
-		node->plr->pos[0] += tmpx;
+	tmpx = (node->io->w ? DELTA * node->plr->dir[0] : 0);
+	tmpy = (node->io->w ? DELTA * node->plr->dir[1] : 0);
+	tmpx -= (node->io->s ? DELTA * node->plr->dir[0] : 0);
+	tmpy -= (node->io->s ? DELTA * node->plr->dir[1] : 0);
+	if (POSINMAP(node, 1, tmpy) && MAPBLCK(node, 0.0, tmpy) == '0')
 		node->plr->pos[1] += tmpy;
-	}
+	if (POSINMAP(node, 0, tmpx) && MAPBLCK(node, tmpx, 0.0) == '0')
+		node->plr->pos[0] += tmpx;
 	node->plr->z += (node->io->space && node->plr->z < 0.46 ? 0.05 : 0);
 	node->plr->z -= (!node->io->space && node->plr->z > 0.01 ? 0.05 : 0);
 	rotate_player(node);
@@ -91,6 +84,7 @@ void	move_player(t_wolf *node)
 
 void	free_player(t_plr *player)
 {
-	if (player)
-		free(player);
+	player ? free(player) : NULL;
+//	if (player)
+//		free(player);
 }

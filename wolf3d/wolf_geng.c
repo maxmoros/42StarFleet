@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/09 11:00:40 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/11 10:14:04 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/07/31 20:32:32 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ static int		draw(t_wolf *node, int x)
 	bottom = RESY / 2 - tmp / 2 + (int)(RESY * node->plr->z / node->ray->pwdst);
 	while (++y < RESY)
 	{
-		if (y < bottom || y > top)
+		if (y > top)
+			pixel_to_img(node, x, y, 0x00444444);
+		else if (y < bottom)
 			pixel_to_img(node, x, y, 0x00000000);
-//		else if (node->ray->side)
-//			pixel_to_img(node, x, y, 0x00AAFFAA);
 		else
 			pixel_to_img(node, x, y, pick_colour(node));
 	}

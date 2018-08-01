@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   testpf.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/14 12:59:02 by mmoros            #+#    #+#             */
-/*   Updated: 2018/07/30 20:10:13 by mmoros           ###   ########.fr       */
+/*   Created: 2018/07/30 20:08:26 by mmoros            #+#    #+#             */
+/*   Updated: 2018/07/31 19:25:45 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
- 
-int		ft_printf(char *str, ...)
-{
-	t_conv	*node;
-	va_list	ap;
-	char	error;
-	int		sum;
+#include <stdio.h>
 
-	error = 0;
-	node = pf_chomp(str, &error);
-	va_start(ap, str);
-	do_conv(ap, node, &error);
-	sum = sum_printed(node);
-	node = free_conv(node);
-	va_end(ap);
-	return (sum);
+int		main()
+{
+	printf("%s is a test\n", "This");
+	ft_printf("%s is a test\n", "This");
+	printf("%s is a %s\n", "This", "test.");
+	ft_printf("%s is a %s\n", "This", "test");
+
+	ft_printf("%d%d yolo %d%d maxint = %d\n", 4, 2, 0, -0, 0x7FFFFFFF);
+
+	return (0);
 }

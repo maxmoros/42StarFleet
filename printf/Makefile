@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmoros <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 15:34:53 by mmoros            #+#    #+#              #
-#    Updated: 2018/04/30 00:16:30 by mmoros           ###   ########.fr        #
+#    Updated: 2018/07/31 19:09:23 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_printf
+NAME = libftprintf.a
 
 SRC =	ft_printf.c			\
 		node_conv.c			\
@@ -21,9 +21,12 @@ SRC =	ft_printf.c			\
 		pf_bigf1.c			\
 		pf_bigf2.c			\
 		libft/ft_memalloc.c	\
+		libft/ft_math_abs.c	\
 		libft/ft_strlen_c.c	\
+		libft/ft_strlen.c	\
 		libft/ft_strncpy.c	\
 		libft/ft_putstr.c	\
+		libft/ft_putchar.c	\
 		libft/ft_putnbr.c	\
 		libft/ft_puthex.c	\
 		libft/ft_puthex_f.c	\
@@ -34,29 +37,26 @@ SRC =	ft_printf.c			\
 
 
 INC = ft_printf.h
-LIBFT = libft/libft.a
 CC = gcc
 OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
-%.o: %.c $(INC)
-	$(CC) -c -o $@ $< $(CFLAGS)
+%.o: %.c
+	$(CC) $(CFLAGS) -c $^ -o $@
 
 $(NAME): $(OBJ)
-	@make -C libft/
-	@gcc $(CFLAGS) -c $(SRC)
-	@ar rcs libftprintf.a $(OBJ)
+	@/bin/rm -f $(NAME)
+	@ar rcs $(NAME) $(OBJ)
 	@ranlib libftprintf.a
 
 clean:
-	@/bin/rm -f $(OBJ) *.gch
-	@rm *.o
+	@/bin/rm -f $(OBJ)
 	@make clean -C libft/
 
 fclean: clean
 	@/bin/rm -f $(NAME)
 	@make fclean -C libft/
 
-re: fclean all
+re: clean all

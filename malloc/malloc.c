@@ -147,7 +147,6 @@ int				main(void)
 	ft_putchar('\n');
 	ft_putchar('\n');
 	free(yolo2);
-	printf("freed\n");
 	yolo4 = malloc(6);
 	printf("freed\n");
 	yolo4 = "YOLO4\n";

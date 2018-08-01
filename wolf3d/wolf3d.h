@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 16:58:49 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/11 09:44:36 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/07/31 20:58:47 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@
 
 # define RESX 600
 # define RESY 600
+# define DELTA 0.04
+# define DPOS(n, x, d) (n->plr->pos[x] + d)
+# define MAPDIM(n, x) (n->map->dim[x])
+# define MAPBLCK(n, x, y) (n->map->xy[(int)DPOS(n, 0, x)][(int)DPOS(n, 1, y)])
+# define POSINMAP(n, x, d) (DPOS(n, x, d) > 0.0 && DPOS(n, x, d) < MAPDIM(n, x))
+
+
 
 typedef struct		s_map
 {
