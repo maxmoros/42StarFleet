@@ -16,6 +16,7 @@
 # include "libft/libft.h"
 # include <stdarg.h>
 # include <stddef.h>
+# include <stdio.h>
 
 typedef struct		s_conv
 {
