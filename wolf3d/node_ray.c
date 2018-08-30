@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 21:11:08 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/11 10:49:59 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/08/29 18:28:52 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,15 @@ void		compute_ray(t_wolf *node)
 
 	ray = node->ray;
 	ray->hit = 0;
-	while (!ray->hit && ray->mpos[0] >= 0 && ray->mpos[0] < node->map->dim[0]
-					&& ray->mpos[1] >= 0 && ray->mpos[1] < node->map->dim[1])
+	while (!ray->hit && RAY_IN_MAP(0) && RAY_IN_MAP(1))
 	{
 		i = (ray->sdst[0] < ray->sdst[1] ? 0 : 1);
 		ray->sdst[i] += ray->ddst[i];
 		ray->mpos[i] += ray->step[i];
 		ray->side = i;
-		if (ray->mpos[0] >= 0 && ray->mpos[0] < node->map->dim[0]
-					&& ray->mpos[1] >= 0 && ray->mpos[1] < node->map->dim[1])
-				ray->hit = (node->map->xy[ray->mpos[0]][ray->mpos[1]]
-							!= '0' ? 1 : 0);
+		if (RAY_IN_MAP(0) && RAY_IN_MAP(1) && RAY_IN_WALL)
+			ray->hit = 1;
 	}
-	i = ray->side;
 	ray->pwdst = (ray->mpos[i] - node->plr->pos[i] +
 						(1 - ray->step[i]) / 2) / ray->dir[i];
 }
@@ -88,19 +84,6 @@ void		init_ray(t_wolf *node, double camx)
 		}
 	}
 	compute_ray(node);
-}
-
-void		print_ray(t_ray *ray)
-{
-	printf("Ray:\tdir = (%f, %f)\n\t\tsdst = (%f, %f)\n\t\tddst = (%f, %f)\n",
-			ray->dir[0], ray->dir[1],
-			ray->sdst[0], ray->sdst[1],
-			ray->ddst[0], ray->ddst[1]);
-	printf("\t\tstep = (%d, %d)\n\t\tmpos = (%d, %d)\n",
-			ray->step[0], ray->step[1],
-			ray->mpos[0], ray->mpos[1]);
-	printf("\t\tcamx = %f\tside = %d\n\t\tpwdst = %f\n",
-			ray->camx, ray->side, ray->pwdst);
 }
 
 void		free_ray(t_ray *ray)

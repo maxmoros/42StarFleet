@@ -6,36 +6,21 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 16:57:42 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/11 10:30:59 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/08/29 18:28:50 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-#include <time.h>
-#include <stdlib.h>
-#include <time.h>
-
-void	delay(int number_of_seconds)
-{
-	int			mil_sec;
-	clock_t		start;
-
-	start = clock();
-	mil_sec = 1000 * number_of_seconds;
-	while (clock() < start + mil_sec)
-		;
-}
 
 int		key_pressed(int key, t_wolf *node)
 {
-	printf("%d pressed\n", key);
-	if (key == 0)
+	if (key == 0 || key == 123)
 		node->io->a = 1;
-	else if (key == 1)
+	else if (key == 1 || key == 125)
 		node->io->s = 1;
-	else if (key == 2)
+	else if (key == 2 || key == 124)
 		node->io->d = 1;
-	else if (key == 13)
+	else if (key == 13 || key == 126)
 		node->io->w = 1;
 	else if (key == 49)
 		node->io->space = 1;
@@ -46,13 +31,13 @@ int		key_pressed(int key, t_wolf *node)
 
 int		key_released(int key, t_wolf *node)
 {
-	if (key == 0)
+	if (key == 0 || key == 123)
 		node->io->a = 0;
-	else if (key == 1)
+	else if (key == 1 || key == 125)
 		node->io->s = 0;
-	else if (key == 2)
+	else if (key == 2 || key == 124)
 		node->io->d = 0;
-	else if (key == 13)
+	else if (key == 13 || key == 126)
 		node->io->w = 0;
 	else if (key == 49)
 		node->io->space = 0;
@@ -73,7 +58,7 @@ void	wolf3d(int x, int y)
 	t_wolf		*node;
 
 	node = new_wolf_inst(x, y, RESX, RESY);
-	printf("Wolf initialized\n");
+	ft_putstr("Wolf initialized\n\n");
 	print_map(node->map);
 	mlx(node);
 }
@@ -82,5 +67,11 @@ int		main(int ac, char **av)
 {
 	if (ac == 3 && ft_isint(av[1]) && ft_isint(av[2]))
 		wolf3d(ft_atoi(av[1]), ft_atoi(av[2]));
+	else
+	{
+		ft_putstr("\tUsage1: \"cat MAP_FILE | ./wolf3d X_DIM Y_DIM\"\n");
+		ft_putstr("\tUsage2: \"./wolf3d X_DIM Y_DIM\"\n");
+		ft_putstr("\t\tManual input [0]:open [1..3]:wall\n");
+	}
 	return (0);
 }

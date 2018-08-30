@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 16:58:49 by mmoros            #+#    #+#             */
-/*   Updated: 2018/07/31 20:58:47 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/08/29 18:15:53 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "libft/libft.h"
 # include "minilibx_macos/mlx.h"
-# include <stdio.h>
+# include <stdlib.h>
 
 # define RESX 600
 # define RESY 600
@@ -24,8 +24,8 @@
 # define MAPDIM(n, x) (n->map->dim[x])
 # define MAPBLCK(n, x, y) (n->map->xy[(int)DPOS(n, 0, x)][(int)DPOS(n, 1, y)])
 # define POSINMAP(n, x, d) (DPOS(n, x, d) > 0.0 && DPOS(n, x, d) < MAPDIM(n, x))
-
-
+# define RAY_IN_MAP(d) (ray->mpos[d] >= 0 && ray->mpos[d] < node->map->dim[d])
+# define RAY_IN_WALL (node->map->xy[ray->mpos[0]][ray->mpos[1]] != '0')
 
 typedef struct		s_map
 {
@@ -101,7 +101,6 @@ void				free_player(t_plr *player);
 
 t_ray				*new_ray(void);
 void				init_ray(t_wolf *node, double camx);
-void				print_ray(t_ray *ray);
 void				free_ray(t_ray *ray);
 
 t_io				*new_io(void);

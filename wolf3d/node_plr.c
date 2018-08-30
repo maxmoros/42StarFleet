@@ -6,14 +6,14 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 21:03:15 by mmoros            #+#    #+#             */
-/*   Updated: 2018/07/31 21:06:14 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/08/29 18:28:53 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 #include "math.h"
 
-static int		find_pos(t_map *map, t_plr *player)
+static int	find_pos(t_map *map, t_plr *player)
 {
 	int		x;
 	int		y;
@@ -33,7 +33,7 @@ static int		find_pos(t_map *map, t_plr *player)
 	return (0);
 }
 
-t_plr	*new_player(t_wolf *node)
+t_plr		*new_player(t_wolf *node)
 {
 	t_plr	*player;
 
@@ -51,7 +51,7 @@ t_plr	*new_player(t_wolf *node)
 	return (free_wolf_inst(node, NULL));
 }
 
-void	rotate_player(t_wolf *node)
+void		rotate_player(t_wolf *node)
 {
 	double	rad;
 
@@ -64,7 +64,7 @@ void	rotate_player(t_wolf *node)
 	node->plr->pln[1] = 0.66 * sin(rad + M_PI / 2);
 }
 
-void	move_player(t_wolf *node)
+void		move_player(t_wolf *node)
 {
 	double	tmpx;
 	double	tmpy;
@@ -82,9 +82,7 @@ void	move_player(t_wolf *node)
 	rotate_player(node);
 }
 
-void	free_player(t_plr *player)
+void		free_player(t_plr *player)
 {
 	player ? free(player) : NULL;
-//	if (player)
-//		free(player);
 }

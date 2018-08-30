@@ -6,19 +6,19 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/07 21:07:01 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/11 10:50:02 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/08/29 18:28:46 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-t_wolf		*new_wolf_inst(int x, int y, unsigned int resx, unsigned int resy)
+t_wolf	*new_wolf_inst(int x, int y, unsigned int resx, unsigned int resy)
 {
 	t_wolf		*node;
 
 	if (!(node = (t_wolf*)ft_memalloc(sizeof(t_wolf))))
 		return (NULL);
-	printf("Initializing Wolf\n");
+	ft_putstr("\nInitializing Wolf\n");
 	if (!(node->map = new_map(x, y)) ||
 		!(node->plr = new_player(node)) ||
 		!(node->ray = new_ray()) ||

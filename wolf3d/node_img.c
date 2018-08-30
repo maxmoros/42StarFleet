@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 17:39:57 by mmoros            #+#    #+#             */
-/*   Updated: 2018/05/10 19:17:58 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/08/29 18:28:57 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ t_img	*new_img(t_wolf *node)
 	node->img->ptr = mlx_new_image(node->mlx, RESX, RESY);
 	node->img->img = (int*)mlx_get_data_addr(node->img->ptr, &node->img->bits,
 										&node->img->line, &node->img->endian);
-	printf("initializing t_img\n");
-//	init_img(node);
+	ft_putstr("\tt_img successful\n");
 	return (img);
 }
 
