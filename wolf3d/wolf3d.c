@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 16:57:42 by mmoros            #+#    #+#             */
-/*   Updated: 2018/08/30 19:21:13 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/08/30 19:51:54 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int		key_pressed(int key, t_wolf *node)
 {
-	ft_putnbr(key);
-	ft_putchar('\n');
 	if (key == 0 || key == 123)
 		node->io->a = 1;
 	else if (key == 1 || key == 125)
