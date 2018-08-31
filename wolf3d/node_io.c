@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/09 10:38:15 by mmoros            #+#    #+#             */
-/*   Updated: 2018/08/29 18:28:56 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/08/30 19:18:28 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ t_io	*new_io(void)
 
 	if (!(node = (t_io*)ft_memalloc(sizeof(t_io))))
 		return (NULL);
+	node->q = 0;
+	node->e = 0;
 	node->a = 0;
 	node->s = 0;
 	node->d = 0;

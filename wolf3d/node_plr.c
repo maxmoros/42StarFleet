@@ -6,12 +6,11 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 21:03:15 by mmoros            #+#    #+#             */
-/*   Updated: 2018/08/29 18:28:53 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/08/30 19:43:58 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-#include "math.h"
 
 static int	find_pos(t_map *map, t_plr *player)
 {
@@ -73,6 +72,10 @@ void		move_player(t_wolf *node)
 	tmpy = (node->io->w ? DELTA * node->plr->dir[1] : 0);
 	tmpx -= (node->io->s ? DELTA * node->plr->dir[0] : 0);
 	tmpy -= (node->io->s ? DELTA * node->plr->dir[1] : 0);
+	tmpx += (node->io->q ? DELTA * node->plr->dir[1] : 0);
+	tmpy -= (node->io->q ? DELTA * node->plr->dir[0] : 0);
+	tmpx -= (node->io->e ? DELTA * node->plr->dir[1] : 0);
+	tmpy += (node->io->e ? DELTA * node->plr->dir[0] : 0);
 	if (POSINMAP(node, 1, tmpy) && MAPBLCK(node, 0.0, tmpy) == '0')
 		node->plr->pos[1] += tmpy;
 	if (POSINMAP(node, 0, tmpx) && MAPBLCK(node, tmpx, 0.0) == '0')

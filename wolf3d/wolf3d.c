@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 16:57:42 by mmoros            #+#    #+#             */
-/*   Updated: 2018/08/29 18:28:50 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/08/30 19:21:13 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int		key_pressed(int key, t_wolf *node)
 {
+	ft_putnbr(key);
+	ft_putchar('\n');
 	if (key == 0 || key == 123)
 		node->io->a = 1;
 	else if (key == 1 || key == 125)
@@ -22,6 +24,10 @@ int		key_pressed(int key, t_wolf *node)
 		node->io->d = 1;
 	else if (key == 13 || key == 126)
 		node->io->w = 1;
+	else if (key == 12)
+		node->io->q = 1;
+	else if (key == 14)
+		node->io->e = 1;
 	else if (key == 49)
 		node->io->space = 1;
 	else if (key == 53)
@@ -39,6 +45,10 @@ int		key_released(int key, t_wolf *node)
 		node->io->d = 0;
 	else if (key == 13 || key == 126)
 		node->io->w = 0;
+	else if (key == 12)
+		node->io->q = 0;
+	else if (key == 14)
+		node->io->e = 0;
 	else if (key == 49)
 		node->io->space = 0;
 	return (1);

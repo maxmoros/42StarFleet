@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/06 16:58:49 by mmoros            #+#    #+#             */
-/*   Updated: 2018/08/29 18:15:53 by mmoros           ###   ########.fr       */
+/*   Updated: 2018/08/30 19:41:31 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,12 @@
 # include "libft/libft.h"
 # include "minilibx_macos/mlx.h"
 # include <stdlib.h>
+# include <math.h>
 
 # define RESX 600
 # define RESY 600
+# define TEXX 400
+# define TEXY 400
 # define DELTA 0.04
 # define DPOS(n, x, d) (n->plr->pos[x] + d)
 # define MAPDIM(n, x) (n->map->dim[x])
@@ -51,6 +54,7 @@ typedef struct		s_ray
 	int				mpos[2];
 	double			pwdst;
 	double			camx;
+	double			wallx;
 	char			side;
 	char			hit;
 }					t_ray;
@@ -61,6 +65,8 @@ typedef struct		s_io
 	char			s;
 	char			d;
 	char			w;
+	char			q;
+	char			e;
 	char			space;
 	char			esc;
 }					t_io;
@@ -72,6 +78,8 @@ typedef struct		s_img
 	int				bits;
 	int				line;
 	int				endian;
+	int				x;
+	int				y;
 }					t_img;
 
 typedef struct		s_wolf
@@ -81,6 +89,7 @@ typedef struct		s_wolf
 	t_ray			*ray;
 	t_io			*io;
 	t_img			*img;
+	t_img			*tex[4];
 	void			*mlx;
 	void			*window;
 }					t_wolf;
@@ -106,9 +115,10 @@ void				free_ray(t_ray *ray);
 t_io				*new_io(void);
 void				free_io(t_io *io);
 
-t_img				*new_img(t_wolf *node);
+t_img				*new_img(t_wolf *nodei, char tex, char *filename);
 void				init_img(t_wolf *node);
-void				pixel_to_img(t_wolf *node, int x, int y, int colour);
+void				pixel_to_img(t_img *img, int x, int y, int colour);
+int					img_to_pixel(t_img *img, int x, int y);
 void				free_img(t_wolf *wolf);
 
 t_wolf				*new_wolf_inst(int x, int y,
