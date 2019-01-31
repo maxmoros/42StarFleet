@@ -24,8 +24,8 @@ class NeuralNet:
     def net(self, W, B, inputs):
         Hull_data = self.compute_hulls(W[60:68], B[28:36], inputs[0:4])
         Li_data = self.compute_lidar(inputs[14:24])
-        Leg_data = self.compute_legs(W[68:128], B[36:68], inputs[4:14], Hull_data)
-        DATA = self.compute_combination(W[128:144], B[68:72], Li_data, Leg_data, inputs[8], inputs[13])
+        Leg_data = self.compute_legs(W[68:132], B[36:72], inputs[4:14], Hull_data)
+        DATA = self.compute_combination(W[132:148], B[72:76], Li_data, Leg_data, inputs[8], inputs[13])
         return self.output_layer(W[0:60], B[0:28], DATA)
 
     #takes 16W, 4B, 3Li, 4Lg, 2S (leg contacts)
@@ -52,7 +52,7 @@ class NeuralNet:
         Hull_D = self.relu_sum(W[6:8], B[6:8], S[3])
         return Hull_A, Hull_B, Hull_C, Hull_D
 
-    #takes, 60W, 32B, 10S, 4H.
+    #takes, 64W, 36B, 10S, 4H.
     def compute_legs(self, W, B, S, H):
         if S[9] < 0.5:
             L1a, L2a = self.leg_net(W[0:14], B[0:7], S[0], S[2], H[0:2])
@@ -74,14 +74,14 @@ class NeuralNet:
             L1 = tanh(L1 + S[4] * self.relu(L1 * W[56] + B[28]))
             L2 = tanh(L2 + S[4] * self.relu(L2 * W[57] + B[29]))
         else:
-            L1 = tanh(L1 + S[4] * self.relu(L1 * W[58] + B[30]))
-            L2 = tanh(L2 + S[4] * self.relu(L2 * W[59] + B[31]))
+            L1 = tanh(L1 + S[4] * self.relu(L1 * W[58] + B[30]) + H[1] * W[60] + B[32])    #ADD HULL ANGLE HERE
+            L2 = tanh(L2 + S[4] * self.relu(L2 * W[59] + B[31]) + H[1] * W[61] + B[33])    #HERE
         if S[4] < 0.5:
             L3 = tanh(L3 + S[9] * self.relu(L3 * W[56] + B[28]))
             L4 = tanh(L4 + S[9] * self.relu(L4 * W[57] + B[29]))
         else:
-            L3 = tanh(L3 + S[9] * self.relu(L3 * W[58] + B[30]))
-            L4 = tanh(L4 + S[9] * self.relu(L4 * W[59] + B[31]))
+            L3 = tanh(L3 + S[9] * self.relu(L3 * W[58] + B[30]) + H[3] * W[62] + B[34])    #HERE
+            L4 = tanh(L4 + S[9] * self.relu(L4 * W[59] + B[31]) + H[3] * W[63] + B[35])    #AND HERE
         return L1, L2, L3, L4
 
     #takes 14W, 7B, 2S, 2H

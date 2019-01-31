@@ -6,34 +6,45 @@
 #    By: mmoros <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/16 18:50:59 by mmoros            #+#    #+#              #
-#    Updated: 2018/05/02 22:23:37 by mmoros           ###   ########.fr        #
+#    Updated: 2019/01/30 17:07:11 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = lem-in
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+INC_FLAGS = -I $(LIBDIR) -I $(IDIR)
 
-SRC =	lem_in.c	\
+ODIR = .objects
+SDIR = srcs
+IDIR = inc
+LIBDIR = libft/inc
+
+FILES =	lem_in.c	\
 		lem_input.c	\
 		node_lem.c	\
 		node_room.c
 
-INC = lem_in.h
+LIBS = libft/libft.a
 
-CC = gcc
-
-OBJ = $(SRC:.c=.o)
-
-CFLAGS = -Wall -Wextra -Werror
+OBJ = $(patsubst %.c, $(ODIR)/%.o, $(FILES))
+SRC = $(patsubst %.c, $(SDIR)/%.c, $(FILES))
 
 all: $(NAME)
 
-%.o: %.c $(INC)
-	$(CC) -c -o $@ $< $(CFLAGS)
+$(NAME): $(LIBS) $(OBJ) $(ODIR)
+	$(CC) $(CFLAGS) $(INC_FLAGS) -o $(NAME) $(SRC) $(LIBS) #HOW do i use obj instead of src?
 
-$(NAME): $(OBJ)
+$(ODIR)/%.o:
+	$(CC) $(CFLAGS) -o $@ $(SRC) $(INC_FLAGS) $(LIBS)
+
+$(ODIR):
+	mkdir -p $(ODIR)
+
+$(LIBS): libft
 	@make -C libft/
-	@gcc $(CFLAGS) -c $(SRC) $(INC)
-	@gcc -Llibft/ -lft $(OBJ) -o $(NAME)
+
+.PHONY: clean re fclean
 
 clean:
 	@/bin/rm -f $(OBJ) *.gch
@@ -44,3 +55,8 @@ fclean: clean
 	@make fclean -C libft/
 
 re: fclean all
+
+norm:
+	@printf "%b" "$(LIB_COLOR)$(NAME): Checking Norm...\n$(NO_COLOR)"
+	@norminette $(SRC) $(INCLUDES)
+	@make -C libft norm

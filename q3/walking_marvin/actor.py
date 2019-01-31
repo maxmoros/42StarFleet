@@ -1,8 +1,8 @@
 import numpy as np
 import random
 
-WEIGHTS_SHAPE = [144,]
-BIASES_SHAPE = [72,]
+WEIGHTS_SHAPE = [632,]
+BIASES_SHAPE = [632,]
 
 class Actor:
     W = []
@@ -27,6 +27,13 @@ class Actor:
 
     def randomize_actor(self):
         for i in range(len(self.W)):
-            self.W[i] = random.uniform(-0.6, 0.6)
+            self.W[i] = random.uniform(-1.0, 1.0)
         for i in range(len(self.B)):
-            self.B[i] = random.uniform(-0.6, 0.6)
+            self.B[i] = random.uniform(-1.0, 1.0)
+'''     #Stupid since permanent.
+    def dropout_layer(self, droupout=0.1):
+        for i in range(len(self.W)):
+            x = random.randint(0, 1 // dropout)
+            if x == 0:
+                self.
+'''
