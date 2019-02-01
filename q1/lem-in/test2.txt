@@ -1,0 +1,15 @@
+3
+##start
+A 2 3
+B 3 4
+C 4 5
+D 5 6
+E 7 6
+##end
+F 10 4
+A-B
+B-C
+C-E
+E-F
+B-D
+D-F

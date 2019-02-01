@@ -27,13 +27,13 @@ int		line_path(char *line)
 
 	ret = 1;
 	parts = ft_strsplit(line, '-');
-	i = 0;
-	while (parts[i])
-		i++;
+	i = -1;
+	while (parts[++i])
+		;
 	if (i != 2 || !valid_name(parts[0]) || !valid_name(parts[1]))
 		ret = 0;
-	else if (g_lem.check & PATH)
-	{
+	else if (g_lem.check & PATH)//only adds path if data_line sets PATH.
+	{		//Otherwise line_path only confirms if line is path.
 		link_rooms(parts[0], parts[1]);
 		printf("link from %s to %s\n", parts[0], parts[1]);
 	}
@@ -42,7 +42,7 @@ int		line_path(char *line)
 	free(parts);
 	return (ret);
 }
-
+//Beautiful function. ignores comments and does error checking.
 int		ht_line(char *line)
 {
 	t_room	*node;
@@ -72,23 +72,23 @@ int		ht_line(char *line)
 
 int		data_line(char *line)
 {
-	if (!(g_lem.check & PATH) && !line_path(line))
+	if (!(g_lem.check & PATH) && !line_path(line))//confirm this could be room
 	{
-		if (g_lem.check & START)
-		{
+		if (g_lem.check & START)//CONFIRM WHAT IS GOING ON HERE
+		{				//Is it injecting rooms after start?
 			if (!(g_lem.rooms->next = line_room(line, g_lem.rooms->next)))
 				return (0);
 		}
 		else if (!(g_lem.rooms = line_room(line, g_lem.rooms)))
 			return (0);
 	}
-	else if (!(g_lem.check & PATH))
+	else if (!(g_lem.check & PATH))//This happens on first occurence of a path.
 	{
 		g_lem.check |= PATH;
-		if (!count_rooms() || !line_path(line))
+		if (!count_rooms() || !line_path(line))//count room allocates adjacencies 
 			return (0);
 	}
-	else if (!line_path(line))
+	else if (!line_path(line))//adds path.
 		return (0);
 	return (1);
 }

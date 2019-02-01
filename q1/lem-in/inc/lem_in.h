@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/13 09:11:03 by mmoros            #+#    #+#             */
-/*   Updated: 2019/01/30 17:06:25 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/01/31 19:49:27 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct		s_lem
 	struct s_room	*rooms;
 	struct s_path	*paths;
 	char			*occupied;
+	char			**map;
 	int				room_count;
 	int				ants;
 	char			check;
@@ -66,6 +67,7 @@ extern t_lem		g_lem;
 **Read/Verify input and build rooms.
 */
 
+void				init_lem(void);
 int					get_ants();
 int					build_map();
 
@@ -73,6 +75,7 @@ t_room				*line_room(char *line, t_room *next);
 int					valid_name(char *name);
 int					count_rooms();
 void				print_rooms();
+int					build_logic_map();
 
 
 

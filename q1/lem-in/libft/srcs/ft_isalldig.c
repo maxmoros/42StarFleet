@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 19:23:13 by mmoros            #+#    #+#             */
-/*   Updated: 2018/02/28 20:17:41 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/01/30 19:37:55 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@ int       ft_isalldig(char *str)
 {
     if (*str == '+' || *str == '-')
         str++;
-    while (*str)
-        if (ft_isdigit(*str))
-            str++;
-        else
-            return (0);
+    while (ft_isdigit(*str))
+		str++;
+    if (*str)
+		return (0);
     return (1);
 }

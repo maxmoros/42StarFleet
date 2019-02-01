@@ -24,8 +24,8 @@ t_room	*line_room(char *line, t_room *next)
 	parts = ft_strsplit(line, ' ');
 							//`		ft_putstr("\t\taa\n");
 	i = 0;
-	while (parts[i])
-		i++;
+	while (parts[++i])
+		;
 							//		ft_putstr("\t\tbb\n");
 	node = NULL;
 	if (i == 3 && ft_isint(parts[1]) && ft_isint(parts[2]))
@@ -87,9 +87,9 @@ void	print_rooms(void)
 		i = -1;
 		while (++i < g_lem.room_count)
 			if (node->adjc[i])
-				ft_putchar('1');
+				ft_putchar('.');
 			else
-				ft_putchar('0');
+				ft_putchar('x');
 		ft_putstr("\n");
 		node = node->next;
 	}
