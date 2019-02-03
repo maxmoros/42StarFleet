@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lem_input.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/02/02 17:50:39 by mmoros            #+#    #+#             */
+/*   Updated: 2019/02/02 19:36:09 by mmoros           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
-void	link_rooms(char *room1, char *room2)
+static void		link_rooms(char *room1, char *room2)
 {
 	int		r1;
 	int		r2;
@@ -19,7 +31,7 @@ void	link_rooms(char *room1, char *room2)
 	node2->adjc[r1] = 1;
 }
 
-int		line_path(char *line)
+static int		line_path(char *line)
 {
 	char	**parts;
 	int		i;
@@ -32,27 +44,33 @@ int		line_path(char *line)
 		;
 	if (i != 2 || !valid_name(parts[0]) || !valid_name(parts[1]))
 		ret = 0;
-	else if (g_lem.check & PATH)//only adds path if data_line sets PATH.
-	{		//Otherwise line_path only confirms if line is path.
+	else if (g_lem.check & PATH)
+	{
 		link_rooms(parts[0], parts[1]);
-		printf("link from %s to %s\n", parts[0], parts[1]);
+		ft_putstr("link from ");
+		ft_putstr(parts[0]);
+		ft_putstr(" to ");
+		ft_putstr(parts[1]);
+		ft_putstr("\n");
 	}
 	while (i-- > 0)
 		free(parts[i]);
 	free(parts);
 	return (ret);
 }
-//Beautiful function. ignores comments and does error checking.
-int		ht_line(char *line)
+
+static int		ht_line(char *line)
 {
 	t_room	*node;
 
+	ft_putstr(line);
+	ft_putstr("\n");
 	if (!ft_strcmp(line, "##start"))
 	{
-		if ((g_lem.check & 0x01)
-				|| !(g_lem.check |= 0x01)
+		if ((g_lem.check & 0x01) || !(g_lem.check |= 0x01)
 				|| get_next_line(0, &line) != 1
-				|| !(g_lem.rooms = line_room(line, g_lem.rooms)))
+				|| !(g_lem.rooms = line_room(line, g_lem.rooms))
+				|| free_ret(line, 0))
 			return (0);
 	}
 	else if (!ft_strcmp(line, "##end"))
@@ -61,47 +79,50 @@ int		ht_line(char *line)
 		while (node && node->next)
 			node = node->next;
 		if ((g_lem.check & 0x02) || !(g_lem.check |= 0x02)
-				|| get_next_line(0 ,&line) != 1)
+				|| get_next_line(0, &line) != 1)
 			return (0);
-		if ((node && !(node->next = line_room(line, NULL)))
-				|| (!node && !(g_lem.rooms = line_room(line, NULL))))
+		if ((node && !(node->next = line_room(line, NULL))) || (!node &&
+				!(g_lem.rooms = line_room(line, NULL))) || free_ret(line, 0))
 			return (0);
 	}
 	return (1);
 }
 
-int		data_line(char *line)
+static int		data_line(char *line)
 {
-	if (!(g_lem.check & PATH) && !line_path(line))//confirm this could be room
+	if (!(g_lem.check & PATH) && !line_path(line))
 	{
-		if (g_lem.check & START)//CONFIRM WHAT IS GOING ON HERE
-		{				//Is it injecting rooms after start?
+		if (g_lem.check & START)
+		{
 			if (!(g_lem.rooms->next = line_room(line, g_lem.rooms->next)))
 				return (0);
 		}
 		else if (!(g_lem.rooms = line_room(line, g_lem.rooms)))
 			return (0);
 	}
-	else if (!(g_lem.check & PATH))//This happens on first occurence of a path.
+	else if (!(g_lem.check & PATH))
 	{
 		g_lem.check |= PATH;
-		if (!count_rooms() || !line_path(line))//count room allocates adjacencies 
+		if (!count_rooms() || !line_path(line))
 			return (0);
 	}
-	else if (!line_path(line))//adds path.
+	else if (!line_path(line))
 		return (0);
 	return (1);
 }
 
-int		build_map(void)
+int				build_map(void)
 {
 	char	*line;
 
+	ft_putstr("\n   BUILDING MAP\n");
 	while (get_next_line(0, &line) == 1 && line[0])
 	{
 		if (!(line[0] == '#' ? ht_line(line) : data_line(line)))
 		{
-			printf("Invalid line : \"%s\"\n", line);
+			ft_putstr("Invalid line : \"");
+			ft_putstr(line);
+			ft_putstr("\"\n");
 			free(line);
 			return (0);
 		}

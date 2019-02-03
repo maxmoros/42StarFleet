@@ -1,47 +1,82 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   node_path.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/02/02 17:44:47 by mmoros            #+#    #+#             */
+/*   Updated: 2019/02/02 19:01:14 by mmoros           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
-t_path  *new_path(t_path *next, t_room *room, int steps)
+static t_path	*new_path(int length)
 {
-	t_path  *node;
+	t_path	*node;
 
 	if (!(node = (t_path*)ft_memalloc(sizeof(t_path))))
 		return (NULL);
-	node->room = room;
-	node->steps = steps;
+	if (!(node->path = (char**)ft_memalloc(sizeof(char*) * (length + 2))))
+		return (NULL);
+	node->path[length + 1] = NULL;
+	node->length = length;
 	return (node);
 }
 
-t_room	*get_room(int index)
+int				free_ret(char *line, int ret)
 {
-	t_room	*node;
-
-	node = g_lem.rooms;
-	while (index-- && node->next)
-		node = node->next;
-	return (node);
+	free(line);
+	return (ret);
 }
 
-void	advance_paths(t_path *start)
+static void		backtrack(void)
 {
-	t_path	*node;
-	int		i;
+	int		room_num;
+	int		door_num;
+	int		step;
 
-	node = start;
-	while (node)
+	step = g_lem.path->length;
+	room_num = g_lem.room_count - 1;
+	g_lem.path->path[step] = get_room(room_num)->name;
+	while (room_num)
 	{
-		i = -1;
-		while (++i < g_lem.room_count)
-		{
-			
-		}
+		door_num = -1;
+		while (g_lem.map[room_num][++door_num] != step)
+			;
+		g_lem.path->path[--step] = get_room(door_num)->name;
+		room_num = door_num;
 	}
 }
 
-t_path	*find_path(void)
+static void		print_path(void)
 {
-	t_path	*node;
+	char	**path;
 
-	node = new_path(NULL, get_room(g_lem.room_count - 1), 0);
-	g_lem.paths = node;
-	advance_paths(node);
+	path = g_lem.path->path;
+	ft_putstr("\n   SHORTEST PATH\n");
+	while (*path)
+	{
+		ft_putstr(*path++);
+		if (*path)
+			ft_putstr("->");
+	}
+	ft_putstr("\n");
+}
+
+void			map_path(void)
+{
+	int		min_length;
+	int		i;
+
+	min_length = g_lem.room_count;
+	i = -1;
+	while (++i < g_lem.room_count)
+		if (g_lem.map[g_lem.room_count - 1][i] > 0 &&
+				g_lem.map[g_lem.room_count - 1][i] < min_length)
+			min_length = g_lem.map[g_lem.room_count - 1][i];
+	g_lem.path = new_path(min_length);
+	backtrack();
+	print_path();
 }

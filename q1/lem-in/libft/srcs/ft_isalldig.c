@@ -6,19 +6,19 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 19:23:13 by mmoros            #+#    #+#             */
-/*   Updated: 2019/01/30 19:37:55 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/02/02 18:35:54 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int       ft_isalldig(char *str)
+int		ft_isalldig(char *str)
 {
-    if (*str == '+' || *str == '-')
-        str++;
-    while (ft_isdigit(*str))
+	if (*str == '+' || *str == '-')
 		str++;
-    if (*str)
+	while (ft_isdigit(*str))
+		str++;
+	if (*str)
 		return (0);
-    return (1);
+	return (1);
 }

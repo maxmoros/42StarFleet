@@ -1,54 +1,97 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   node_lem.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/02/02 17:47:57 by mmoros            #+#    #+#             */
+/*   Updated: 2019/02/02 18:27:40 by mmoros           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
 t_lem	g_lem;
 
-void    init_lem()
+void			init_lem(void)
 {
-    g_lem.rooms = NULL;
-    g_lem.paths = NULL;
-    g_lem.ants = 0;
-    g_lem.check = 0;
+	g_lem.rooms = NULL;
+	g_lem.path = NULL;
+	g_lem.ants = 0;
+	g_lem.check = 0;
 }
 
-int     get_ants()
+int				get_ants(void)
 {
-    char    *line;
+	char	*line;
 
-    printf("Getting ants\n");
-    if (get_next_line(0, &line) < 1)
-        return (0);
-    while (line[0] == '#' && line[1] != '#')
-        if (get_next_line(1, &line) < 1)
-            return (0);
-    if (!ft_isint(line) || !ft_isalldig(line))
-        return (0);
-    g_lem.ants = ft_atoi(line);
-    printf("Number of ants = %d\n", g_lem.ants);
-    return (g_lem.ants > 0 ? 1 : 0);
+	ft_putstr("\n   GETTING ANTS\n");
+	if (get_next_line(0, &line) < 1)
+		return (0);
+	while (line[0] == '#' && line[1] != '#')
+		if (get_next_line(1, &line) < 1)
+			return (0);
+	if (!ft_isint(line) || !ft_isalldig(line))
+		return (0);
+	g_lem.ants = ft_atoi(line);
+	ft_putstr("Number of ants = ");
+	ft_putnbr(g_lem.ants);
+	ft_putstr("\n");
+	free(line);
+	return (g_lem.ants > 0 ? 1 : 0);
 }
 
-int		build_logic_map(void)
+t_room			*get_room(int index)
 {
-	char	**map;
 	t_room	*room;
+
+	if (index < 0 || index >= g_lem.room_count)
+		return (NULL);
+	room = g_lem.rooms;
+	while (index-- && room->next)
+		room = room->next;
+	return (room);
+}
+
+static void		print_ants(int *pos)
+{
 	int		i;
 
-	if (!(map = (char**)ft_memalloc(sizeof(char) * g_lem.room_count)))
-		return (0);
-	i = -1;
-	room = g_lem.rooms;
-	while (room && ++i < g_lem.room_count)
-	{
-		if (!(map[i] = (char*)ft_memalloc(sizeof(char) * g_lem.room_count)))
-			return (0);
-		ft_strcpy(map[i], room->adjc);
-		room = room->next;
-	}
-	g_lem.map = map;
-	return (1);
+	i = g_lem.path->length;
+	while (i-- > 0)
+		if (pos[i] > 0 && pos[i] <= g_lem.ants)
+		{
+			ft_putstr("L");
+			ft_putnbr(pos[i]);
+			ft_putchar('-');
+			ft_putstr(g_lem.path->path[i + 1]);
+			if (i > 0 && pos[i - 1] <= g_lem.ants)
+				ft_putchar(' ');
+		}
+	ft_putchar('\n');
 }
 
-int		traverse_map(void)
+void			move_ants(void)
 {
-	return (0);	
+	int		*pos;
+	int		i;
+	int		j;
+
+	ft_putstr("\n   MOVING ANTS\n");
+	if (!(pos = (int*)ft_memalloc(sizeof(int) * (g_lem.path->length))))
+		return ;
+	i = -1;
+	while (++i < g_lem.path->length)
+		pos[i] = -i;
+	j = g_lem.path->length + g_lem.ants;
+	while (--j)
+	{
+		i = -1;
+		while (++i < g_lem.path->length)
+			pos[i]++;
+		print_ants(pos);
+	}
+	free(pos);
+	ft_putstr("\n   COMPLETED\n");
 }

@@ -6,7 +6,7 @@
 #    By: mmoros <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/16 18:50:59 by mmoros            #+#    #+#              #
-#    Updated: 2019/01/30 17:07:11 by mmoros           ###   ########.fr        #
+#    Updated: 2019/02/02 18:43:04 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,11 +21,15 @@ IDIR = inc
 LIBDIR = libft/inc
 
 FILES =	lem_in.c	\
+		lemogic.c	\
 		lem_input.c	\
 		node_lem.c	\
+		node_path.c	\
 		node_room.c
 
 LIBS = libft/libft.a
+
+VPATH = srcs
 
 OBJ = $(patsubst %.c, $(ODIR)/%.o, $(FILES))
 SRC = $(patsubst %.c, $(SDIR)/%.c, $(FILES))
@@ -33,9 +37,9 @@ SRC = $(patsubst %.c, $(SDIR)/%.c, $(FILES))
 all: $(NAME)
 
 $(NAME): $(LIBS) $(OBJ) $(ODIR)
-	$(CC) $(CFLAGS) $(INC_FLAGS) -o $(NAME) $(SRC) $(LIBS) #HOW do i use obj instead of src?
+	$(CC) $(CFLAGS) $(INC_FLAGS) -o $(NAME) $(SRC) $(LIBS) 
 
-$(ODIR)/%.o:
+$(ODIR)/%.o: $(ODIR) %.c
 	$(CC) $(CFLAGS) -o $@ $(SRC) $(INC_FLAGS) $(LIBS)
 
 $(ODIR):
@@ -55,8 +59,3 @@ fclean: clean
 	@make fclean -C libft/
 
 re: fclean all
-
-norm:
-	@printf "%b" "$(LIB_COLOR)$(NAME): Checking Norm...\n$(NO_COLOR)"
-	@norminette $(SRC) $(INCLUDES)
-	@make -C libft norm

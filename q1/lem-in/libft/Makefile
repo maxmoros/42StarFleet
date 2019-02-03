@@ -6,7 +6,7 @@
 #    By: mmoros <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 15:34:53 by mmoros            #+#    #+#              #
-#    Updated: 2019/01/30 20:10:03 by mmoros           ###   ########.fr        #
+#    Updated: 2019/02/02 18:47:58 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -106,11 +106,11 @@ VPATH = $(SDIR)
 
 all: $(NAME)
 
-$(NAME): $(ODIR) $(OBJ) 
+$(NAME): $(OBJ) 
 	@ar rcs $(NAME) $(OBJ)
 	@ranlib $(NAME)
 
-$(ODIR)/%.o: %.c
+$(ODIR)/%.o: %.c $(ODIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(ODIR):
@@ -125,8 +125,3 @@ fclean: clean
 	@/bin/rm -f $(NAME)
 
 re: fclean all
-
-norm:
-	@printf "%b" "$(LIB_COLOR)$(NAME): Checking Norm...\n$(NO_COLOR)"
-	@norminette $(SRC) $(INCLUDES)
-	@make -C libft norm

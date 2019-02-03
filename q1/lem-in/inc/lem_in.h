@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/13 09:11:03 by mmoros            #+#    #+#             */
-/*   Updated: 2019/01/31 19:49:27 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/02/02 18:29:37 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 # define LEM_IN_H
 
 # include "libft.h"
-# include <stdio.h>			//###
 
-# define			START	0x01
-# define			END		0x02
-# define			PATH	0x04
+# define START	0x01
+# define END	0x02
+# define PATH	0x04
 
 typedef struct		s_room
 {
@@ -27,15 +26,12 @@ typedef struct		s_room
 	char			*adjc;
 	int				x;
 	int				y;
-	struct s_room	*prev;
 }					t_room;
 
 typedef struct		s_path
 {
-	int				step;
-	struct s_path	*next;
-	struct s_path	*list;
-	struct t_room	*room;
+	char			**path;
+	int				length;
 }					t_path;
 
 /*
@@ -53,9 +49,8 @@ typedef struct		s_path
 typedef struct		s_lem
 {
 	struct s_room	*rooms;
-	struct s_path	*paths;
-	char			*occupied;
-	char			**map;
+	struct s_path	*path;
+	int				**map;
 	int				room_count;
 	int				ants;
 	char			check;
@@ -63,24 +58,19 @@ typedef struct		s_lem
 
 extern t_lem		g_lem;
 
-/*
-**Read/Verify input and build rooms.
-*/
-
 void				init_lem(void);
-int					get_ants();
-int					build_map();
+int					get_ants(void);
+int					build_map(void);
 
 t_room				*line_room(char *line, t_room *next);
 int					valid_name(char *name);
-int					count_rooms();
-void				print_rooms();
-int					build_logic_map();
-
-
-
-/*
-**Connect all rooms via tube list.
-*/
+int					count_rooms(void);
+void				print_rooms(void);
+t_room				*get_room(int index);
+int					build_logic_map(void);
+int					traverse_map(void);
+void				map_path(void);
+void				move_ants(void);
+int					free_ret(char *line, int ret);
 
 #endif
