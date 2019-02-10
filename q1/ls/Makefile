@@ -6,33 +6,45 @@
 #    By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/16 18:50:59 by mmoros            #+#    #+#              #
-#    Updated: 2018/05/05 11:57:03 by mmoros           ###   ########.fr        #
+#    Updated: 2019/02/03 08:01:38 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ls
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -I $(LIBDIR) -I $(IDIR)
 
-SRC =	ls.c		\
+ODIR = .objects
+SDIR = srcs
+IDIR = inc
+LIBDIR = libft/inc
+
+FILES =	ls.c		\
 		ls_print.c	\
 		node_dir.c
 
-INC = ls.h
+LIBS = libft/libft.a
 
-CC = gcc
+VPATH = srcs
 
-OBJ = $(SRC:.c=.o)
-
-CFLAGS = -Wall -Wextra -Werror
+OBJ = $(patsubst %.c, $(ODIR)/%.o, $(FILES))
+SRC = $(patsubst %.c, $(SDIR)/%.c, $(FILES))
 
 all: $(NAME)
 
-%.o: %.c $(INC)
-	$(CC) -c -o $@ $< $(CFLAGS)
+$(NAME): $(LIBS) $(OBJ) $(ODIR)
+	$(CC) $(CFLAGS) $(INC_FLAGS) -o $(NAME) $(SRC) $(LIBS)
 
-$(NAME): $(OBJ)
+$(ODIR)/%.o: $(ODIR) %.c
+	$(CC) $(CFLAGS) -o $@ $(SRC) $(INC_FLAGS) $(LIBS)
+
+$(ODIR):
+	mkdir -p $(ODIR)
+
+$(LIBS): libft
 	@make -C libft/
-	@gcc $(CFLAGS) -c $(SRC) $(INC)
-	@gcc -Llibft/ -lft $(OBJ) -o $(NAME)
+
+.PHONY: clean re fclean
 
 clean:
 	@/bin/rm -f $(OBJ) *.gch

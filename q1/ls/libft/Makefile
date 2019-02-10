@@ -6,19 +6,26 @@
 #    By: mmoros <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/25 15:34:53 by mmoros            #+#    #+#              #
-#    Updated: 2018/04/27 19:07:27 by mmoros           ###   ########.fr        #
+#    Updated: 2019/02/02 18:47:58 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -I $(IDIR)
 
-SRC =	ft_atoi.c			\
+ODIR = .objects
+SDIR = srcs
+IDIR = inc
+
+FILES =	ft_atoi.c			\
 		ft_bzero.c			\
 		ft_isalnum.c		\
+		ft_isalldig.c		\
 		ft_isalpha.c		\
 		ft_isascii.c		\
 		ft_isdigit.c		\
-		ft_isint.c		\
+		ft_isint.c			\
 		ft_isprint.c		\
 		ft_itoa.c			\
 		ft_lstadd.c			\
@@ -91,19 +98,25 @@ SRC =	ft_atoi.c			\
 		ft_wordcount_d.c	\
 		get_next_line.c
 
-INC =	libft.h				\
-		get_next_line.h
 
-OBJ = $(SRC:.c=.o)
+OBJ = $(patsubst %.c, $(ODIR)/%.o, $(FILES))
+SRC = $(patsubst %.c, $(SDIR)/%.c, $(FILES))
 
-CFLAGS = -Wall -Wextra -Werror
+VPATH = $(SDIR)
 
 all: $(NAME)
 
-$(NAME):
-	@gcc $(CFLAGS) -c $(SRC) -I $(INC)
-	@ar rc $(NAME) $(OBJ)
+$(NAME): $(OBJ) 
+	@ar rcs $(NAME) $(OBJ)
 	@ranlib $(NAME)
+
+$(ODIR)/%.o: %.c $(ODIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(ODIR):
+	mkdir -p $(ODIR)
+
+.PHONY: clean re fclean
 
 clean:
 	@/bin/rm -f $(OBJ)
