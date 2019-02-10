@@ -1,0 +1,102 @@
+greeting
+---
+
+game = new Game({ x: , y: , teams: ["zerg", "protoss"], tickrate: })
+game.current_tick = num_elapsed_ticks
+game.create_tiles([ { x: , y: , eggs: , inventory: [s1, s2, s3, s4, s5, s6, food] }... ])
+game.add_players([ { x: , y: , inventory: [ditto], facing: , team_id: , id: }...])
+connected_player_ids.forEach(id => { get_player(id).connect() })
+timings.advance = 7
+timings.incantation_start = ...
+
+tick
+---
+game.tick()
+
+game_end
+---
+game_over({ winners: [1, 2, 3] })
+OR
+game_over({ winners: [] })
+
+spawn_resource
+---
+spawn_resources([ {x: y: type:} ])
+
+player_connects
+---
+get_player(id).connect_client()
+
+see
+---
+get_player(id).see()
+
+advance
+---
+get_player(id).advance({ x: y: })
+
+right
+---
+get_player(id).right(new_facing)
+
+left
+---
+get_player(id).left(new_facing)
+
+incantation
+---
+get_player(priest_id)
+	.start_successful_incantation({ participants: [1, 2, 3], new_level: })
+OR
+get_player(priest_id)
+	.start_failing_incantation({ participants: [1, 2, 3] })
+
+incantation_finish
+---
+get_player(priest_id).finish_successful_incantation({ participants: [1, 2, 3], new_level: })
+OR
+get_player(priest_id).finish_failing_incantation({ participants: [1, 2, 3], new_level: })
+
+death
+---
+get_player(id).death()
+
+kick
+---
+get_player(id).kick(true)
+group_get_kicked([1, 2, 3])
+	OR
+get_player(id).kick(false)
+
+broadcast
+---
+get_player(id).broadcast(msg)
+
+take
+---
+get_player(id).take({obj: , x: , y: , success: })
+
+put
+---
+get_player(id).put({obj: , x: , y: , success: })
+
+bad_command
+---
+get_player(id).bad_command(msg)
+
+inventory
+---
+get_player(id).inventory()
+
+start_laying_egg
+---
+get_player(id).lay_egg()
+
+egg_laid
+---
+get_player(id).finish_laying_egg({x: , y: , team_id: })
+
+egg_hatch
+---
+player = hatch_egg({x: , y: , team: })
+game.add_player(player)

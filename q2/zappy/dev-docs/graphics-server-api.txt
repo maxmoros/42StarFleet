@@ -1,0 +1,104 @@
+greeting
+---
+"WORLD x y tickrate start_tick\n"
+"TILE x y eggs food stone1 s2 s3 s4 s5 s6\n"
+"TILE ..."
+"TEAMNAME team1\n"
+"TEAMNAME team2\n"
+"PLAYER id team_id level x y energy facing food is_connected stone1 s2 s3 s4 s5 s6\n"
+"PLAYER ..."
+"DELAY_TIME ADVANCE 7\n" (or whatever)
+"DELAY_TIME INCANTATION_START 300\n" (or whatever)
+"DELAY_TIME ..."
+"DONE\n"
+
+tick
+---
+"TICK num_elapsed_ticks\n"
+
+game_end
+---
+"GAME_END num_winners\n"
+(if any winners):
+"WINNING_TEAM team_id\n"
+"WINNING_TEAM..."
+
+spawn_resource
+---
+"SPAWN_RESOURCE obj_type x y\n"
+
+player_connects
+---
+"CONNECT player_id\n"
+
+see
+---
+"SEE player_id\n"
+
+advance
+---
+"ADVANCE player_id x y\n"
+
+right
+---
+"RIGHT player_id new_facing\n"
+
+left
+---
+"LEFT player_id new_facing\n"
+
+ritual_leader
+---
+"LEAD_RITUAL priest_id will_succeed new_level group_members\n"
+
+ritual_participant
+---
+"JOIN_RITUAL player_id\n"
+
+level_up
+---
+"LEVEL_UP player_id new_level\n"
+
+death
+---
+"DEATH player_id\n"
+
+kick
+---
+"KICK kicker_id direction num_people_kicked\n"
+
+get_kicked
+---
+"GET_KICKED player_id direction\n"
+
+broadcast
+---
+"BROADCAST sender_id first_31_chars_of_msg\n"
+
+take
+---
+"TAKE player_id obj_type x y is_success\n"
+
+put
+---
+"PUT player_id obj_type x y is_success\n"
+
+bad_command
+---
+"BAD_COMMAND player_id first_31_chars_of_command\n"
+
+inventory
+---
+"INVENTORY player_id\n"
+
+start_laying_egg
+---
+"LAY_EGG player_id\n"
+
+egg_laid
+---
+"DONE_LAYING_EGG player_id team_id x y\n"
+
+egg_hatch
+---
+"EGG_HATCH id team_id level x y energy facing stone1 s2 s3 s4 s5 s6\n"

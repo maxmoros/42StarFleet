@@ -1,0 +1,19 @@
+{
+  "name": "gfx",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bridge.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "CTMstudios",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^5.6.0",
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1"
+  },
+  "dependencies": {
+    "split2": "^3.0.0"
+  }
+}
