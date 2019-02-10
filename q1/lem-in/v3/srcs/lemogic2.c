@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lemogic2.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/02/09 20:34:04 by mmoros            #+#    #+#             */
+/*   Updated: 2019/02/09 20:39:51 by mmoros           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <lem_in.h>
 
 void	build_logic_map(void)
@@ -47,11 +59,10 @@ void	bfs_map(void)
 						g_lem.occupied[k] = i + 1;
 						updoot = 1;
 					}
-
 	}
 }
 
-void			print_path(int room_number, int start, int block)
+void	print_path(int room_number, int start, int block)
 {
 	int		i;
 	int		step;
@@ -75,7 +86,7 @@ void			print_path(int room_number, int start, int block)
 				ft_putstr("->");
 			else
 				ft_putstr("\n");
-			break;
+			break ;
 		}
 }
 
@@ -92,4 +103,5 @@ void	clear_occupied(int block)
 	}
 	else
 		ft_bzero(g_lem.occupied, sizeof(int) * g_lem.room_count);
+	g_lem.occupied[0] = 1;
 }

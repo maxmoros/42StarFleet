@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lemisc.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/02/09 20:24:54 by mmoros            #+#    #+#             */
+/*   Updated: 2019/02/09 20:24:57 by mmoros           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <lem_in.h>
 
 t_room			*get_room(int index)
@@ -28,6 +40,18 @@ void			print_occupied(void)
 	{
 		ft_putnbr(g_lem.occupied[i]);
 		if (i < g_lem.room_count - 1)
+			ft_putstr(", ");
+	}
+	ft_putstr("]\n");
+}
+
+void			print_list(int *list, int num)
+{
+	ft_putstr("[");
+	while (num--)
+	{
+		ft_putnbr(*list++);
+		if (num)
 			ft_putstr(", ");
 	}
 	ft_putstr("]\n");

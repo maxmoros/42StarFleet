@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/02 17:50:39 by mmoros            #+#    #+#             */
-/*   Updated: 2019/02/08 15:44:04 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/02/09 20:54:08 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,13 @@ static void		link_rooms(char *room1, char *room2)
 	node2->adjc[r1] = 1;
 }
 
-static int		line_path(char *line)
+static int		line_path(char *line, int i)
 {
 	char	**parts;
-	int		i;
 	int		ret;
 
 	ret = 1;
 	parts = ft_strsplit(line, '-');
-	i = -1;
 	while (parts[++i])
 		;
 	if (i != 2 || !valid_name(parts[0]) || !valid_name(parts[1]))
@@ -47,11 +45,14 @@ static int		line_path(char *line)
 	else if (g_lem.check & PATH)
 	{
 		link_rooms(parts[0], parts[1]);
-		ft_putstr("link from ");
-		ft_putstr(parts[0]);
-		ft_putstr(" to ");
-		ft_putstr(parts[1]);
-		ft_putstr("\n");
+		if (g_lem.verbose)
+		{
+			ft_putstr("link from ");
+			ft_putstr(parts[0]);
+			ft_putstr(" to ");
+			ft_putstr(parts[1]);
+			ft_putstr("\n");
+		}
 	}
 	while (i-- > 0)
 		free(parts[i]);
@@ -90,7 +91,7 @@ static int		ht_line(char *line)
 
 static int		data_line(char *line)
 {
-	if (!(g_lem.check & PATH) && !line_path(line))
+	if (!(g_lem.check & PATH) && !line_path(line, -1))
 	{
 		if (g_lem.check & START)
 		{
@@ -103,10 +104,10 @@ static int		data_line(char *line)
 	else if (!(g_lem.check & PATH))
 	{
 		g_lem.check |= PATH;
-		if (!count_rooms() || !line_path(line))
+		if (!count_rooms() || !line_path(line, -1))
 			return (0);
 	}
-	else if (!line_path(line))
+	else if (!line_path(line, -1))
 		return (0);
 	return (1);
 }

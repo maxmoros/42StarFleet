@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/02 17:47:57 by mmoros            #+#    #+#             */
-/*   Updated: 2019/02/09 18:36:46 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/02/09 21:01:58 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 t_lem	g_lem;
 
-void			init_lem(void)
+void			init_lem(int verbose)
 {
 	g_lem.rooms = NULL;
 	g_lem.paths = NULL;
 	g_lem.ants = 0;
 	g_lem.check = 0;
+	g_lem.verbose = verbose;
 }
 
 int				get_ants(void)
@@ -42,46 +43,52 @@ int				get_ants(void)
 	return (g_lem.ants > 0 ? 1 : 0);
 }
 
-/*
-static void		print_ants(int *pos)
+static void		print_ants(int *pos, int index)
 {
 	int		i;
+	int		offset;
 
-	i = g_lem.paths->length;
+	i = -1;
+	offset = 0;
+	while (++i < index)
+		offset += g_lem.y[i];
+	i = g_lem.x[index] - 1;
 	while (i-- > 0)
-		if (pos[i] > 0 && pos[i] <= g_lem.ants)
+		if (pos[i] > 0 && pos[i] <= g_lem.y[index])
 		{
 			ft_putstr("L");
-			ft_putnbr(pos[i]);
+			ft_putnbr(pos[i] + offset);
 			ft_putchar('-');
-			ft_putstr(g_lem.path->path[i + 1]);
-			if (i > 0 && pos[i - 1] <= g_lem.ants)
-				ft_putchar(' ');
+			ft_putstr(g_lem.paths[index]->trail[i + 1]);
+			ft_putchar(' ');
 		}
-	ft_putchar('\n');
 }
 
 void			move_ants(void)
 {
-	int		*pos;
 	int		i;
 	int		j;
+	int		k;
 
 	ft_putstr("\n   MOVING ANTS\n");
-	if (!(pos = (int*)ft_memalloc(sizeof(int) * (g_lem.path->length))))
-		return ;
+	if (!(g_lem.pos = (int**)ft_memalloc(sizeof(int*) * (g_lem.w))))
+		exit_lem("Malloc fail moving ants 1\n");
 	i = -1;
-	while (++i < g_lem.path->length)
-		pos[i] = -i;
-	j = g_lem.path->length + g_lem.ants;
-	while (--j)
+	while (++i < g_lem.w && (j = -1))
+		if (!(g_lem.pos[i] = (int*)ft_memalloc(sizeof(int) * g_lem.x[i])))
+			exit_lem("Malloc fail moving ants 2\n");
+		else
+			while (++j < g_lem.x[i])
+				g_lem.pos[i][j] = -j;
+	i = g_lem.x[0] + g_lem.y[0];
+	while (--i && (j = -1))
 	{
-		i = -1;
-		while (++i < g_lem.path->length)
-			pos[i]++;
-		print_ants(pos);
+		while (++j < g_lem.w && (k = -1))
+		{
+			while (++k < g_lem.x[j])
+				g_lem.pos[j][k]++;
+			print_ants(g_lem.pos[j], j);
+		}
+		ft_putchar('\n');
 	}
-	free(pos);
-	ft_putstr("\n   COMPLETED\n");
 }
-*/

@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/02 17:43:33 by mmoros            #+#    #+#             */
-/*   Updated: 2019/02/09 18:05:13 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/02/09 21:08:11 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,11 @@ static void		free_lem(void)
 	}
 	ft_putstr("paths freed\n");
 	if (g_lem.map)
-	{
-		i = g_lem.room_count;
-		while (i-- > 0)
-			free(g_lem.map[i]);
 		free(g_lem.map);
-	}
 	ft_putstr("Map freed\n");
 }
 
-void		exit_lem(char *error)
+void			exit_lem(char *error)
 {
 	ft_putstr("\x1b[31;1mERROR\n\x1b[0m");
 	ft_putstr("  ");
@@ -59,30 +54,28 @@ void		exit_lem(char *error)
 	exit(1);
 }
 
-static void		lem_in(void)
+static void		lem_in(int verbose)
 {
-	init_lem();
+	init_lem(verbose);
 	if (!get_ants() || !build_map())
 		exit_lem("  Invalid data in map!\n");
-//	print_rooms();
+	if (verbose)
+		print_rooms();
 	build_logic_map();
-	ft_bzero(g_lem.occupied, sizeof(int) * g_lem.room_count);
-	g_lem.occupied[0] = 1;
-	bfs_map();
-//	test_bfs();
-	get_paths();
-
-//	if (!build_logic_map())
-//		exit_lem("  Bad Malloc...rare!\n");
-//	if (!traverse_map())
-//		exit_lem("  No Valid Path!\n");
-//	map_path();
-//	move_ants();
+	if (!get_paths())
+		exit_lem("  No Valid Path!\n");
+	move_ants();
+	ft_putstr("completed in ");
+	ft_putnbr(g_lem.x[0] + g_lem.y[0] - 2);
+	ft_putstr(" lines!\n   COMPLETED\n");
 }
 
-int				main(void)
+int				main(int ac, char **av)
 {
-	lem_in();
-//	free_lem();
+	if (ac == 2 && !ft_strcmp("-s", av[1]))
+		lem_in(0);
+	else
+		lem_in(1);
+	free_lem();
 	return (0);
 }

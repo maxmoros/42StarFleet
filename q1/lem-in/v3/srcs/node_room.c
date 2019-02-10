@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/02 17:54:57 by mmoros            #+#    #+#             */
-/*   Updated: 2019/02/05 17:51:31 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/02/09 20:58:44 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,18 @@ t_room			*line_room(char *line, t_room *next)
 	i = 0;
 	while (parts[++i])
 		;
-	node = NULL;
-	if (i == 3 && ft_isint(parts[1]) && ft_isint(parts[2]))
+	if (!(node = NULL) && i == 3 && ft_isint(parts[1]) && ft_isint(parts[2]))
 	{
 		node = new_room(parts[0], ft_atoi(parts[1]), ft_atoi(parts[2]), next);
-		ft_putstr(parts[0]);
-		ft_putstr(" room at (");
-		ft_putnbr(ft_atoi(parts[1]));
-		ft_putstr(", ");
-		ft_putnbr(ft_atoi(parts[2]));
-		ft_putstr(")\n");
+		if (g_lem.verbose)
+		{
+			ft_putstr(parts[0]);
+			ft_putstr(" room at (");
+			ft_putnbr(ft_atoi(parts[1]));
+			ft_putstr(", ");
+			ft_putnbr(ft_atoi(parts[2]));
+			ft_putstr(")\n");
+		}
 	}
 	while (i-- > 0)
 		free(parts[i]);
