@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(0, './nets')
 import gym
 from director import Director
 from actor import Actor
