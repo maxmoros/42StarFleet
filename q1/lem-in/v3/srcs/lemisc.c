@@ -18,3 +18,17 @@ int				free_ret(char *line, int ret)
 	return (ret);
 }
 
+void			print_occupied(void)
+{
+	int		i;
+
+	i = -1;
+	ft_putstr("Occupied\n[");
+	while (++i < g_lem.room_count)
+	{
+		ft_putnbr(g_lem.occupied[i]);
+		if (i < g_lem.room_count - 1)
+			ft_putstr(", ");
+	}
+	ft_putstr("]\n");
+}

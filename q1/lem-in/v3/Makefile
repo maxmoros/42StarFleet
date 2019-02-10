@@ -6,7 +6,7 @@
 #    By: mmoros <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/16 18:50:59 by mmoros            #+#    #+#              #
-#    Updated: 2019/02/05 17:58:05 by mmoros           ###   ########.fr        #
+#    Updated: 2019/02/09 17:09:23 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,10 @@ LIBDIR = libft/inc
 
 FILES =	lem_in.c	\
 		lemisc.c	\
+		lemogic2.c	\
 		lem_input.c	\
 		node_lem.c	\
+		node_path.c	\
 		node_room.c
 
 LIBS = libft/libft.a

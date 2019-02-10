@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/13 09:11:03 by mmoros            #+#    #+#             */
-/*   Updated: 2019/02/07 10:45:08 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/02/09 18:44:03 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LEM_IN_H
 
 # include "libft.h"
+# include <stdio.h>			//########
 
 # define START	0x01
 # define END	0x02
@@ -51,10 +52,11 @@ typedef struct		s_lem
 	struct s_room	*rooms;
 	struct s_path	**paths;
 	char			**map;
-	int				occupied;
+	int				*occupied;
 	int				*x;
 	int				*y;
 	int				w;
+	int				qmax;
 	int				room_count;
 	int				ants;
 	char			check;
@@ -65,17 +67,23 @@ extern t_lem		g_lem;
 void				init_lem(void);
 void				exit_lem(char *error);
 int					get_ants(void);
-int					build_map(void);
-
+t_room				*get_room(int index);
 t_room				*line_room(char *line, t_room *next);
 int					valid_name(char *name);
-int					count_rooms(void);
-void				print_rooms(void);
-t_room				*get_room(int index);
-int					build_logic_map(void);
-int					traverse_map(void);
+int					build_map(void);
+void				build_logic_map(void);
+void				bfs_map(void);
 void				map_path(void);
+void				get_paths(void);
+void				clear_occupied(int block);
+int					has_solution(void);
+void				print_occupied(void);
+void				print_rooms(void);
+void				print_path(int room_number, int start, int block);
+int					count_rooms(void);
 void				move_ants(void);
 int					free_ret(char *line, int ret);
+
+void				test_bfs(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/02 17:43:33 by mmoros            #+#    #+#             */
-/*   Updated: 2019/02/05 17:58:31 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/02/09 18:05:13 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,13 @@ static void		lem_in(void)
 	if (!get_ants() || !build_map())
 		exit_lem("  Invalid data in map!\n");
 //	print_rooms();
+	build_logic_map();
+	ft_bzero(g_lem.occupied, sizeof(int) * g_lem.room_count);
+	g_lem.occupied[0] = 1;
+	bfs_map();
+//	test_bfs();
+	get_paths();
+
 //	if (!build_logic_map())
 //		exit_lem("  Bad Malloc...rare!\n");
 //	if (!traverse_map())
@@ -76,6 +83,6 @@ static void		lem_in(void)
 int				main(void)
 {
 	lem_in();
-	free_lem();
+//	free_lem();
 	return (0);
 }
