@@ -5,6 +5,12 @@ WEIGHTS_SHAPE = [632,]
 BIASES_SHAPE = [632,]
 
 class Actor:
+    """Contains weights and biases for a neural network.
+
+    Attributes:
+        W: An array of floats representing weights.
+        B: An array of floats representing biases.
+    """
     W = []
     B = []
     def __init__(self):
@@ -18,11 +24,9 @@ class Actor:
         return self.B
 
     def set_weights(self, weights):
-#        assert self.W.shape == weights.shape 
         self.W = np.array(weights)
 
     def set_biases(self, biases):
-#        assert self.B.shape == biases.shape
         self.B = np.array(biases)
 
     def randomize_actor(self):
@@ -30,10 +34,3 @@ class Actor:
             self.W[i] = random.uniform(-1.0, 1.0)
         for i in range(len(self.B)):
             self.B[i] = random.uniform(-1.0, 1.0)
-'''     #Stupid since permanent.
-    def dropout_layer(self, droupout=0.1):
-        for i in range(len(self.W)):
-            x = random.randint(0, 1 // dropout)
-            if x == 0:
-                self.
-'''

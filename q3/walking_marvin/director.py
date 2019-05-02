@@ -8,23 +8,35 @@ import os
 
 
 class Director:
-    
+    """Stores and mutates actors.
+
+    The Director class contains all the actors currently being
+    trained. The Director handles the mutations and creation of
+    new generations of actors. Also, it does the work of importing
+    and exporting actors.
+
+    Attributes:
+        pop: An integer storing the desired population size of a generation.
+        noise: A float indicating the ammount of noise to add to mutations.
+        random: An integer count of random actors to be added to a generation.
+        survive: An integer count of actors that survive from one generation to the next.
+    """
     pop = 6
     noise = 0.1
     random = 0
     survive = 1
 
-    def __init__(self, pop=100, noise=0.1, train=True):
+    def __init__(self, pop=100, noise=0.1):
         self.actors = []
-        if train:
-            self.pop = pop
-            self.noise = noise
-            self.survive = pop // 10
-            self.random = pop // 20
-            for i in range(pop):
-                self.actors.append(Actor())
-                self.actors[i].randomize_actor()
-        print("population = {pop}\nnoise = {noise}\nsurvive = {survive}\nrandom = {random}".format(pop=pop, noise=noise, survive=self.survive, random=self.random))
+        self.pop = pop
+        self.noise = noise
+        self.survive = pop // 10
+        if self.survive == 0:
+            self.survive = 1
+        self.random = pop // 20
+        for i in range(pop):
+            self.actors.append(Actor())
+            self.actors[i].randomize_actor()
 
     def get_actor(self, index):
         assert index < len(self.actors)
@@ -51,8 +63,14 @@ class Director:
         with open("./super_actors/" + st + ".pkl", 'wb') as output:
             pickle.dump(top_actor, output, pickle.HIGHEST_PROTOCOL)
 
+    def export_top_to_path(self, fitness_scores, path):
+        st = datetime.datetime.fromtimestamp(time.time()).strftime('%m-%d_%H:%M_')
+        top_actor = self.actors[np.argsort(fitness_scores)[-1:][0]]
+        os.system("mkdir -p " + path)
+        with open(path + "/" + st + ".pkl", 'wb') as output:
+            pickle.dump(top_actor, output, pickle.HIGHEST_PROTOCOL)
+
     def import_actor(self, filename):
-        print(filename)
         top_actor = pickle.load(open(filename, 'rb'))
         self.actors.append(top_actor)
         return top_actor
