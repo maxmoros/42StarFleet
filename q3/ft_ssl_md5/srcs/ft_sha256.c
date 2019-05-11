@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 09:55:38 by mmoros            #+#    #+#             */
-/*   Updated: 2019/05/09 19:37:22 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/05/10 10:27:56 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,6 @@ static void				sha256_digest()
 	g_sha256.hex_digest[64] = '\0';
 }
 
-void					init_sha256()
-{
-	ft_memcpy(g_sha256.x_result, g_h_init, 32);
-}
-
 static void				sha256_prep_chunk(uint32_t *w, uint32_t *chunk)
 {
 	int			i;
@@ -94,7 +89,6 @@ static void				sha256_main_loop()
 		X_BLOCK[7] = X_BLOCK[6];
 		printf("random g_block = \'%u\'\n", X_BLOCK[6]);
 		X_BLOCK[6] = X_BLOCK[5];
-		printf("random f_block = \'%u\'\n", X_BLOCK[5]);
 		X_BLOCK[5] = X_BLOCK[4];
 		X_BLOCK[4] = X_BLOCK[3] + t1;
 		X_BLOCK[3] = X_BLOCK[2];
@@ -107,13 +101,30 @@ static void				sha256_main_loop()
 		X_RESULT[i] += X_BLOCK[i];
 }
 
+void				byte_flip(uint32_t *b)
+{
+	int		i;
+
+	i = -1;
+	while (++i < 32)
+		b[i] = (b[i] & 0xF0000000) >> 28 | (b[i] & 0x0F000000) >> 20 |
+			(b[i] & 0x00F00000) >> 12 | (b[i] & 0x000F0000) >> 4 |
+			(b[i] & 0x0000F000) << 4 | (b[i] & 0x00000F00) << 12 |
+			(b[i] & 0x000000F0) << 20 | (b[i] & 0x0000000F) << 28;
+}
+
 void				sha256(t_512chunk *chunk)
 {
 	ft_putstr("doing SHA256\n");
-	flip_chunk();
+	if (!g_ft_ssl.initialized)
+	{
+		g_ft_ssl.initialized = 1;
+		ft_memcpy(g_sha256.x_result, g_h_init, 32);
+	}
 	sha256_prep_chunk(g_sha256.w, chunk->c);
 	ft_memcpy(g_sha256.x_block, g_sha256.x_result, 32);
 	sha256_main_loop();
+	byte_flip(g_sha256.x_result);
 	ft_memcpy(g_sha256.digest, g_sha256.x_result, 32);
 	sha256_digest();
 	ft_putstr("(xxx) = ");

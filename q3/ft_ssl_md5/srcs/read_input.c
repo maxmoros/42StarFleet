@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 13:25:29 by mmoros            #+#    #+#             */
-/*   Updated: 2019/05/09 09:44:37 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/05/10 10:26:32 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,17 @@ void	last_chunk(int left, size_t *length)
 	ft_bzero(buf + left + 1, 64 - left - 1);
 	*length *= 8;
 	if (left < 57)
+	{
 		ft_memcpy(buf + 56, length, 8);
-	push_chunk();
+		push_chunk(1);
+	}
+	else
+		push_chunk(0);
 	if (left >= 57)
 	{
 		ft_bzero(buf, BUF_SIZE);
 		ft_memcpy(buf + 56, length, 8);	
-		push_chunk();
+		push_chunk(1);
 	}
 }
 
@@ -58,7 +62,7 @@ void	read_str(char *str)
 	while (++i < full)
 	{
 		ft_memcpy(buf, str + i * 64, 64);
-		push_chunk();
+		push_chunk(0);
 	}
 	ft_bzero(buf, BUF_SIZE);
 	ft_memcpy(buf, str + 64 * full, left);
@@ -75,7 +79,7 @@ void	read_fd(int fd)
 	while ((count = read(fd, buf, BUF_SIZE)) == BUF_SIZE)
 	{
 		length += BUF_SIZE;
-		push_chunk();
+		push_chunk(0);
 		ft_bzero(buf, BUF_SIZE);
 	}
 	length += count;

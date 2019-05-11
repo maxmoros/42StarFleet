@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 11:08:19 by mmoros            #+#    #+#             */
-/*   Updated: 2019/05/09 19:01:56 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/05/10 10:27:02 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct		s_ft_ssl
 	char			flags;
 	void			(*hash)();
 	char			debug;
+	uint8_t			initialized;
 }					t_ft_ssl;
 
 extern char			buf[BUF_SIZE];
@@ -53,8 +54,7 @@ void				read_fd(int fd);
 void				read_file(char *path);
 void				read_str(char *str);
 
-void				push_chunk();
+void				push_chunk(uint8_t last);
 void				print_chunk(uint32_t *table);
-void				flip_chunk();
 
 #endif
