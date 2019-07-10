@@ -16,9 +16,8 @@ void	recurse_print(t_dir *node)
 {
 	while (node)
 	{
-		printf("HERE1 [%s] \'%s\'\n", (node->up ? node->up->data->d_name : "root"), node->data->d_name);
-		if (ft_strcmp(node->data->d_name, ".") &&
-			ft_strcmp(node->data->d_name, "..") &&
+	//	printf("HERE1 [%s] \'%s\'\n", (node->up ? node->up->data->d_name : "root"), node->data->d_name);
+		if (CMP_DIR(".") && CMP_DIR("..") &&
 			!(FLAG_SET(A_FLAG) ^ (node->data->d_name[0] == '.')))
 		{
 			if (node->stat->st_mode & S_IFDIR)
@@ -26,15 +25,15 @@ void	recurse_print(t_dir *node)
 				ft_putstr("\n");
 				ft_putstr(node->path);
 				ft_putstr(":\n");
-				printf("  HERE2 NODE_IN? \'%s\'\n", node->in ? "yes" : "no");
+	//			printf("  HERE2 NODE_IN? \'%s\'\n", node->in ? "yes" : "no");
 				if (node->in)
-					printf("    HERE3 \'%s\'\n", node->in->data->d_name);
+	//				printf("    HERE3 \'%s\'\n", node->in->data->d_name);
 				print_nodes(node->in);
 			}
 		}
 		node = node->next;
 	}
-	printf("\033[33;5;205mOUT\033[m\n");
+//	printf("\033[33;5;205mOUT\033[m\n");
 }
 
 void	print_nodes(t_dir *node)

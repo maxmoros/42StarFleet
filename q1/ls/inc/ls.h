@@ -33,6 +33,7 @@
 # define NODE_IN		(node->in ? node->in : 								\
 							get_nodes(opendir(node->path), node))
 # define FLAG_SET(f)	(g_flags & f)
+# define CMP_DIR(str)	ft_strcmp(node->data->d_name, str)
 
 typedef struct		s_dir
 {

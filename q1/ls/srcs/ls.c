@@ -47,8 +47,8 @@ void	bs_print(t_dir *node, int ind)
 {
 	while (node)
 	{
-		write(1, "                                              ", ind * 2);
-		printf("n->path = \'%s\'\n", node->path);
+		write(1, "                                     ", ind * 2);
+		printf("%s\n", node->path);
 		if (node->in)
 			bs_print(node->in, ind + 1);
 		node = node->next;
@@ -64,9 +64,9 @@ int		ls(char **input)
 	if (!(dir = parse_input(input)))
 		return (0);
 	root = get_nodes(dir, NULL);
-//	bs_print(root, 0);
+	bs_print(root, 0);
 	print_nodes(root);
-	write(1, "\n", 1);
+	write(1, "\n", !FLAG_SET(L_FLAG));
 	free(g_root_offset);
 	return (1);
 }

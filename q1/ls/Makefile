@@ -12,7 +12,7 @@
 
 NAME = ls
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g -I $(LIBDIR) -I $(IDIR)
+CFLAGS = -Wall -Wextra -Werror -I $(LIBDIR) -I $(IDIR)
 
 ODIR = .objects
 SDIR = srcs
