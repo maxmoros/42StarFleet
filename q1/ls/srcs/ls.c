@@ -6,77 +6,74 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 12:43:48 by mmoros            #+#    #+#             */
-/*   Updated: 2019/02/03 09:50:25 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/07/09 19:01:06 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
-#include <time.h>
- 
-void delay(int number_of_seconds)
-{
-    // Converting time into milli_seconds
-    int milli_seconds = 1000 * number_of_seconds;
- 
-    // Stroing start time
-    clock_t start_time = clock();
- 
-    // looping till required time is not acheived
-    while (clock() < start_time + milli_seconds)
-        ;
-}
 
-char	parse_flags(char *flags, char *input)
+char	*g_root_offset;
+uint8_t	g_flags;
+
+char	parse_flags(char *input)
 {
-	while (++input)
+	while (*++input)
 	{
 		if (*input == 'l')
-			*flags |= L_FLAG;
+			g_flags |= L_FLAG;
 		else if (*input == 'R')
-			*flags |= RC_FLAG;
+			g_flags |= RC_FLAG;
 		else if (*input == 'a')
-			*flags |= A_FLAG;
+			g_flags |= A_FLAG;
 		else if (*input == 'r')
-			*flags |= RV_FLAG;
+			g_flags |= RV_FLAG;
 		else if (*input == 't')
-			*flags |= T_FLAG;
+			g_flags |= T_FLAG;
 		else
 			return (0);
 	}
 	return (1);
 }
 
-DIR		*parse_input(char *flags, char **input)
+DIR		*parse_input(char **input)
 {
-	DIR		*dir;
+	while (input && *input && **input == '-')
+		parse_flags(*input++);
+	g_root_offset = ft_strdup(input && *input ? *input : ".");
+	return (opendir(g_root_offset));
+}
 
-	while (input && **input == '-')
-		parse_flags(flags, *input++);
-	if ((dir = opendir(*input)))
-		return (dir);
-	return (NULL);
+void	bs_print(t_dir *node, int ind)
+{
+	while (node)
+	{
+		write(1, "                                              ", ind * 2);
+		printf("n->path = \'%s\'\n", node->path);
+		if (node->in)
+			bs_print(node->in, ind + 1);
+		node = node->next;
+	}
 }
 
 int		ls(char **input)
 {
 	DIR				*dir;
-	char			flags;
 	t_dir			*root;
 
-	flags = 0;
-	if (!(dir = parse_input(&flags, input)))
+	g_flags = 0;
+	if (!(dir = parse_input(input)))
 		return (0);
-	root = get_nodes(dir, NULL, flags);
-	print_nodes(root, flags);
-	ft_putchar('\n');
+	root = get_nodes(dir, NULL);
+//	bs_print(root, 0);
+	print_nodes(root);
+	write(1, "\n", 1);
+	free(g_root_offset);
 	return (1);
 }
 
 int		main(int ac, char **av)
 {
-	if (ac > 1)
-		ls(av[1]);
-	else
-		ls(".");
+	printf("\033[31;5;205mSTART\033[m\n");
+	ls(ac > 1 ? av + 1 : NULL);
 	return (0);
 }

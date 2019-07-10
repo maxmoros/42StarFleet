@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 12:45:42 by mmoros            #+#    #+#             */
-/*   Updated: 2019/02/03 16:36:55 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/07/09 19:01:02 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,38 @@
 # include "libft.h"
 # include <stdio.h>
 # include <dirent.h>
+# include <time.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/xattr.h>
 # include <pwd.h>
 # include <grp.h>
 
+# define ST_MODE(n, x)	(n->stat->st_mode & x)
+# define NODE_IN		(node->in ? node->in : 								\
+							get_nodes(opendir(node->path), node))
+# define FLAG_SET(f)	(g_flags & f)
+
 typedef struct		s_dir
 {
 	char			*path;
+	struct s_dir	*in;
 	struct stat		*stat;
 	struct dirent	*data;
 	struct s_dir	*up;
-	struct s_dir	*in;
 	struct s_dir	*next;
 }					t_dir;
 
-t_dir				*get_nodes(DIR *dir, t_dir *up, char flags);
+extern char			*g_root_offset;
+extern uint8_t		g_flags;
+
+t_dir				*get_nodes(DIR *dir, t_dir *up);
 char				*node_path(t_dir *node);
 
-void				print_nodes(t_dir *node, char flags);
+void				print_nodes(t_dir *node);
+void				print_longf_nodes(t_dir *node);
+
+uint8_t				ft_numlen(int num);
 
 void				delay(int num);
 

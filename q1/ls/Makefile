@@ -6,21 +6,23 @@
 #    By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/16 18:50:59 by mmoros            #+#    #+#              #
-#    Updated: 2019/02/03 08:01:38 by mmoros           ###   ########.fr        #
+#    Updated: 2019/07/09 18:57:34 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ls
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I $(LIBDIR) -I $(IDIR)
+CFLAGS = -Wall -Wextra -Werror -g -I $(LIBDIR) -I $(IDIR)
 
 ODIR = .objects
 SDIR = srcs
 IDIR = inc
 LIBDIR = libft/inc
 
-FILES =	ls.c		\
-		ls_print.c	\
+FILES =	ls.c			\
+		ls_print.c		\
+		ls_print_l.c	\
+		ls_misc.c		\
 		node_dir.c
 
 LIBS = libft/libft.a

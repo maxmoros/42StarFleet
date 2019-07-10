@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 18:40:59 by mmoros            #+#    #+#             */
-/*   Updated: 2019/02/03 09:50:29 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/07/09 19:01:08 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ t_dir	*new_dir(struct dirent *data, t_dir *up, t_dir *in, t_dir *next)
 	node->in = in;
 	node->next = next;
 	node->path = node_path(node);
-	if (stat(node->path, node->stat) == -1)
-		return (NULL);
+	lstat(node->path, node->stat);
 	return (node);
 }
 
@@ -33,7 +32,7 @@ t_dir	*new_dir(struct dirent *data, t_dir *up, t_dir *in, t_dir *next)
 **If time permits, replace this p.o.s.
 */
 
-t_dir	*sort_list(t_dir *list, char flags, int (*cmp)(t_dir*, t_dir*, char))
+t_dir	*sort_list(t_dir *list, int (*cmp)(t_dir*, t_dir*))
 {
 	struct dirent	*tmp;
 	struct stat		*stats;
@@ -42,13 +41,10 @@ t_dir	*sort_list(t_dir *list, char flags, int (*cmp)(t_dir*, t_dir*, char))
 
 	node = list;
 	while (node->next)
-	{
-		if (cmp(node, node->next, flags))
+		if (cmp(node, node->next))
 			node = node->next;
 		else
 		{
-//			printf("swap : n1 = \"%s\", n2 = \"%s\"\n",
-//				node->data->d_name, node->next->data->d_name);
 			tmp = node->data;
 			str = node->path;
 			stats = node->stat;
@@ -60,11 +56,10 @@ t_dir	*sort_list(t_dir *list, char flags, int (*cmp)(t_dir*, t_dir*, char))
 			node->next->stat = stats;
 			node = list;
 		}
-	}
 	return (list);
 }
 
-int		cmp_time(t_dir *n1, t_dir *n2, char flags)
+int		cmp_time(t_dir *n1, t_dir *n2)
 {
 	struct stat		stat_n1;
 	struct stat		stat_n2;
@@ -72,28 +67,26 @@ int		cmp_time(t_dir *n1, t_dir *n2, char flags)
 	if (stat(n1->data->d_name, &stat_n1) == -1 ||
 		stat(n2->data->d_name, &stat_n2) == -1)
 		return (-1);
-	flags &= T_FLAG;
+	FLAG_SET(T_FLAG);		//WHY?
 	printf("time : stat_n1 = %d, stat_n2 = %ld\n", (int)stat_n1.st_mtime, stat_n2.st_mtime);
 	printf("dif = %d\n", (int)stat_n1.st_mtime - (int)stat_n2.st_mtime);
-	if (stat_n1.st_mtime - stat_n1.st_mtime >= 0)// ^ !(flags & RV_FLAG))
-		return (1);
-	return (0);
+	return (stat_n1.st_mtime - stat_n1.st_mtime >= 0);// ^ !(g_flags & RV_FLAG))
 }
 
-int		cmp_lexi(t_dir *n1, t_dir *n2, char fg)
+int		cmp_lexi(t_dir *n1, t_dir *n2)
 {
-	if ((ft_strcmp(n1->data->d_name, n2->data->d_name) > 0) ^ !(fg & RV_FLAG))
-		return (1);
-	return (0);
+	return ((ft_strcmp(n1->data->d_name, n2->data->d_name) > 0) ^
+											!(FLAG_SET(RV_FLAG)));
 }
 
 char	*node_path(t_dir *node)
 {
 	int		length;
+	int		tmp_len;
 	t_dir	*tmp;
 	char	*path;
 
-	length = 0;
+	length = ft_strlen(g_root_offset) + 1;
 	tmp = node;
 	while (tmp)
 	{
@@ -106,47 +99,45 @@ char	*node_path(t_dir *node)
 	tmp = node;
 	while (tmp)
 	{
-		ft_strncpy(path + (length -= ft_strlen(tmp->data->d_name)),
-					tmp->data->d_name, ft_strlen(tmp->data->d_name));
-		if (length > 0)
-			path[--length] = '/';
+		tmp_len = ft_strlen(tmp->data->d_name);
+		ft_strncpy(path + (length -= tmp_len), tmp->data->d_name, tmp_len);
+		path[--length] = '/';
 		tmp = tmp->up;
 	}
+	ft_strncpy(path, g_root_offset, ft_strlen(g_root_offset));
 	return (path);
 }
 
-void	recurse_node(t_dir *node, char flags)
+void	recurse_node(t_dir *node)
 {
 	DIR				*dir;
 
 	while (node)
 	{
 		if (ft_strcmp(node->data->d_name, ".") &&
-			ft_strcmp(node->data->d_name, ".."))
+			ft_strcmp(node->data->d_name, "..") &&
+			!((FLAG_SET(A_FLAG)) ^ (node->data->d_name[0] == '.')) &&
+			ST_MODE(node, S_IFDIR) && (dir = opendir(node->path)))
 		{
-			if ((dir = opendir(node->path)))
-			{
-				if (node->stat->st_mode & S_IFDIR)
-					node->in = get_nodes(dir, node, flags);
-				closedir(dir);
-			}
+			node->in = get_nodes(dir, node);
+			closedir(dir);
 		}
 		node = node->next;
 	}
 }
 
-t_dir	*get_nodes(DIR *dir, t_dir *up, char flags)
+t_dir	*get_nodes(DIR *dir, t_dir *up)
 {
 	t_dir			*root;
 	struct dirent	*dp;
 
-	if (!(dp = readdir(dir)))
-		return (NULL);
-	root = new_dir(dp, up, NULL, NULL);
+	root = NULL;
 	while ((dp = readdir(dir)))
 		root = new_dir(dp, up, NULL, root);
-	root = sort_list(root, flags, (flags & T_FLAG ? cmp_time : cmp_lexi));
-	if (flags & RC_FLAG)
-		recurse_node(root, flags);
+	if (!root)
+		return (NULL);
+	root = sort_list(root, (FLAG_SET(T_FLAG) ? cmp_time : cmp_lexi));
+	if (FLAG_SET(RC_FLAG))
+		recurse_node(root);
 	return (root);
 }
