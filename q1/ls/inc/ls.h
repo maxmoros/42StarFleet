@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 12:45:42 by mmoros            #+#    #+#             */
-/*   Updated: 2019/07/09 19:01:02 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/07/10 16:01:20 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # define A_FLAG 0x4
 # define RV_FLAG 0x8
 # define T_FLAG 0x10
+# define S_FLAG 0x20
+# define PATH_MAX 4096
 
 # include "libft.h"
 # include <stdio.h>
@@ -38,6 +40,7 @@
 typedef struct		s_dir
 {
 	char			*path;
+	DIR				*dir;
 	struct s_dir	*in;
 	struct stat		*stat;
 	struct dirent	*data;

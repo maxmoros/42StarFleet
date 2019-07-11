@@ -6,22 +6,23 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 18:40:59 by mmoros            #+#    #+#             */
-/*   Updated: 2019/07/09 19:01:08 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/07/10 16:01:23 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
 
-t_dir	*new_dir(struct dirent *data, t_dir *up, t_dir *in, t_dir *next)
+t_dir	*new_dir(struct dirent *data, t_dir *up, t_dir *next)
 {
 	t_dir	*node;
 
 	if (!(node = (t_dir*)ft_memalloc(sizeof(t_dir))) ||
 		!(node->stat = (struct stat*)ft_memalloc(sizeof(struct stat))))
 		return (NULL);
+	node->dir = NULL;
 	node->data = data;
 	node->up = up;
-	node->in = in;
+	node->in = NULL;
 	node->next = next;
 	node->path = node_path(node);
 	lstat(node->path, node->stat);
@@ -93,9 +94,10 @@ char	*node_path(t_dir *node)
 		length += 1 + ft_strlen(tmp->data->d_name);
 		tmp = tmp->up;
 	}
-	if (!(path = (char*)ft_memalloc(sizeof(char) * (length--))))
+	if (!(path = (char*)ft_memalloc(sizeof(char) * (length))))
 		return (NULL);
-	path[length] = '\0';
+	path[length - 1] = '\0';
+	length--;
 	tmp = node;
 	while (tmp)
 	{
@@ -110,18 +112,12 @@ char	*node_path(t_dir *node)
 
 void	recurse_node(t_dir *node)
 {
-	DIR				*dir;
-
 	while (node)
 	{
-		if (ft_strcmp(node->data->d_name, ".") &&
-			ft_strcmp(node->data->d_name, "..") &&
-			!((FLAG_SET(A_FLAG)) ^ (node->data->d_name[0] == '.')) &&
-			ST_MODE(node, S_IFDIR) && (dir = opendir(node->path)))
-		{
-			node->in = get_nodes(dir, node);
-			closedir(dir);
-		}
+		if (CMP_DIR(".") && CMP_DIR("..") &&
+				!((FLAG_SET(A_FLAG)) ^ (node->data->d_name[0] == '.')) &&
+				ST_MODE(node, S_IFDIR) && (node->dir = opendir(node->path)))
+			node->in = get_nodes(node->dir, node);
 		node = node->next;
 	}
 }
@@ -133,7 +129,7 @@ t_dir	*get_nodes(DIR *dir, t_dir *up)
 
 	root = NULL;
 	while ((dp = readdir(dir)))
-		root = new_dir(dp, up, NULL, root);
+		root = new_dir(dp, up, root);
 	if (!root)
 		return (NULL);
 	root = sort_list(root, (FLAG_SET(T_FLAG) ? cmp_time : cmp_lexi));
