@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 12:43:48 by mmoros            #+#    #+#             */
-/*   Updated: 2019/07/11 20:37:04 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/07/12 13:01:15 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void		ls(char **input, uint8_t verbose_title)
 		{
 			if (verbose_title)
 				ft_pbs("%s:\n", *input);
-			print_nodes((root = get_nodes(dir, NULL, 1)));
+			root = get_nodes(dir, NULL, 1);
 			write(1, "\n", *++input && !FLAG_SET(L_FLAG));
 			closedir(dir);
 			free_nodes(root);

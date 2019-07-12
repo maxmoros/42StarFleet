@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 12:57:59 by mmoros            #+#    #+#             */
-/*   Updated: 2019/07/11 21:35:18 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/07/12 12:46:14 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,34 @@ void	print_blocks(t_dir *node, int blck_len)
 	write(1, " ", 1);
 }
 
+void	print_links(t_dir *node)
+{
+	t_dir	*tmp;
+	int		count;
+	DIR		*dir;
+
+	ft_putstr(S_ISLNK(MODE(node)) ? "@ " : "  ");
+	count = 0;
+	if (S_ISDIR(MODE(node)) && (dir = opendir(node->path)))
+	{
+		node->in = get_nodes(dir, node, 0);
+		closedir(dir);
+		tmp = node->in;
+		while (tmp)
+		{
+			if (S_ISDIR(MODE(tmp)))
+				count++;
+			tmp = tmp->next;
+		}
+	}
+	ft_putnbr(count ? count : 1);
+	if (node->in && !FLAG_SET(RC_FLAG))
+	{
+		free_nodes(node->in);
+		node->in = NULL;
+	}
+}
+
 void	print_longf_nodes(t_dir *node)
 {
 	int		offset;
@@ -81,7 +109,7 @@ void	print_longf_nodes(t_dir *node)
 			FLAG_SET(S_FLAG) ? print_blocks(node, blck_len) : 0;
 			print_permissions(node->stat);
 			print_links(node);
-			ft_pbs(" %s  %s", PW_NAME(node), GR_NAME(node));
+			print_id(node);
 			print_size(node, offset + 2);
 			print_date_mod(node);
 			if (S_ISLNK(MODE(node)))

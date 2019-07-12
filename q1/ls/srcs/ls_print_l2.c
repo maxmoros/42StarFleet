@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 12:57:59 by mmoros            #+#    #+#             */
-/*   Updated: 2019/07/11 21:10:51 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/07/12 12:23:24 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,35 +59,6 @@ void	print_permissions(struct stat *stat)
 	}
 }
 
-void	print_links(t_dir *node)
-{
-	t_dir	*tmp;
-	int		count;
-	DIR		*dir;
-
-	ft_putstr(S_ISLNK(MODE(node)) ? "@ " : "  ");
-	count = 0;
-	if (S_ISDIR(MODE(node)))
-	{
-		if (!node->in)
-		{
-			dir = opendir(node->path);
-			node->in = get_nodes(dir, NULL, 0);
-			closedir(dir);
-		}
-		tmp = node->in;
-		while ((tmp = tmp->next))
-			if (S_ISDIR(MODE(tmp)))
-				count++;
-	}
-	ft_putnbr(count ? count : 1);
-	if (node->in && !FLAG_SET(RC_FLAG))
-	{
-		free_nodes(node->in);
-		node->in = NULL;
-	}
-}
-
 void	print_size(t_dir *node, int offset)
 {
 	int		len;
@@ -99,4 +70,13 @@ void	print_size(t_dir *node, int offset)
 		x /= 10;
 	write(1, "          ", offset - len);
 	ft_putnbr(SIZE(node));
+}
+
+void	print_id(t_dir *node)
+{
+	struct passwd	*uid;
+	struct group	*gid;
+
+	ft_pbs(" %s", ((uid = PW_NAME(node)) ? uid->pw_name : NULL));
+	ft_pbs("  %s", ((gid = GR_NAME(node)) ? gid->gr_name : NULL));
 }

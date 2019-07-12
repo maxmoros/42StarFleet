@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 12:45:42 by mmoros            #+#    #+#             */
-/*   Updated: 2019/07/11 21:35:23 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/07/12 13:46:42 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define NODE_IN		(node->in ? node->in : 								\
 							get_nodes(opendir(node->path), node))
 # define FLAG_SET(f)	(g_flags & f)
+# define REV_ON			((g_flags & RV_FLAG) > 0)
 # define CMP_DIR(str)	ft_strcmp(node->d_name, str)
 # define BLOCKS(n)		(n->stat->st_blocks)
 # define SIZE(n)		(n->stat->st_size)
@@ -44,8 +45,8 @@
 # define MTIME(n)		(n->stat->st_mtime)
 # define CTIME(n)		(ctime(&MTIME(n)))
 # define NAME(n)		(n->d_name)
-# define PW_NAME(n)		(getpwuid(n->stat->st_uid)->pw_name)
-# define GR_NAME(n)		(getgrgid(n->stat->st_gid)->gr_name)
+# define PW_NAME(n)		(getpwuid(n->stat->st_uid))
+# define GR_NAME(n)		(getgrgid(n->stat->st_gid))
 
 
 typedef struct		s_dir
@@ -62,13 +63,14 @@ typedef struct		s_dir
 extern char			*g_root_offset;
 extern uint8_t		g_flags;
 
-t_dir				*new_dir(char *d_name, t_dir *up, t_dir *next);
-t_dir				*get_nodes(DIR *dir, t_dir *up, uint8_t sort);
+t_dir				*new_dir(char *d_name, t_dir *up, t_dir *next, uint8_t sort);
+t_dir				*get_nodes(DIR *dir, t_dir *up, uint8_t print);
 void				node_path(t_dir *node);
 int					free_nodes(t_dir *node);
 
 void				print_nodes(t_dir *node);
 void				print_links(t_dir *node);
+void				print_id(t_dir *node);
 void				print_permissions(struct stat *stat);
 void				print_size(t_dir *node, int offset);
 void				print_date_mod(t_dir *node);
