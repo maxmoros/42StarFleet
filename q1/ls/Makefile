@@ -6,7 +6,7 @@
 #    By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/16 18:50:59 by mmoros            #+#    #+#              #
-#    Updated: 2019/07/10 12:02:57 by mmoros           ###   ########.fr        #
+#    Updated: 2019/07/11 20:55:41 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ LIBDIR = libft/inc
 
 FILES =	ls.c			\
 		ls_print.c		\
-		ls_print_l.c	\
+		ls_print_l1.c	\
+		ls_print_l2.c	\
 		ls_misc.c		\
 		node_dir.c
 

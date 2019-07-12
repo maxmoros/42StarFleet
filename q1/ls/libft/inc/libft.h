@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 10:26:13 by mmoros            #+#    #+#             */
-/*   Updated: 2018/04/28 21:40:23 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/07/11 10:52:51 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s);
 char				**ft_strsplit(char const *s, char c);
 char				*ft_itoa(int n);
+int					ft_pbs(char *f, ...);
 void				ft_putchar(char c);
 void				ft_putstr(char const *s);
 void				ft_putnstr(char const *s, size_t n);

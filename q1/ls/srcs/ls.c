@@ -6,16 +6,16 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 12:43:48 by mmoros            #+#    #+#             */
-/*   Updated: 2019/07/10 16:01:18 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/07/11 20:37:04 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
 
-char	*g_root_offset;
-uint8_t	g_flags;
+char		*g_root_offset;
+uint8_t		g_flags;
 
-char	parse_flags(char *input)
+static char		parse_flags(char *input)
 {
 	while (*++input)
 	{
@@ -32,17 +32,12 @@ char	parse_flags(char *input)
 		else if (*input == 's')
 			g_flags |= S_FLAG;
 		else
-		{
-			ft_putstr("    ft_ls: illegal option -- \'");
-			ft_putchar(*input);
-			ft_putstr("\'\n");
-			return (0);
-		}
+			return (ft_pbs("    ft_ls: illegal option -- \'%c\'\n", *input));
 	}
 	return (1);
 }
 
-DIR		*parse_input(uint8_t *verbose_title, char ***input)
+static DIR		*parse_input(uint8_t *verbose_title, char ***input)
 {
 	g_root_offset = ft_strdup(*input && **input ? **input : ".");
 	if (**input && *(*input + 1) && !*verbose_title)
@@ -50,7 +45,7 @@ DIR		*parse_input(uint8_t *verbose_title, char ***input)
 	return (opendir(g_root_offset));
 }
 
-void	rev_order(char **input)
+static void		rev_order(char **input)
 {
 	int		i;
 	int		j;
@@ -68,7 +63,7 @@ void	rev_order(char **input)
 	}
 }
 
-void	ls(char **input, uint8_t verbose_title)
+static void		ls(char **input, uint8_t verbose_title)
 {
 	DIR				*dir;
 	t_dir			*root;
@@ -76,39 +71,32 @@ void	ls(char **input, uint8_t verbose_title)
 	if (FLAG_SET(RV_FLAG))
 		rev_order(input);
 	while (input && *input)
-		if (!(dir = parse_input(&verbose_title, &input)))
-		{
-			ft_putstr("ft_ls: ");
-			ft_putstr(*input++);
-			ft_putstr(": No such file or directory\n");
-		}
-		else if (0)
-			;		//DO SYMLINK HERE?
-		else	
+		if (FLAG_SET(L_FLAG) && check_symlink(*input))
+			print_symlink(*input++);
+		else if (!(dir = parse_input(&verbose_title, &input)))
+			ft_pbs("ft_ls: %s: No such file or directory\n", *input++);
+		else
 		{
 			if (verbose_title)
-			{
-				ft_putstr(*input);
-				ft_putstr(":\n");
-			}
-			print_nodes((root = get_nodes(dir, NULL)));
+				ft_pbs("%s:\n", *input);
+			print_nodes((root = get_nodes(dir, NULL, 1)));
 			write(1, "\n", *++input && !FLAG_SET(L_FLAG));
 			closedir(dir);
+			free_nodes(root);
 		}
+	g_root_offset ? free(g_root_offset) : 0;
 }
 
-int		main(int ac, char **av)
+int				main(int ac, char **av)
 {
 	char	**tmp;
 
 	g_flags = 0;
+	g_root_offset = NULL;
 	(void)ac;
 	while (*++av && **av == '-')
 		if (!parse_flags(*av))
-		{
-			ft_putstr("        Usage: ft_ls [-alrRt] [file ...]\n");
-			return (0);
-		}
+			return (ft_pbs("        Usage: ft_ls [-alrRt] [file ...]\n"));
 	if (*av)
 		ls(av, 0);
 	else
@@ -120,6 +108,5 @@ int		main(int ac, char **av)
 		free(tmp[0]);
 		free(tmp);
 	}
-	free(g_root_offset);
 	return (0);
 }
