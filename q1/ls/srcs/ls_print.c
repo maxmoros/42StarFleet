@@ -6,7 +6,7 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/05 11:54:01 by mmoros            #+#    #+#             */
-/*   Updated: 2019/07/12 12:18:37 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/07/12 14:21:42 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void			print_symlink(char *path)
 	t_dir			*node;
 	char			buff[PATH_MAX + 1];
 
-	node = new_dir(path, NULL, NULL, 0);
+	node = new_dir(path, NULL, NULL);
 	FLAG_SET(S_FLAG) ? write(1, "1 ", 2) : 0;
 	print_permissions(node->stat);
 	write(1, "@", 1);

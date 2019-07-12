@@ -6,13 +6,13 @@
 #    By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/16 18:50:59 by mmoros            #+#    #+#              #
-#    Updated: 2019/07/12 12:55:24 by mmoros           ###   ########.fr        #
+#    Updated: 2019/07/12 14:46:01 by mmoros           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ls
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I $(LIBDIR) -I $(IDIR) #-fsanitize=address -fsanitize=undefined
+CFLAGS = -Wall -Wextra -Werror -I $(LIBDIR) -I $(IDIR)
 
 ODIR = .objects
 SDIR = srcs

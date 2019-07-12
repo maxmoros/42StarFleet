@@ -6,48 +6,13 @@
 /*   By: mmoros <mmoros@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 18:40:59 by mmoros            #+#    #+#             */
-/*   Updated: 2019/07/12 13:47:51 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/07/12 14:49:33 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls.h"
 
-int		cmp_lexi(t_dir *n1, t_dir *n2)
-{
-	return (ft_strcmp(NAME(n1), NAME(n2)) < 0);
-}
-
-int		cmp_time(t_dir *n1, t_dir *n2)
-{
-	if (MTIME(n1) == MTIME(n2))
-	{
-		ft_pbs("SAME TIME! n1[%s], n2[%s], cmp=%d\n", NAME(n1), NAME(n2), cmp_lexi(n1, n2));
-		return (cmp_lexi(n1, n2));
-	}
-	return ((MTIME(n1) - MTIME(n2)) >= 0);
-}
-
-t_dir	*insert_node(t_dir *n1, t_dir *n2)
-{
-	int		(*cmp)(t_dir*, t_dir*);
-	t_dir	*tmp;
-
-	cmp = (FLAG_SET(T_FLAG) ? cmp_time : cmp_lexi);
-	if (REV_ON ^ cmp(n2, n1))
-	{
-		n2->next = n1;
-		return (n2);
-	}
-	tmp = n1;
-	while (tmp->next && (REV_ON ^ cmp(tmp->next, n2)))
-		tmp = tmp->next;
-	if (tmp->next)
-		n2->next = tmp->next;
-	tmp->next = n2;
-	return (n1);
-}
-
-t_dir	*new_dir(char *d_name, t_dir *up, t_dir *list, uint8_t sort)
+t_dir	*new_dir(char *d_name, t_dir *up, t_dir *list)
 {
 	t_dir	*node;
 
@@ -60,8 +25,7 @@ t_dir	*new_dir(char *d_name, t_dir *up, t_dir *list, uint8_t sort)
 	lstat(node->path, node->stat);
 	if (!list)
 		return (node);
-	node->next = (sort ? NULL : list);
-	return (sort ? insert_node(list, node) : node);
+	return (insert_node(list, node));
 }
 
 int		free_nodes(t_dir *node)
@@ -117,20 +81,24 @@ void	recurse_node(t_dir *node)
 	{
 		if (CMP_DIR(".") && CMP_DIR("..") &&
 				(FLAG_SET(A_FLAG) || !(NAME(node)[0] == '.')) &&
-				S_ISDIR(MODE(node)) && !S_ISLNK(MODE(node)) &&
-				(node->dir = opendir(node->path)))
+				S_ISDIR(MODE(node)) && !S_ISLNK(MODE(node)))
 		{
 			ft_pbs("\n%s:\n", node->path);
-			if (FLAG_SET(L_FLAG))
+			if ((node->dir = opendir(node->path)))
 			{
-				print_nodes(node->in);
-				recurse_node(node->in);
+				if (FLAG_SET(L_FLAG))
+				{
+					print_nodes(node->in);
+					recurse_node(node->in);
+				}
+				else
+					node->in = get_nodes(node->dir, node, 1);
+				closedir(node->dir);
+				free_nodes(node->in);
+				node->in = NULL;
 			}
 			else
-				node->in = get_nodes(node->dir, node, 1);
-			closedir(node->dir);
-			free_nodes(node->in);
-			node->in = NULL;
+				ft_pbs("ls: %s: Permission denied\n", node->d_name);
 		}
 		node = node->next;
 	}
@@ -143,7 +111,7 @@ t_dir	*get_nodes(DIR *dir, t_dir *up, uint8_t print)
 
 	root = NULL;
 	while ((dp = readdir(dir)))
-		root = new_dir(dp->d_name, up, root, print);
+		root = new_dir(dp->d_name, up, root);
 	if (!root)
 		return (NULL);
 	print ? print_nodes(root) : 0;

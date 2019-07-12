@@ -6,7 +6,7 @@
 /*   By: mmoros <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 12:57:59 by mmoros            #+#    #+#             */
-/*   Updated: 2019/07/12 12:46:14 by mmoros           ###   ########.fr       */
+/*   Updated: 2019/07/12 14:45:02 by mmoros           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,7 @@ void	print_links(t_dir *node)
 		tmp = node->in;
 		while (tmp)
 		{
-			if (S_ISDIR(MODE(tmp)))
-				count++;
+			count++;
 			tmp = tmp->next;
 		}
 	}
